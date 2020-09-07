@@ -1,0 +1,48 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=1.5cm]{geometry}
+%
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{caratula/caratula}
+
+\begin{document}
+
+\def\runtitulo{Sistemas de ecuaciones lineales}
+
+\input{caratula.tex}
+%Carátula
+\maketitle
+\newpage
+
+%Abstract
+\input{abstract.tex}
+\newpage
+
+%Indice
+\tableofcontents
+\newpage
+
+% Demás secciones
+\section{Introducción}
+\input{introduccion.tex}
+\newpage
+
+\section{Desarrollo}
+\input{desarrollo.tex}
+\newpage
+
+\section{Resultados}
+\input{resultados.tex}
+\newpage
+
+\section{Conclusiones}
+\input{conclusion.tex}
+\newpage
+%
+
+%%%% BIBLIOGRAFIA
+\bibliographystyle{unsrt}
+\bibliography{biblio}
+
+\end{document}
