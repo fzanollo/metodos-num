@@ -357,3 +357,4 @@ __pycache__
 tp
 .deps
 .vscode
+*.dat
