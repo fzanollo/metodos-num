@@ -11,10 +11,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iterator>
+#include <sstream>
 
 using namespace std;
-
-vector<string> split_string(string);
 
 vector<long> compute(int n, int m, vector<vector<int>>& queries) {
     // TODO: armar C, b; resolver C * r = b; devolver r.
@@ -25,71 +25,75 @@ vector<long> compute(int n, int m, vector<vector<int>>& queries) {
     return r;
 }
 
-void write(vector<long>& v, ofstream& fout) {
+void write(vector<int>& v, fstream& fout) {
     for (auto i = v.begin(); i != v.end(); ++i) {
-        fout << *i << '\n';
+        fout << *i ;
+        fout<<",";
+    }
+    fout<< '\n';
+}
+
+void write_csv(vector<vector<int>>& v, string path){
+    fstream fout;
+    fout.open(path, ios::out | ios::app);
+
+    int cant_filas = v.size();
+    for(int i=0; i<cant_filas;i++){
+        write(v[i], fout);
     }
 }
 
-int main() {
-    // TODO: levantar argv del enunciado
-
-    ofstream fout(getenv("OUTPUT_PATH"));
-
-    string nm_temp;
-    getline(cin, nm_temp);
-
-    vector<string> nm = split_string(nm_temp);
-
-    int n = stoi(nm[0]);
-
-    int m = stoi(nm[1]);
-
-    vector<vector<int>> queries(m);
-    for (int i = 0; i < m; i++) {
-        queries[i].resize(4);
-
-        for (int j = 0; j < 4; j++) {
-            cin >> queries[i][j];
+int read_csv(string path, int filas, int columnas) {
+    ifstream read_csv;
+    // Open an existing file
+    read_csv.open(path, ios::in);
+    if(!read_csv)
+        return -1;
+    string line, cell;
+    string fileline, filecell;
+    int prevNoOfCols = 0, noOfRows = 0, noOfCols = 0;
+    while (getline(read_csv, fileline)) {
+        noOfCols = 0;
+        stringstream linestream(fileline);
+        while (getline(linestream, filecell, ',')) {
+            stod(filecell);
+            noOfCols++;
         }
-
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (noOfRows++ == 0)
+            prevNoOfCols = noOfCols;
+        if (prevNoOfCols != noOfCols)
+            return -1;
     }
+    read_csv.close();
+    //aca debería pasarse noOfrow y noOfCols, que definen el tamaño de la matriz
+    int  parsedCsv[2][6];
 
-    auto result = compute(n, m, queries);
-
-    write(result, fout);
-
-    fout.close();
-
+    read_csv.open(path,ios::in);
+    int i = 0;
+    while (getline(read_csv, fileline)) {
+        int j = 0;
+        stringstream linestream(fileline);
+        while (getline(linestream, filecell, ',')) {
+            parsedCsv[i][j] = stod(filecell);
+            j++;
+        }
+        i++;
+    }
+    cout<<parsedCsv;
     return 0;
 }
 
-vector<string> split_string(string input_string) {
-    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
-        return x == y and x == ' ';
-    });
+int main(int num_arguments, char* argv[]) {
+    // TODO: levantar argv del enunciado
+    string medida = argv[1]; //representa a o
+    string salidaOentrada = argv[2]; //representa a nombre del archivo
+    vector<vector<int>> vec;
+    vector<int> vec2;
+    vec2.push_back(1);
+    vec2.push_back(3);
+    vec.push_back(vec2);
+  //  write_csv(vec, salidaOentrada);
 
-    input_string.erase(new_end, input_string.end());
-
-    while (input_string[input_string.length() - 1] == ' ') {
-        input_string.pop_back();
-    }
-
-    vector<string> splits;
-    char delimiter = ' ';
-
-    size_t i = 0;
-    size_t pos = input_string.find(delimiter);
-
-    while (pos != string::npos) {
-        splits.push_back(input_string.substr(i, pos - i));
-
-        i = pos + 1;
-        pos = input_string.find(delimiter, i);
-    }
-
-    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
-
-    return splits;
+    read_csv(salidaOentrada, 1,2);
+    return 0;
 }
