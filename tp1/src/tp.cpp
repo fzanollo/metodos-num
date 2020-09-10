@@ -76,11 +76,47 @@ vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     return C;
 }
 
+vector<vector<int>> calcularPartidos(int n, int m, vector<vector<int>>& queries, vector<double>& b){
+    vector<vector<int>> cantPartidosPorEquipo(n, vector<int>(n));
+    cout << "aca llego 2";
+    
+    for (int i = 0; i < m; ++i){
+        int eq1 = queries[i][1];
+        int eq2 = queries[i][3];
+        cout << "aca llego: "<< i;
+
+        
+        cantPartidosPorEquipo[eq1][eq2]++;
+        cantPartidosPorEquipo[eq2][eq1]++;
+
+        b[eq1] += 1;
+        b[eq2] -= 1;
+    }
+
+    return cantPartidosPorEquipo;
+}
+
 vector<long> compute(int n, int m, vector<vector<int>>& queries) {
+    cout << "aca llego";
+    vector<vector<double>> C;
+    vector<double> b(m, 0.0);
+
+    vector<vector<int>> cantPartidosPorEquipo = calcularPartidos(n, m, queries, b);
+
+    for (int i = 0; i < n; ++i){
+        for (int j = 0; j < n; ++j)
+        {
+            cout << cantPartidosPorEquipo[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+
     // TODO: armar C, b; resolver C * r = b; devolver r.
     vector<long> r(m);
     for(int i = 0; i < m; i++) {
-        r[i] = queries[i][1];
+        r[i] = queries[i][2];
     }
     return r;
 }
