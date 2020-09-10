@@ -16,6 +16,66 @@ using namespace std;
 
 vector<string> split_string(string);
 
+void printMatrix(int n, int m, vector<vector<double>>& C){
+    for (int i = 0; i < m; ++i){
+        for (int j = 0; j < n; ++j)
+        {
+            cout << C[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+//     i_max := argmax (i = h ... m, abs(A[i, k]))
+int indexOfMaxRowInColumn(int n, int m, vector<vector<double>>& C, int h, int k){
+    int i_max = h;
+    for (int i = h; i < m; ++i){
+        if (abs(C[i][k]) > abs(C[i_max][k])) i_max = i;
+    }
+
+    return i_max;
+}
+
+vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
+    int h = 0; //pivot row
+    int k = 0; //pivot column
+
+    int step = 1;
+
+    while(h < m && k < n) {
+        cout << "step: "<< step << " *********" << endl;
+        step++;
+        printMatrix(n, m, C);
+        //find k-th pivot
+        int i_max = indexOfMaxRowInColumn(n, m, C, h, k);
+
+        if(C[i_max][k] != 0) {
+            // swap h and i_max rows
+            cout << "swap rows: " << h << " <-> " << i_max << endl;
+            vector<double> auxRow = C[h];
+            C[h] = C[i_max];
+            C[i_max] = auxRow;
+
+            printMatrix(n, m, C);
+
+            for (int i = h+1; i < m; ++i){
+                double f = C[i][k] / C[h][k];
+                C[i][k] = 0;
+
+                for (int j = k+1; j < n; ++j){
+                    C[i][j] = C[i][j] - C[h][j]*f;
+                }
+            }
+            h++;
+        }
+        
+        k++;
+    }
+
+    return C;
+}
+
 vector<long> compute(int n, int m, vector<vector<int>>& queries) {
     // TODO: armar C, b; resolver C * r = b; devolver r.
     vector<long> r(m);
