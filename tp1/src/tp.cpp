@@ -78,33 +78,34 @@ vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     return C;
 }
 
-map<int, map<int, vector<int>>> calcularPartidos(int n, int m, vector<vector<int>>& queries, set<int>& equiposIds){
-    map<int, map<int, vector<int>>> partidosPorEquipo; // eq -> eq contrincante -> [ganados, perdidos]
-    
+map<int, vector<int>> calcularPartidos(int n, int m, vector<vector<int>>& queries){
+    map<int, vector<int>> partidosPorEquipo; // eq -> [ganados, perdidos]
+
     for (int i = 0; i < m; ++i){
         int eq1 = queries[i][1];
+        int ptseq1 = queries[i][2];
         int eq2 = queries[i][3];
+        int ptseq2 = queries[i][4];
 
         // si el eq no esta en el map
         if(partidosPorEquipo.count(eq1)==0){
-            partidosPorEquipo[eq1] = map<int,vector<int>>();
-            equiposIds.insert(eq1);
-        } 
+            partidosPorEquipo[eq1] = vector<int>(3);
+        }
+
         if(partidosPorEquipo.count(eq2)==0){
-            partidosPorEquipo[eq2] = map<int,vector<int>>();
-            equiposIds.insert(eq2);
-        } 
+            partidosPorEquipo[eq2] = vector<int>(3);
+        }
 
-        // si el eq no esta en el submap
-        if(partidosPorEquipo[eq1].count(eq2)==0){
-            partidosPorEquipo[eq1][eq2] = vector<int>(2);
-        } 
-        if(partidosPorEquipo[eq2].count(eq1)==0){
-            partidosPorEquipo[eq2][eq1] = vector<int>(2);
-        } 
+        if(ptseq1 > ptseq2) {
+            partidosPorEquipo[eq1][0]++;
+            partidosPorEquipo[eq2][1]++;
+        } else {
+            partidosPorEquipo[eq1][1]++;
+            partidosPorEquipo[eq2][0]++;
+        }
 
-        partidosPorEquipo[eq1][eq2][0]++;
-        partidosPorEquipo[eq2][eq1][1]++;
+        partidosPorEquipo[eq1][2]++;
+        partidosPorEquipo[eq2][2]++;
     }
 
     return partidosPorEquipo;
@@ -114,19 +115,15 @@ vector<double> compute(int n, int m, vector<vector<int>>& queries) {
     vector<vector<double>> C;
     vector<double> b(m, 0.0);
 
-    set<int> equiposIds;
+    auto partidosPorEquipo = calcularPartidos(n, m, queries);
 
-    auto partidosPorEquipo = calcularPartidos(n, m, queries, equiposIds);
+    for(auto par : partidosPorEquipo){
+        int equipo = par.first;
+        int ganados = par.second[0];
+        int perdidos = par.second[1];
+        int jugados = par.second[2];
 
-    for(auto eq1Map : partidosPorEquipo){
-        int eq1 = eq1Map.first;
-
-        for(auto eq2Map : partidosPorEquipo[eq1]){
-            int eq2 = eq2Map.first;
-            cout << eq1 << " vs " << eq2;
-            cout << " ganados: " << partidosPorEquipo[eq1][eq2][0];
-            cout << " perdidos: " << partidosPorEquipo[eq1][eq2][1] << endl;            
-        }
+        cout << equipo << " ganados: " << ganados << "; perdidos: " << perdidos << "; jugados: " << jugados << endl;
     }
 
     cout << endl;
