@@ -29,6 +29,13 @@ void printMatrix(int n, int m, vector<vector<double>>& C){
     cout << endl;
 }
 
+void printVector(vector<double>& v){
+    for(auto e : v) {
+        cout << e << ", ";
+    }
+    cout << endl;
+}
+
 //     i_max := argmax (i = h ... m, abs(A[i, k]))
 int indexOfMaxRowInColumn(int n, int m, vector<vector<double>>& C, int h, int k){
     int i_max = h;
@@ -110,34 +117,93 @@ map<int, map<int, vector<int>>> calcularPartidos(int n, int m, vector<vector<int
     return partidosPorEquipo;
 }
 
-vector<double> compute(int n, int m, vector<vector<int>>& queries) {
-    vector<vector<double>> C;
-    vector<double> b(m, 0.0);
+map<int, vector<int>> generalEquipos(map<int, map<int, vector<int>>>& partidosPorEquipo) {
+    map<int, vector<int>> info;
 
-    set<int> equiposIds;
+    for(auto pEquipo1 : partidosPorEquipo) {
+        int equipo = pEquipo1.first;
+        int ganados = 0;
+        int perdidos = 0;
+        int jugados = 0;
 
-    auto partidosPorEquipo = calcularPartidos(n, m, queries, equiposIds);
+        for(auto pEquipo2 : partidosPorEquipo[equipo]) {
+            vector<int> resultados = pEquipo2.second;
 
-    for(auto eq1Map : partidosPorEquipo){
-        int eq1 = eq1Map.first;
+            ganados += resultados[0];
+            perdidos += resultados[1];
+        }
 
-        for(auto eq2Map : partidosPorEquipo[eq1]){
-            int eq2 = eq2Map.first;
-            cout << eq1 << " vs " << eq2;
-            cout << " ganados: " << partidosPorEquipo[eq1][eq2][0];
-            cout << " perdidos: " << partidosPorEquipo[eq1][eq2][1] << endl;            
+        info[equipo] = vector<int>(2);
+        info[equipo][0] = ganados;
+        info[equipo][1] = perdidos;
+    }
+
+    return info;
+}
+
+map<int, int> hidratarSistema(
+    map<int, map<int, vector<int>>>& partidosPorEquipo,
+    map<int, vector<int>>& generalEquipos,
+    vector<vector<double>>& c,
+    vector<double>& b
+) {
+    map<int, int> indices;
+    int i = 0;
+
+    // armando b
+    for(auto pEquipo : generalEquipos) {
+        int equipo = pEquipo.first;
+        vector<int> info = pEquipo.second;
+
+        // TODO: revisar esto por el error numérico.
+        b.push_back(1 + (info[0] + info[1]) / 2);
+
+        // referencia de posiciones, por si se necesita
+        indices[equipo] = i++;
+    }
+
+    // armando c
+    for(auto pEquipo1 : partidosPorEquipo){
+        int eq1 = pEquipo1.first;
+
+        for(auto pEquipo2 : partidosPorEquipo[eq1]){
+            int eq2 = pEquipo2.first;
+
+            int jugados = -(partidosPorEquipo[eq1][eq2][0] + partidosPorEquipo[eq1][eq2][1]);
+
+            c[indices[eq1]][indices[eq2]] = jugados;
         }
     }
 
-    cout << endl;
+    for(auto pEquipo : generalEquipos) {
+        int equipo = pEquipo.first;
+        int jugados = 2 + generalEquipos[equipo][0] + generalEquipos[equipo][1];
+        c[indices[equipo]][indices[equipo]] = jugados;
+    }
 
+    return indices;
+}
+
+vector<double> compute(int n, int m, vector<vector<int>>& queries) {
     // TODO: armar C, b; resolver C * r = b; devolver r.
 
-
+    vector<vector<double>> c(n);
+    vector<double> b(m);
     vector<double> r(m);
-    for(int i = 0; i < m; i++) {
-        r[i] = queries[i][2];
+    set<int> equiposIds;
+
+    for(int i = 0; i < n; i++) {
+        c[i] = vector<double>(n);
     }
+
+    auto partidosPorEquipo = calcularPartidos(n, m, queries, equiposIds);
+    auto infoGeneralEquipos = generalEquipos(partidosPorEquipo);
+    auto indices = hidratarSistema(partidosPorEquipo, infoGeneralEquipos, c, b);
+
+
+    printMatrix(n, n, c);
+    printVector(b);
+
     return r;
 }
 
