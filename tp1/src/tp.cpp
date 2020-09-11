@@ -124,7 +124,6 @@ map<int, vector<int>> generalEquipos(map<int, map<int, vector<int>>>& partidosPo
         int equipo = pEquipo1.first;
         int ganados = 0;
         int perdidos = 0;
-        int jugados = 0;
 
         for(auto pEquipo2 : partidosPorEquipo[equipo]) {
             vector<int> resultados = pEquipo2.second;
