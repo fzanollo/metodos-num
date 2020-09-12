@@ -235,13 +235,13 @@ void write(vector<double>& v, ofstream& fout) {
     }
 }
 
-int main() {
-    // TODO: levantar argv del enunciado
+int main(int argc, char *argv[]) {
 
-    ofstream fout(getenv("OUTPUT_PATH"));
+    ifstream fin(argv[1]);
+    ofstream fout(argv[2]);
 
     string nm_temp;
-    getline(cin, nm_temp);
+    getline(fin, nm_temp);
 
     vector<string> nm = split_string(nm_temp);
 
@@ -255,10 +255,10 @@ int main() {
         queries[i].resize(5);
 
         for (int j = 0; j < 5; j++) {
-            cin >> queries[i][j];
+            fin >> queries[i][j];
         }
 
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        fin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
     auto result = compute(n, m, queries);
