@@ -182,8 +182,7 @@ map<int, int> hidratarSistema(
         int equipo = pEquipo.first;
         vector<int> info = pEquipo.second;
 
-        // TODO: revisar esto por el error numérico.
-        b[i] = 1 + (info[0] + info[1]) / 2;
+        b[i] = 1 + ((double)(info[0] - info[1])) / 2;
 
         // referencia de posiciones, por si se necesita
         indices[equipo] = i++;
@@ -212,8 +211,6 @@ map<int, int> hidratarSistema(
 }
 
 vector<double> compute(int n, int m, vector<vector<int>>& queries) {
-    // TODO: armar C, b; resolver C * r = b; devolver r.
-
     vector<vector<double>> c(n);
     vector<double> b(n);
     vector<double> r(n);
@@ -227,13 +224,7 @@ vector<double> compute(int n, int m, vector<vector<int>>& queries) {
     auto infoGeneralEquipos = generalEquipos(partidosPorEquipo);
     auto indices = hidratarSistema(partidosPorEquipo, infoGeneralEquipos, c, b);
 
-
-    // printMatrix(n, n, c);
-    // printVector(b);
-
     r = resolver(c, b);
-
-    printVector(r);
 
     return r;
 }
