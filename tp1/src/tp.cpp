@@ -53,20 +53,20 @@ vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     int step = 1;
 
     while(h < m && k < n) {
-        cout << "step: "<< step << " *********" << endl;
+        // cout << "step: "<< step << " *********" << endl;
         step++;
-        printMatrix(n, m, C);
+        // printMatrix(n, m, C);
         //find k-th pivot
         int i_max = indexOfMaxRowInColumn(n, m, C, h, k);
 
         if(C[i_max][k] != 0) {
             // swap h and i_max rows
-            cout << "swap rows: " << h << " <-> " << i_max << endl;
+            // cout << "swap rows: " << h << " <-> " << i_max << endl;
             vector<double> auxRow = C[h];
             C[h] = C[i_max];
             C[i_max] = auxRow;
 
-            printMatrix(n, m, C);
+            // printMatrix(n, m, C);
 
             for (int i = h+1; i < m; ++i){
                 double f = C[i][k] / C[h][k];
@@ -83,6 +83,34 @@ vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     }
 
     return C;
+}
+
+vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
+    int n = c.size();
+
+    vector<double> r(n);
+
+    // aumento c
+
+    for(int i = 0; i < n; i++) {
+        c[i].push_back(b[i]);
+    }
+
+    triangular(n+1, n, c);
+
+    n--;
+
+    r[n] = c[n][n+1] / c[n][n];
+
+    for(int i = n-1; i >= 0; i--) {
+        double sum = 0;
+        for(int j = i+1; j <= n; j++) {
+            sum += c[i][j] * r[j];
+        }
+        r[i] = (c[i][n+1] - sum) / c[i][i];
+    }
+
+    return r;
 }
 
 map<int, map<int, vector<int>>> calcularPartidos(int n, int m, vector<vector<int>>& queries, set<int>& equiposIds){
@@ -155,7 +183,7 @@ map<int, int> hidratarSistema(
         vector<int> info = pEquipo.second;
 
         // TODO: revisar esto por el error numérico.
-        b.push_back(1 + (info[0] + info[1]) / 2);
+        b[i] = 1 + (info[0] + info[1]) / 2;
 
         // referencia de posiciones, por si se necesita
         indices[equipo] = i++;
@@ -187,8 +215,8 @@ vector<double> compute(int n, int m, vector<vector<int>>& queries) {
     // TODO: armar C, b; resolver C * r = b; devolver r.
 
     vector<vector<double>> c(n);
-    vector<double> b(m);
-    vector<double> r(m);
+    vector<double> b(n);
+    vector<double> r(n);
     set<int> equiposIds;
 
     for(int i = 0; i < n; i++) {
@@ -200,8 +228,12 @@ vector<double> compute(int n, int m, vector<vector<int>>& queries) {
     auto indices = hidratarSistema(partidosPorEquipo, infoGeneralEquipos, c, b);
 
 
-    printMatrix(n, n, c);
-    printVector(b);
+    // printMatrix(n, n, c);
+    // printVector(b);
+
+    r = resolver(c, b);
+
+    printVector(r);
 
     return r;
 }
