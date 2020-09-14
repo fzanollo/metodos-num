@@ -50,35 +50,19 @@ vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     int h = 0; //pivot row
     int k = 0; //pivot column
 
-    int step = 1;
-
     while(h < m && k < n) {
-        // cout << "step: "<< step << " *********" << endl;
-        step++;
-        // printMatrix(n, m, C);
-        //find k-th pivot
-        int i_max = indexOfMaxRowInColumn(n, m, C, h, k);
+        if(C[h][k] == 0) cout << "Can't solve this system! There's a 0 in (" << h << ", " << k << ")" << endl;
 
-        if(C[i_max][k] != 0) {
-            // swap h and i_max rows
-            // cout << "swap rows: " << h << " <-> " << i_max << endl;
-            vector<double> auxRow = C[h];
-            C[h] = C[i_max];
-            C[i_max] = auxRow;
+        for (int i = h+1; i < m; ++i){
+            double f = C[i][k] / C[h][k];
+            C[i][k] = 0;
 
-            // printMatrix(n, m, C);
-
-            for (int i = h+1; i < m; ++i){
-                double f = C[i][k] / C[h][k];
-                C[i][k] = 0;
-
-                for (int j = k+1; j < n; ++j){
-                    C[i][j] = C[i][j] - C[h][j]*f;
-                }
+            for (int j = k+1; j < n; ++j){
+                C[i][j] = C[i][j] - C[h][j]*f;
             }
-            h++;
         }
-        
+
+        h++;
         k++;
     }
 
@@ -237,8 +221,11 @@ void write(vector<double>& v, ofstream& fout) {
 
 int main(int argc, char *argv[]) {
 
+    string inputFile = argv[1];
+    auto output = inputFile.replace(inputFile.rfind('.'), inputFile.size(),".out");
+
     ifstream fin(argv[1]);
-    ofstream fout(argv[2]);
+    ofstream fout(output);
 
     string nm_temp;
     getline(fin, nm_temp);
