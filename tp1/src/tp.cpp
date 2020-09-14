@@ -36,16 +36,6 @@ void printVector(vector<double>& v){
     cout << endl;
 }
 
-//     i_max := argmax (i = h ... m, abs(A[i, k]))
-int indexOfMaxRowInColumn(int n, int m, vector<vector<double>>& C, int h, int k){
-    int i_max = h;
-    for (int i = h; i < m; ++i){
-        if (abs(C[i][k]) > abs(C[i_max][k])) i_max = i;
-    }
-
-    return i_max;
-}
-
 vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
     int h = 0; //pivot row
     int k = 0; //pivot column
@@ -75,7 +65,6 @@ vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
     vector<double> r(n);
 
     // aumento c
-
     for(int i = 0; i < n; i++) {
         c[i].push_back(b[i]);
     }
@@ -97,118 +86,57 @@ vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
     return r;
 }
 
-map<int, map<int, vector<int>>> calcularPartidos(int n, int m, vector<vector<int>>& queries, set<int>& equiposIds){
-    map<int, map<int, vector<int>>> partidosPorEquipo; // eq -> eq contrincante -> [ganados, perdidos]
-    
-    for (int i = 0; i < m; ++i){
-        int eq1 = queries[i][1];
-        int eq2 = queries[i][3];
-
-        // si el eq no esta en el map
-        if(partidosPorEquipo.count(eq1)==0){
-            partidosPorEquipo[eq1] = map<int,vector<int>>();
-            equiposIds.insert(eq1);
-        } 
-        if(partidosPorEquipo.count(eq2)==0){
-            partidosPorEquipo[eq2] = map<int,vector<int>>();
-            equiposIds.insert(eq2);
-        } 
-
-        // si el eq no esta en el submap
-        if(partidosPorEquipo[eq1].count(eq2)==0){
-            partidosPorEquipo[eq1][eq2] = vector<int>(2);
-        } 
-        if(partidosPorEquipo[eq2].count(eq1)==0){
-            partidosPorEquipo[eq2][eq1] = vector<int>(2);
-        } 
-
-        partidosPorEquipo[eq1][eq2][0]++;
-        partidosPorEquipo[eq2][eq1][1]++;
-    }
-
-    return partidosPorEquipo;
-}
-
-map<int, vector<int>> generalEquipos(map<int, map<int, vector<int>>>& partidosPorEquipo) {
-    map<int, vector<int>> info;
-
-    for(auto pEquipo1 : partidosPorEquipo) {
-        int equipo = pEquipo1.first;
-        int ganados = 0;
-        int perdidos = 0;
-
-        for(auto pEquipo2 : partidosPorEquipo[equipo]) {
-            vector<int> resultados = pEquipo2.second;
-
-            ganados += resultados[0];
-            perdidos += resultados[1];
-        }
-
-        info[equipo] = vector<int>(2);
-        info[equipo][0] = ganados;
-        info[equipo][1] = perdidos;
-    }
-
-    return info;
-}
-
-map<int, int> hidratarSistema(
-    map<int, map<int, vector<int>>>& partidosPorEquipo,
-    map<int, vector<int>>& generalEquipos,
+map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries, 
     vector<vector<double>>& c,
     vector<double>& b
-) {
-    map<int, int> indices;
+){
+    map<int, int> equipoIdToIndex;    
     int i = 0;
 
-    // armando b
-    for(auto pEquipo : generalEquipos) {
-        int equipo = pEquipo.first;
-        vector<int> info = pEquipo.second;
+    for (int pi = 0; pi < m; ++pi){
+        int eq1 = queries[pi][1];
+        int eq2 = queries[pi][3];
 
-        b[i] = 1 + ((double)(info[0] - info[1])) / 2;
+        if(equipoIdToIndex.count(eq1)==0) equipoIdToIndex[eq1] = i++;
+        if(equipoIdToIndex.count(eq2)==0) equipoIdToIndex[eq2] = i++;
 
-        // referencia de posiciones, por si se necesita
-        indices[equipo] = i++;
+        int iEq1 = equipoIdToIndex[eq1];
+        int iEq2 = equipoIdToIndex[eq2];
+
+        // c_ij = -n_ij
+        c[iEq1][iEq2]--; 
+        c[iEq2][iEq1]--;
+
+        // c_ii = 2+ni
+        c[iEq1][iEq1]++;
+        c[iEq2][iEq2]++;
+        
+        b[iEq1]++; //winner
+        b[iEq2]--; //loser
     }
 
-    // armando c
-    for(auto pEquipo1 : partidosPorEquipo){
-        int eq1 = pEquipo1.first;
+    for (int i = 0; i < n; ++i){
+        b[i] = 1 + b[i]/2; //en b[i] estaba (wi - li)
 
-        for(auto pEquipo2 : partidosPorEquipo[eq1]){
-            int eq2 = pEquipo2.first;
-
-            int jugados = -(partidosPorEquipo[eq1][eq2][0] + partidosPorEquipo[eq1][eq2][1]);
-
-            c[indices[eq1]][indices[eq2]] = jugados;
-        }
+        c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
     }
 
-    for(auto pEquipo : generalEquipos) {
-        int equipo = pEquipo.first;
-        int jugados = 2 + generalEquipos[equipo][0] + generalEquipos[equipo][1];
-        c[indices[equipo]][indices[equipo]] = jugados;
-    }
-
-    return indices;
+    return equipoIdToIndex;
 }
 
 vector<double> compute(int n, int m, vector<vector<int>>& queries) {
+    map<int, int> equipoIdToIndex;
+    
     vector<vector<double>> c(n);
     vector<double> b(n);
-    vector<double> r(n);
-    set<int> equiposIds;
 
     for(int i = 0; i < n; i++) {
         c[i] = vector<double>(n);
     }
 
-    auto partidosPorEquipo = calcularPartidos(n, m, queries, equiposIds);
-    auto infoGeneralEquipos = generalEquipos(partidosPorEquipo);
-    auto indices = hidratarSistema(partidosPorEquipo, infoGeneralEquipos, c, b);
+    equipoIdToIndex = hidratarSistema(n, m, queries, c, b);
 
-    r = resolver(c, b);
+    auto r = resolver(c, b);
 
     return r;
 }
