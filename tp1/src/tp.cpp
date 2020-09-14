@@ -124,7 +124,7 @@ map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries,
     return equipoIdToIndex;
 }
 
-vector<double> compute(int n, int m, vector<vector<int>>& queries) {
+vector<double> CMM(int n, int m, vector<vector<int>>& queries) {
     map<int, int> equipoIdToIndex;
     
     vector<vector<double>> c(n);
@@ -149,11 +149,10 @@ void write(vector<double>& v, ofstream& fout) {
 
 int main(int argc, char *argv[]) {
 
-    string inputFile = argv[1];
-    auto output = inputFile.replace(inputFile.rfind('.'), inputFile.size(),".out");
+    int opcionAlgor = stoi(argv[1]);
 
-    ifstream fin(argv[1]);
-    ofstream fout(output);
+    ifstream fin(argv[2]);
+    ofstream fout(argv[3]);
 
     string nm_temp;
     getline(fin, nm_temp);
@@ -176,7 +175,15 @@ int main(int argc, char *argv[]) {
         fin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    auto result = compute(n, m, queries);
+    vector<double> result;
+
+    // 0 = CMM, 1 = WP, 2 = Alternativo
+    if(opcionAlgor == 0) { 
+        result = CMM(n, m, queries);
+    }
+    else {
+        cout << "TODO, todavia no esta implementado" << endl;
+    }
 
     write(result, fout);
 
