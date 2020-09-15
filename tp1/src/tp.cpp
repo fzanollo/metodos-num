@@ -11,33 +11,154 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
+#include <set>
 
 using namespace std;
 
 vector<string> split_string(string);
 
-vector<long> compute(int n, int m, vector<vector<int>>& queries) {
-    // TODO: armar C, b; resolver C * r = b; devolver r.
-    vector<long> r(m);
-    for(int i = 0; i < m; i++) {
-        r[i] = queries[i][1];
+void printMatrix(int n, int m, vector<vector<double>>& C){
+    for (int i = 0; i < m; ++i){
+        for (int j = 0; j < n; ++j)
+        {
+            cout << C[i][j] << " ";
+        }
+        cout << endl;
     }
+    cout << endl;
+}
+
+void printVector(vector<double>& v){
+    for(auto e : v) {
+        cout << e << ", ";
+    }
+    cout << endl;
+}
+
+vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
+    int h = 0; //pivot row
+    int k = 0; //pivot column
+
+    while(h < m && k < n) {
+        if(C[h][k] == 0) cout << "Can't solve this system! There's a 0 in (" << h << ", " << k << ")" << endl;
+
+        for (int i = h+1; i < m; ++i){
+            double f = C[i][k] / C[h][k];
+            C[i][k] = 0;
+
+            for (int j = k+1; j < n; ++j){
+                C[i][j] = C[i][j] - C[h][j]*f;
+            }
+        }
+
+        h++;
+        k++;
+    }
+
+    return C;
+}
+
+vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
+    int n = c.size();
+
+    vector<double> r(n);
+
+    // aumento c
+    for(int i = 0; i < n; i++) {
+        c[i].push_back(b[i]);
+    }
+
+    triangular(n+1, n, c);
+
+    n--;
+
+    r[n] = c[n][n+1] / c[n][n];
+
+    for(int i = n-1; i >= 0; i--) {
+        double sum = 0;
+        for(int j = i+1; j <= n; j++) {
+            sum += c[i][j] * r[j];
+        }
+        r[i] = (c[i][n+1] - sum) / c[i][i];
+    }
+
     return r;
 }
 
-void write(vector<long>& v, ofstream& fout) {
+map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries, 
+    vector<vector<double>>& c,
+    vector<double>& b
+){
+    map<int, int> equipoIdToIndex;    
+    int i = 0;
+
+    for (int pi = 0; pi < m; ++pi){
+        int eq1 = queries[pi][1];
+        int eq2 = queries[pi][3];
+
+        if(equipoIdToIndex.count(eq1)==0) equipoIdToIndex[eq1] = i++;
+        if(equipoIdToIndex.count(eq2)==0) equipoIdToIndex[eq2] = i++;
+
+        int iEq1 = equipoIdToIndex[eq1];
+        int iEq2 = equipoIdToIndex[eq2];
+
+        // c_ij = -n_ij
+        c[iEq1][iEq2]--; 
+        c[iEq2][iEq1]--;
+
+        // c_ii = 2+ni
+        c[iEq1][iEq1]++;
+        c[iEq2][iEq2]++;
+        
+        b[iEq1]++; //winner
+        b[iEq2]--; //loser
+    }
+
+    for (int i = 0; i < n; ++i){
+        b[i] = 1 + b[i]/2; //en b[i] estaba (wi - li)
+
+        c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
+    }
+
+    return equipoIdToIndex;
+}
+
+vector<double> CMM(int n, int m, vector<vector<int>>& queries) {
+    map<int, int> equipoIdToIndex;
+    
+    vector<vector<double>> c(n);
+    vector<double> b(n);
+
+    for(int i = 0; i < n; i++) {
+        c[i] = vector<double>(n);
+    }
+
+    equipoIdToIndex = hidratarSistema(n, m, queries, c, b);
+
+    auto r = resolver(c, b);
+
+    return r;
+}
+
+void write(vector<double>& v, ofstream& fout) {
     for (auto i = v.begin(); i != v.end(); ++i) {
         fout << *i << '\n';
     }
 }
 
-int main() {
-    // TODO: levantar argv del enunciado
+int main(int argc, char *argv[]) {
 
-    ofstream fout(getenv("OUTPUT_PATH"));
+    ifstream fin(argv[1]);
+    ofstream fout(argv[2]);
+    
+    int opcionAlgor = 0;
+    if(argc>3){
+        opcionAlgor = stoi(argv[3]);
+    }
 
     string nm_temp;
-    getline(cin, nm_temp);
+    getline(fin, nm_temp);
 
     vector<string> nm = split_string(nm_temp);
 
@@ -45,18 +166,27 @@ int main() {
 
     int m = stoi(nm[1]);
 
+
     vector<vector<int>> queries(m);
     for (int i = 0; i < m; i++) {
-        queries[i].resize(4);
+        queries[i].resize(5);
 
-        for (int j = 0; j < 4; j++) {
-            cin >> queries[i][j];
+        for (int j = 0; j < 5; j++) {
+            fin >> queries[i][j];
         }
 
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        fin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    auto result = compute(n, m, queries);
+    vector<double> result;
+
+    // 0 = CMM, 1 = WP, 2 = Alternativo
+    if(opcionAlgor == 0) { 
+        result = CMM(n, m, queries);
+    }
+    else {
+        cout << "TODO, todavia no esta implementado" << endl;
+    }
 
     write(result, fout);
 
