@@ -149,10 +149,13 @@ void write(vector<double>& v, ofstream& fout) {
 
 int main(int argc, char *argv[]) {
 
-    int opcionAlgor = stoi(argv[1]);
-
-    ifstream fin(argv[2]);
-    ofstream fout(argv[3]);
+    ifstream fin(argv[1]);
+    ofstream fout(argv[2]);
+    
+    int opcionAlgor = 0;
+    if(argc>3){
+        opcionAlgor = stoi(argv[3]);
+    }
 
     string nm_temp;
     getline(fin, nm_temp);
