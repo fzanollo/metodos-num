@@ -16,13 +16,16 @@
 
 using namespace std;
 
-vector<string> split_string(string);
+//************************************
 
-void printMatrix(int n, int m, vector<vector<double>>& C){
+void printMatrix(vector<vector<double>>& c){
+    int n = c.size();
+    int m = c[0].size();
+
     for (int i = 0; i < m; ++i){
         for (int j = 0; j < n; ++j)
         {
-            cout << C[i][j] << " ";
+            cout << c[i][j] << " ";
         }
         cout << endl;
     }
@@ -36,66 +39,55 @@ void printVector(vector<double>& v){
     cout << endl;
 }
 
-vector<vector<double>> triangular(int n, int m, vector<vector<double>>& C){
-    int h = 0; //pivot row
-    int k = 0; //pivot column
+vector<vector<double>> triangular(vector<vector<double>>& c){
+    int m = c.size();
+    int n = c[0].size();
 
-    while(h < m && k < n) {
-        if(C[h][k] == 0) cout << "Can't solve this system! There's a 0 in (" << h << ", " << k << ")" << endl;
+    for (int i = 0; i < m-1 ; ++i) {
+        for (int j = i+1; j < m; ++j) {
 
-        for (int i = h+1; i < m; ++i){
-            double f = C[i][k] / C[h][k];
-            C[i][k] = 0;
-
-            for (int j = k+1; j < n; ++j){
-                C[i][j] = C[i][j] - C[h][j]*f;
+            double cij = c[i][j]/c[i][i];
+            for (int k = i; k < n; ++k) {
+                c[j][k] = c[j][k] - c[i][k] * cij;
             }
         }
-
-        h++;
-        k++;
     }
 
-    return C;
+    return c;
 }
 
 vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
+    // printMatrix(c);
     int n = c.size();
-
-    vector<double> r(n);
+    vector<double> res(n);
 
     // aumento c
     for(int i = 0; i < n; i++) {
         c[i].push_back(b[i]);
     }
 
-    triangular(n+1, n, c);
+    triangular(c);
 
-    n--;
-
-    r[n] = c[n][n+1] / c[n][n];
-
-    for(int i = n-1; i >= 0; i--) {
-        double sum = 0;
-        for(int j = i+1; j <= n; j++) {
-            sum += c[i][j] * r[j];
+    for (int i = n-1; i >= 0; --i) {
+        for (int j = n-1; j > i; --j) {
+            res[i] -= c[i][j] * res[j];
         }
-        r[i] = (c[i][n+1] - sum) / c[i][i];
+        res[i] = (res[i] + c[i][n]) / c[i][i];
     }
 
-    return r;
+    return res;
 }
 
-map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries, 
+map<int, int> hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, 
     vector<vector<double>>& c,
     vector<double>& b
 ){
     map<int, int> equipoIdToIndex;    
     int i = 0;
 
-    for (int pi = 0; pi < m; ++pi){
-        int eq1 = queries[pi][1];
-        int eq2 = queries[pi][3];
+    for (int pi = 0; pi < cantPartidos; ++pi){
+        int eq1 = partidos[pi][1];
+        int eq2 = partidos[pi][3];
 
         if(equipoIdToIndex.count(eq1)==0) equipoIdToIndex[eq1] = i++;
         if(equipoIdToIndex.count(eq2)==0) equipoIdToIndex[eq2] = i++;
@@ -115,7 +107,7 @@ map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries,
         b[iEq2]--; //loser
     }
 
-    for (int i = 0; i < n; ++i){
+    for (int i = 0; i < cantEquipos; ++i){
         b[i] = 1 + b[i]/2; //en b[i] estaba (wi - li)
 
         c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
@@ -124,22 +116,28 @@ map<int, int> hidratarSistema(int n, int m, vector<vector<int>>& queries,
     return equipoIdToIndex;
 }
 
-vector<double> CMM(int n, int m, vector<vector<int>>& queries) {
+vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
     map<int, int> equipoIdToIndex;
     
-    vector<vector<double>> c(n);
-    vector<double> b(n);
+    vector<vector<double>> c(cantEquipos);
+    vector<double> b(cantEquipos);
 
-    for(int i = 0; i < n; i++) {
-        c[i] = vector<double>(n);
+    for(int i = 0; i < cantEquipos; i++) {
+        c[i] = vector<double>(cantEquipos);
     }
 
-    equipoIdToIndex = hidratarSistema(n, m, queries, c, b);
+    equipoIdToIndex = hidratarSistema(cantEquipos, cantPartidos, partidos, c, b);
 
     auto r = resolver(c, b);
 
     return r;
 }
+
+
+
+//************************************
+
+vector<string> split_string(string);
 
 void write(vector<double>& v, ofstream& fout) {
     for (auto i = v.begin(); i != v.end(); ++i) {
@@ -162,17 +160,17 @@ int main(int argc, char *argv[]) {
 
     vector<string> nm = split_string(nm_temp);
 
-    int n = stoi(nm[0]);
+    int cantEquipos = stoi(nm[0]);
 
-    int m = stoi(nm[1]);
+    int cantPartidos = stoi(nm[1]);
 
 
-    vector<vector<int>> queries(m);
-    for (int i = 0; i < m; i++) {
-        queries[i].resize(5);
+    vector<vector<int>> partidos(cantPartidos);
+    for (int i = 0; i < cantPartidos; i++) {
+        partidos[i].resize(5);
 
         for (int j = 0; j < 5; j++) {
-            fin >> queries[i][j];
+            fin >> partidos[i][j];
         }
 
         fin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -182,7 +180,7 @@ int main(int argc, char *argv[]) {
 
     // 0 = CMM, 1 = WP, 2 = Alternativo
     if(opcionAlgor == 0) { 
-        result = CMM(n, m, queries);
+        result = CMM(cantEquipos, cantPartidos, partidos);
     }
     else {
         cout << "TODO, todavia no esta implementado" << endl;
