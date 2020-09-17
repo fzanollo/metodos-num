@@ -78,33 +78,38 @@ vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
     return res;
 }
 
-map<int, int> hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, 
+void hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, 
     vector<vector<double>>& c,
-    vector<double>& b
+    vector<double>& b,
+    map<int, int> equipoIdToIndex
 ){
-    map<int, int> equipoIdToIndex;    
     int i = 0;
 
     for (int pi = 0; pi < cantPartidos; ++pi){
         int eq1 = partidos[pi][1];
-        int eq2 = partidos[pi][3];
+        int goles1 = partidos[pi][2];
 
-        if(equipoIdToIndex.count(eq1)==0) equipoIdToIndex[eq1] = i++;
-        if(equipoIdToIndex.count(eq2)==0) equipoIdToIndex[eq2] = i++;
+        int eq2 = partidos[pi][3];
+        int goles2 = partidos[pi][4];
 
         int iEq1 = equipoIdToIndex[eq1];
-        int iEq2 = equipoIdToIndex[eq2];
+        int jEq2 = equipoIdToIndex[eq2];
 
         // c_ij = -n_ij
-        c[iEq1][iEq2]--; 
-        c[iEq2][iEq1]--;
+        c[iEq1][jEq2]--; 
+        c[jEq2][iEq1]--;
 
         // c_ii = 2+ni
         c[iEq1][iEq1]++;
-        c[iEq2][iEq2]++;
-        
-        b[iEq1]++; //winner
-        b[iEq2]--; //loser
+        c[jEq2][jEq2]++;
+
+        if(goles1 > goles2){
+            b[iEq1]++; //winner
+            b[jEq2]--; //loser
+        }else{
+            b[iEq1]--; //loser
+            b[jEq2]++; //winner
+        }
     }
 
     for (int i = 0; i < cantEquipos; ++i){
@@ -112,13 +117,9 @@ map<int, int> hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<i
 
         c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
     }
-
-    return equipoIdToIndex;
 }
 
 vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
-    map<int, int> equipoIdToIndex;
-    
     vector<vector<double>> c(cantEquipos);
     vector<double> b(cantEquipos);
 
@@ -126,7 +127,16 @@ vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
         c[i] = vector<double>(cantEquipos);
     }
 
-    equipoIdToIndex = hidratarSistema(cantEquipos, cantPartidos, partidos, c, b);
+    //coso horrible para el tema del orden de los equipos
+    map<int, int> equipoIdToIndex;
+    int eqIndex = 0;
+
+    for (int pi = 0; pi < cantPartidos; ++pi){ 
+        int eqId = partidos[pi][1];
+        if(equipoIdToIndex.count(eqId)==0) equipoIdToIndex[eqId] = eqIndex++;
+    }
+
+    hidratarSistema(cantEquipos, cantPartidos, partidos, c, b, equipoIdToIndex);
 
     auto r = resolver(c, b);
 
