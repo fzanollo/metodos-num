@@ -78,9 +78,14 @@ vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
     return res;
 }
 
-void hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, 
+void hidratarSistema(
+    int cantEquipos,
+    int cantPartidos,
+    vector<vector<int>>& partidos,
     vector<vector<double>>& c,
     vector<double>& b,
+    vector<int>& wi,
+    vector<int>& li,
     map<int, int> equipoIdToIndex
 ){
     int i = 0;
@@ -106,9 +111,13 @@ void hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& par
         if(goles1 > goles2){
             b[iEq1]++; //winner
             b[jEq2]--; //loser
+            wi[iEq1]++;
+            li[jEq2]++;
         }else{
             b[iEq1]--; //loser
             b[jEq2]++; //winner
+            wi[jEq2]++;
+            li[iEq1]++;
         }
     }
 
@@ -119,10 +128,15 @@ void hidratarSistema(int cantEquipos, int cantPartidos, vector<vector<int>>& par
     }
 }
 
-vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
-    vector<vector<double>> c(cantEquipos);
-    vector<double> b(cantEquipos);
-
+void inicializarEstructuras(
+    int cantEquipos,
+    int cantPartidos,
+    vector<vector<int>>& partidos,
+    vector<vector<double>>& c,
+    vector<double>& b,
+    vector<int>& wi,
+    vector<int>& li
+) {
     for(int i = 0; i < cantEquipos; i++) {
         c[i] = vector<double>(cantEquipos);
     }
@@ -138,7 +152,32 @@ vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
         if(equipoIdToIndex.count(eqId2)==0) equipoIdToIndex[eqId2] = eqIndex++;
     }
 
-    hidratarSistema(cantEquipos, cantPartidos, partidos, c, b, equipoIdToIndex);
+    hidratarSistema(cantEquipos, cantPartidos, partidos, c, b, wi, li, equipoIdToIndex);
+}
+
+vector<double> WP(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
+    vector<vector<double>> c(cantEquipos);
+    vector<double> b(cantEquipos);
+    vector<double> r(cantPartidos);
+    vector<int> wi(cantEquipos);
+    vector<int> li(cantEquipos);
+
+    inicializarEstructuras(cantEquipos, cantPartidos, partidos, c, b, wi, li);
+
+    for(int i = 0; i < cantEquipos; i++) {
+        r[i] = wi[i] / (wi[i] + li[i]);
+    }
+
+    return r;
+}
+
+vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
+    vector<vector<double>> c(cantEquipos);
+    vector<double> b(cantEquipos);
+    vector<int> wi(cantEquipos);
+    vector<int> li(cantEquipos);
+
+    inicializarEstructuras(cantEquipos, cantPartidos, partidos, c, b, wi, li);
 
     auto r = resolver(c, b);
 
@@ -193,8 +232,9 @@ int main(int argc, char *argv[]) {
     // 0 = CMM, 1 = WP, 2 = Alternativo
     if(opcionAlgor == 0) { 
         result = CMM(cantEquipos, cantPartidos, partidos);
-    }
-    else {
+    } else if (opcionAlgor == 1) {
+        result = WP(cantEquipos, cantPartidos, partidos);
+    } else {
         cout << "TODO, todavia no esta implementado" << endl;
     }
 
