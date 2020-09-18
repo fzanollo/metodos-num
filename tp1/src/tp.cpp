@@ -150,14 +150,14 @@ void inicializarEstructuras(
 vector<double> WP(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
     vector<vector<double>> c(cantEquipos);
     vector<double> b(cantEquipos);
-    vector<double> r(cantPartidos);
+    vector<double> r(cantEquipos);
     vector<int> wi(cantEquipos);
     vector<int> li(cantEquipos);
 
     inicializarEstructuras(cantEquipos, cantPartidos, partidos, c, b, wi, li);
 
     for(int i = 0; i < cantEquipos; i++) {
-        r[i] = wi[i] / (wi[i] + li[i]);
+        r[i] = (double)wi[i] / (wi[i] + li[i]);
     }
 
     return r;
