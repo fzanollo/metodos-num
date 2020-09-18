@@ -49,7 +49,7 @@ vector<vector<double>> triangular(vector<vector<double>>& c){
     return c;
 }
 
-vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
+vector<double> resolverSistLineal(vector<vector<double>>& c, vector<double>& b) {
     int n = c.size();
     vector<double> res(n);
 
@@ -70,70 +70,7 @@ vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
     return res;
 }
 
-void hidratarSistema(
-    int cantEquipos,
-    int cantPartidos,
-    vector<vector<int>>& partidos,
-    vector<vector<double>>& c,
-    vector<double>& b,
-    vector<int>& wi,
-    vector<int>& li,
-    map<int, int> equipoIdToIndex
-){
-    int i = 0;
-
-    for (int pi = 0; pi < cantPartidos; ++pi){
-        int eq1 = partidos[pi][1];
-        int goles1 = partidos[pi][2];
-
-        int eq2 = partidos[pi][3];
-        int goles2 = partidos[pi][4];
-
-        int iEq1 = equipoIdToIndex[eq1];
-        int jEq2 = equipoIdToIndex[eq2];
-
-        // c_ij = -n_ij
-        c[iEq1][jEq2]--; 
-        c[jEq2][iEq1]--;
-
-        // c_ii = 2+ni
-        c[iEq1][iEq1]++;
-        c[jEq2][jEq2]++;
-
-        if(goles1 > goles2){
-            b[iEq1]++; //winner
-            b[jEq2]--; //loser
-            wi[iEq1]++;
-            li[jEq2]++;
-        }else{
-            b[iEq1]--; //loser
-            b[jEq2]++; //winner
-            wi[jEq2]++;
-            li[iEq1]++;
-        }
-    }
-
-    for (int i = 0; i < cantEquipos; ++i){
-        b[i] = 1 + b[i]/2; //en b[i] estaba (wi - li)
-
-        c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
-    }
-}
-
-void inicializarEstructuras(
-    int cantEquipos,
-    int cantPartidos,
-    vector<vector<int>>& partidos,
-    vector<vector<double>>& c,
-    vector<double>& b,
-    vector<int>& wi,
-    vector<int>& li
-) {
-    for(int i = 0; i < cantEquipos; i++) {
-        c[i] = vector<double>(cantEquipos);
-    }
-
-    //coso horrible para el tema del orden de los equipos
+map<int, int> calcularIndicesEquipos(int cantPartidos, vector<vector<int>>& partidos){
     map<int, int> equipoIdToIndex;
     int eqIndex = 0;
 
@@ -141,20 +78,87 @@ void inicializarEstructuras(
         int eqId1 = partidos[pi][1];
         int eqId2 = partidos[pi][3];
         if(equipoIdToIndex.count(eqId1)==0) equipoIdToIndex[eqId1] = eqIndex++;
+        //si se comenta la sig linea pasan los 1ros tests y no los completos
+        //es por un orden diferente en el indice esperado de los equipos
         if(equipoIdToIndex.count(eqId2)==0) equipoIdToIndex[eqId2] = eqIndex++;
     }
 
-    hidratarSistema(cantEquipos, cantPartidos, partidos, c, b, wi, li, equipoIdToIndex);
+    return equipoIdToIndex;
 }
 
+void calcularGanadosYPerdidos(
+    int cantEquipos,
+    int cantPartidos,
+    vector<vector<int>>& partidos,
+    vector<int>& wi,
+    vector<int>& li
+){
+    map<int, int> equipoIdToIndex = calcularIndicesEquipos(cantPartidos, partidos);
+
+    for (int pi = 0; pi < cantPartidos; ++pi){
+        int eqI = equipoIdToIndex[partidos[pi][1]];
+        int eqJ = equipoIdToIndex[partidos[pi][3]];
+
+        int golesI = partidos[pi][2];
+        int golesJ = partidos[pi][4];
+
+        if(golesI > golesJ){
+            wi[eqI]++;
+            li[eqJ]++;
+        }else{
+            wi[eqJ]++;
+            li[eqI]++;
+        }
+    }
+}
+
+void hidratarSistemaLineal(
+    int cantEquipos,
+    int cantPartidos,
+    vector<vector<int>>& partidos,
+    vector<vector<double>>& c,
+    vector<double>& b
+){
+    map<int, int> equipoIdToIndex = calcularIndicesEquipos(cantPartidos, partidos);
+
+    for (int pi = 0; pi < cantPartidos; ++pi){
+        int eqI = equipoIdToIndex[partidos[pi][1]];
+        int eqJ = equipoIdToIndex[partidos[pi][3]];
+
+        int golesI = partidos[pi][2];
+        int golesJ = partidos[pi][4];
+
+        // c_ij = -n_ij
+        c[eqI][eqJ]--; 
+        c[eqJ][eqI]--;
+
+        // c_ii = 2+ni
+        c[eqI][eqI]++;
+        c[eqJ][eqJ]++;
+
+        if(golesI > golesJ){
+            b[eqI]++; //winner
+            b[eqJ]--; //loser
+        }else{
+            b[eqI]--; //loser
+            b[eqJ]++; //winner
+        }
+    }
+
+    for (int i = 0; i < cantEquipos; ++i){
+        b[i] = 1 + b[i]/2; //en b[i] estaba (wi - li)
+        c[i][i] += 2; // en c[i][i] estaba ni (falta el +2)
+    }
+}
+
+//************************************
+
 vector<double> WP(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
-    vector<vector<double>> c(cantEquipos);
-    vector<double> b(cantEquipos);
     vector<double> r(cantEquipos);
     vector<int> wi(cantEquipos);
     vector<int> li(cantEquipos);
 
-    inicializarEstructuras(cantEquipos, cantPartidos, partidos, c, b, wi, li);
+    calcularGanadosYPerdidos(cantEquipos, cantPartidos, partidos, wi, li);
 
     for(int i = 0; i < cantEquipos; i++) {
         r[i] = (double)wi[i] / (wi[i] + li[i]);
@@ -166,17 +170,17 @@ vector<double> WP(int cantEquipos, int cantPartidos, vector<vector<int>>& partid
 vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
     vector<vector<double>> c(cantEquipos);
     vector<double> b(cantEquipos);
-    vector<int> wi(cantEquipos);
-    vector<int> li(cantEquipos);
 
-    inicializarEstructuras(cantEquipos, cantPartidos, partidos, c, b, wi, li);
+    for(int i = 0; i < cantEquipos; i++) {
+        c[i] = vector<double>(cantEquipos);
+    }
 
-    auto r = resolver(c, b);
+    hidratarSistemaLineal(cantEquipos, cantPartidos, partidos, c, b);
+
+    auto r = resolverSistLineal(c, b);
 
     return r;
 }
-
-
 
 //************************************
 
