@@ -1,10 +1,3 @@
-// TODO: mover esta doc a otra parte, o borrarla si no se necesita
-// en src/tools
-// python atp2mn.py
-// en src/
-// python metnum.py build
-// cat ../data/atp_matches_2015.dat | OUTPUT_PATH=ranking.out ./tp
-
 #include <algorithm>
 #include <limits>
 #include <fstream>
@@ -57,7 +50,6 @@ vector<vector<double>> triangular(vector<vector<double>>& c){
 }
 
 vector<double> resolver(vector<vector<double>>& c, vector<double>& b) {
-    // printMatrix(c);
     int n = c.size();
     vector<double> res(n);
 
