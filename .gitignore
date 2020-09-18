@@ -360,3 +360,4 @@ tp
 .vscode
 .devcontainer
 *.dat
+.ipynb_checkpoints
