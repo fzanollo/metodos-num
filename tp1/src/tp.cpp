@@ -132,8 +132,10 @@ vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
     int eqIndex = 0;
 
     for (int pi = 0; pi < cantPartidos; ++pi){ 
-        int eqId = partidos[pi][1];
-        if(equipoIdToIndex.count(eqId)==0) equipoIdToIndex[eqId] = eqIndex++;
+        int eqId1 = partidos[pi][1];
+        int eqId2 = partidos[pi][3];
+        if(equipoIdToIndex.count(eqId1)==0) equipoIdToIndex[eqId1] = eqIndex++;
+        if(equipoIdToIndex.count(eqId2)==0) equipoIdToIndex[eqId2] = eqIndex++;
     }
 
     hidratarSistema(cantEquipos, cantPartidos, partidos, c, b, equipoIdToIndex);
