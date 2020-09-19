@@ -182,6 +182,77 @@ vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
     return r;
 }
 
+void printRanking(map<int, double>& ranking) {
+    for(auto p : ranking) {
+        cout << p.first << " - " << p.second << endl;
+    }
+}
+
+map<int, double> combinar(vector<double> r, map<int, int> equipoIdToIndex) {
+    map<int, double> result;
+
+    for(auto p : equipoIdToIndex) {
+        result[p.first] = r[p.second];
+    }
+
+    return result;
+}
+
+pair<int, double> parMenor(map<int, double>& ranking) {
+    auto pr = std::max_element
+    (
+        begin(ranking), end(ranking),
+        [] (const pair<int, double> & p1, const pair<int, double> & p2) {
+            return p1.second > p2.second;
+        }
+    );
+
+    return *pr;
+}
+
+pair<int, double> parMayor(map<int, double>& ranking) {
+    auto pr = std::max_element
+    (
+        begin(ranking), end(ranking),
+        [] (const pair<int, double> & p1, const pair<int, double> & p2) {
+            return p1.second < p2.second;
+        }
+    );
+
+    return *pr;
+}
+
+void estrategiaCMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos) {
+
+    int pasos = 0;
+    int iMenor;
+    int iMayor;
+    double rMenor;
+    double rMayor;
+
+    do {
+        map<int, double> ranking = combinar(CMM(cantEquipos, cantPartidos, partidos), calcularIndicesEquipos(cantPartidos, partidos));
+
+        // printRanking(ranking);
+
+        if(pasos++ == 0) iMenor = parMenor(ranking).first;
+        rMenor = ranking[iMenor];
+
+        iMayor = parMayor(ranking).first;
+        rMayor = ranking[iMayor];
+
+        cout << iMenor << " y " << iMayor << " difieren en " << abs(rMayor - rMenor) << endl;
+
+        // agrego una partida donde el menor le gana al mayor
+        vector<int> partido = { 1, iMenor, 1, iMayor, 0 };
+        partidos.push_back(partido);
+        cantPartidos++;
+    } while(iMenor != iMayor && abs(rMayor - rMenor) > 0.001 );
+
+    cout << pasos << endl;
+
+}
+
 //************************************
 
 vector<string> split_string(string);
@@ -231,6 +302,7 @@ int main(int argc, char *argv[]) {
     } else if (opcionAlgor == 1) {
         result = WP(cantEquipos, cantPartidos, partidos);
     } else {
+        estrategiaCMM(cantEquipos, cantPartidos, partidos);
         cout << "TODO, todavia no esta implementado" << endl;
     }
 

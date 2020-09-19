@@ -360,4 +360,5 @@ tp
 .vscode
 .devcontainer
 *.dat
+!casoscmm.dat
 .ipynb_checkpoints
