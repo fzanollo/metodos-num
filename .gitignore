@@ -362,3 +362,4 @@ tp
 *.dat
 !casoscmm.dat
 .ipynb_checkpoints
+*.csv

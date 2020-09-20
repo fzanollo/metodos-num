@@ -1,0 +1,41 @@
+// map<double, int> combinar(vector<double> r, map<int, int> equipoIdToIndex) {
+//     map<double, int> result;
+
+//     for(auto p : equipoIdToIndex) {
+//         result[r[p.second]] = p.first;
+//     }
+
+//     return result;
+// }
+
+// void estrategiaTrivialCMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, map<int, int>& equipoIdToIndex) {
+
+//     int pasos = 0;
+//     int iMenor;
+//     int iMayor;
+//     double rMenor;
+//     double rMayor;
+
+//     do {
+//         map<double, int> ranking = combinar(CMM(cantEquipos, cantPartidos, partidos, equipoIdToIndex), equipoIdToIndex);
+
+//         if(pasos++ == 0) iMenor = ranking.begin()->second;
+
+//         for(auto p: ranking) {
+//             if(p.second == iMenor) rMenor = p.first;
+//         }
+
+//         iMayor = ranking.rbegin()->second;
+//         rMayor = ranking.rbegin()->first;
+
+//         cout << iMenor << " y " << iMayor << " difieren en " << abs(rMayor - rMenor) << endl;
+
+//         // agrego una partida donde el menor le gana al mayor
+//         vector<int> partido = { 1, iMenor, 1, iMayor, 0 };
+//         partidos.push_back(partido);
+//         cantPartidos++;
+//     } while(iMenor != iMayor && abs(rMayor - rMenor) > 0.001 );
+
+//     cout << pasos << endl;
+
+// }
