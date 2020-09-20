@@ -11,6 +11,22 @@ using namespace std;
 
 //************************************
 
+void printRanking(map<double, int> ranking) {
+    for (auto it = ranking.rbegin(); it != ranking.rend(); ++it) {
+        cout << it->second << " - " << it->first << endl;
+    }
+}
+
+map<double, int> combinar(vector<double> r, map<int, int> equipoIdToIndex) {
+    map<double, int> result;
+
+    for(auto p : equipoIdToIndex) {
+        result[r[p.second]] = p.first;
+    }
+
+    return result;
+}
+
 void printMatrix(vector<vector<double>>& c){
     int n = c.size();
     int m = c[0].size();
@@ -179,50 +195,12 @@ vector<double> CMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
 
     auto r = resolverSistLineal(c, b);
 
+    // printRanking(combinar(r, equipoIdToIndex));
+
     return r;
 }
 
-void printRanking(map<int, double>& ranking) {
-    for(auto p : ranking) {
-        cout << p.first << " - " << p.second << endl;
-    }
-}
-
-map<int, double> combinar(vector<double> r, map<int, int> equipoIdToIndex) {
-    map<int, double> result;
-
-    for(auto p : equipoIdToIndex) {
-        result[p.first] = r[p.second];
-    }
-
-    return result;
-}
-
-pair<int, double> parMenor(map<int, double>& ranking) {
-    auto pr = std::max_element
-    (
-        begin(ranking), end(ranking),
-        [] (const pair<int, double> & p1, const pair<int, double> & p2) {
-            return p1.second > p2.second;
-        }
-    );
-
-    return *pr;
-}
-
-pair<int, double> parMayor(map<int, double>& ranking) {
-    auto pr = std::max_element
-    (
-        begin(ranking), end(ranking),
-        [] (const pair<int, double> & p1, const pair<int, double> & p2) {
-            return p1.second < p2.second;
-        }
-    );
-
-    return *pr;
-}
-
-void estrategiaCMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, map<int, int>& equipoIdToIndex) {
+void estrategiaTrivialCMM(int cantEquipos, int cantPartidos, vector<vector<int>>& partidos, map<int, int>& equipoIdToIndex) {
 
     int pasos = 0;
     int iMenor;
@@ -231,15 +209,16 @@ void estrategiaCMM(int cantEquipos, int cantPartidos, vector<vector<int>>& parti
     double rMayor;
 
     do {
-        map<int, double> ranking = combinar(CMM(cantEquipos, cantPartidos, partidos, equipoIdToIndex), equipoIdToIndex);
+        map<double, int> ranking = combinar(CMM(cantEquipos, cantPartidos, partidos, equipoIdToIndex), equipoIdToIndex);
 
-        // printRanking(ranking);
+        if(pasos++ == 0) iMenor = ranking.begin()->second;
+        
+        for(auto p: ranking) {
+            if(p.second == iMenor) rMenor = p.first;
+        }
 
-        if(pasos++ == 0) iMenor = parMenor(ranking).first;
-        rMenor = ranking[iMenor];
-
-        iMayor = parMayor(ranking).first;
-        rMayor = ranking[iMayor];
+        iMayor = ranking.rbegin()->second;
+        rMayor = ranking.rbegin()->first;
 
         cout << iMenor << " y " << iMayor << " difieren en " << abs(rMayor - rMenor) << endl;
 
@@ -309,7 +288,7 @@ int main(int argc, char *argv[]) {
     } else if (opcionAlgor == 1) {
         result = WP(cantEquipos, cantPartidos, partidos, equipoIdToIndex);
     } else {
-        // estrategiaCMM(cantEquipos, cantPartidos, partidos, equipoIdToIndex);
+        // estrategiaTrivialCMM(cantEquipos, cantPartidos, partidos, equipoIdToIndex);
         cout << "TODO, todavia no esta implementado" << endl;
     }
 
