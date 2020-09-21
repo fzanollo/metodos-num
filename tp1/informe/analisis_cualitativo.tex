@@ -1,0 +1,272 @@
+\subsection{Análisis cualitativo}
+
+El objetivo de esta sección es plantear y responder preguntas que nos lleven a entender mejor CMM y a encontrar ventajas y desventajas del mismo. Para ello primeramente propondremos casos pequeños, que no necesariamente representen casos de competencias reales.
+
+\subsubsection{Planteo de casos}
+
+\subsubsection*{Caso 1}
+Se inicia un sistema con dos equipos: 1, y 2, con un único partido entre ellos: 1 vs 2 a favor de 1.
+
+\textbf{Pregunta}: ¿Qué pasará con los ratings? ¿Hay alguna relación entre ellos?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.625\\
+        2 & 2 & 0.375\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de iniciar una partida 1 vs 2, a favor de 1}
+        \label{cmm_caso_1}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: Acorde a la \textit{Regla de Laplace de sucesos} utilizar el estimador planteado por la misma nos permite que no hayan cambios abruptos en la resolución de los ratings de los equipos involucrados.
+
+\subsubsection*{Caso 2}
+
+Sobre el sistema anterior: se agregan cinco partidos a favor de 1.
+
+\textbf{Pregunta}: ¿Qué pasará con los ratings? ¿Hay alguna relación entre ellos?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.714286\\
+        2 & 2 & 0.285714\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de cinco partidos 1 vs 2, a favor de 1}
+        \label{cmm_caso_2}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: Los ratings se ajustan acorde a los resultados de los partidos. Como vimos hasta ahora, los mismos dependen de la cantidad de partidos que hayan entre los equipos competidores.
+
+\subsubsection*{Caso 3}
+
+Sobre el sistema anterior: se suma un equipo, 3. 3 vs 2 a favor de 3.
+
+\textbf{Pregunta}: ¿Será mejor el rating de 3 que el de 2?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.68\\
+        2 & 3 & 0.58\\
+        3 & 2 & 0.24\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de introducir a 3 y hacer una partida entre 2 y 3, a favor de 3}
+        \label{cmm_caso_3}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: Después de 3 vs 2 a favor de 3, 3 supera facilmente a 2 modificando sus posiciones. El rating de 2 desciende esperadamente, pero el de 1 también aunque sigue manteniendo su posición. Al no estar 1 involucrado en este partido, vemos que CMM afecta el rating (y tal vez el ranking) de equipos que no formaron parte del partido.
+
+\newpage
+
+\subsubsection*{Caso 4}
+
+Sobre el sistema anterior: se agregan diez partidos, 3 vs 2 a favor de 3.
+
+\textbf{Pregunta}: ¿Se acercará el rating de 3 al rating de 1?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 3 & 0.662963\\
+        2 & 1 & 0.644444\\
+        3 & 2 & 0.192593\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de agregar diez partidos a favor de 3}
+        \label{cmm_caso_4}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: En este caso se ve que CMM permite alterar no solo el rating, si no la posición de los equipos, ya que 3 vs 1 nunca tuvo lugar. Esto de alguna forma nos habla de "la justicia del método": ¿es justo que 1 descienda si nunca se enfrentó con 3?. Claramente la relación entre ambos equipos viene dada por los partidos que tuvieron de forma separada con 2. 1 vs 2 se dió hasta ahora seis veces mientras que 3 vs 2 se dió hasta ahora once veces.
+
+\subsubsection*{Caso 5}
+
+Sobre el sistema anterior: se agregan cinco partidos, 1 vs 2 a favor de 1.
+
+\textbf{Pregunta}: Si la relación entre 1 y 3 es intermediada por la cantidad de partidos que ambos ganaron a 2, ¿será cierto que ambos tendrán el mismo rating si igualan la cantidad de partidos con 2?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.657143\\
+        2 & 3 & 0.657143\\
+        3 & 2 & 0.185714\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de que 1 y 3 obtengan la misma configuración de partidos}
+        \label{cmm_caso_5}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: En este caso se ve que a igual cantidad de partidos ganados de 1 y 3 vs 2, se obtiene el mismo rating.
+
+\subsubsection*{Caso 6}
+
+Sobre el sistema anterior: se suma un equipo, 4. 4 vs 3 a favor de 4.
+
+\textbf{Pregunta}: ¿Qué pasará si un nuevo equipo tiene una partida contra el equipo que está en la primera posición?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 4 & 0.692159\\
+        2 & 1 & 0.606041\\
+        3 & 3 & 0.576478\\
+        4 & 2 & 0.125321\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de agregar al sistema anterior un nuevo equipo con un partido a favor}
+        \label{cmm_caso_6}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: En una sola partida, 4 llegó a la primera posición. Se puede explicar que 1 haya quedado por arriba de 3 ya que la configuración de partidos jugados es un factor que está presente en CMM: 4 vs 3 deja a 3 con un partido más, pero perdido, a diferencia de 1 que no sumó partidos.
+
+\newpage
+
+\subsubsection*{Caso 7}
+
+Sobre el sistema anterior: se agregan cien partidos, 2 vs 3 a favor de 2.
+
+\textbf{Pregunta}: ¿Puede alcanzar 2 las primeras posiciones si gana partidos contra los equipos de las últimas posiciones?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.905919\\
+        2 & 4 & 0.52859\\
+        3 & 2 & 0.479722\\
+        4 & 3 & 0.0857696\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de agregar cien partidos a favor de 2}
+        \label{cmm_caso_7}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: Se observa que por un lado 2 y 3 intercambiaron posiciones, lo que muestra que, aunque los ajustes de rating se haga con cada partido, los máximos valores que pueden tener se ven limitados a los valores de los equipos que se enfrentaron. Por otro lado 1 y 4 intercambiaron lugares también: esto puede deberse a que hasta este momento 3 y 4 se enfrentaron en una ocasión a favor de 4, es probable que su caida en el puesto sea debido a la caida de 3 (su victoria se desprestigia).
+
+\subsubsection*{Caso 8}
+
+Sobre el sistema anterior: se agregan tantos partidos como sea necesario para desplazar a 1 de la primera posición, 3 vs 1 a favor de 3.
+
+\textbf{Pregunta}: Estando 3 en la última posición, ¿se podrá desplazar a 1 de la primera posición en pocos partidos?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 2 & 0.597924\\
+        2 & 4 & 0.583805\\
+        3 & 1 & 0.566854\\
+        4 & 3 & 0.251416\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de siete partidos 3 vs 1 a favor de 3}
+        \label{cmm_caso_8}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: En siete partidos, 3 fue capaz mediante CMM de que 2 reemplazara a 1 en el primer lugar.
+
+\subsubsection*{Caso 9}
+
+Sobre el sistema del caso 7: se agregan tantos partidos como sea necesario para desplazar a 1 de la primera posición, 3 vs 2 a favor de 3.
+
+\textbf{Pregunta}: Estando 3 en la última posición, ¿se podrá desplazar a 1 de la primera posición en pocos partidos?
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Posición} & \textbf{Equipo} & \textbf{Rating} \\
+        \hline
+        1 & 1 & 0.864293\\
+        2 & 4 & 0.551295\\
+        3 & 2 & 0.430528\\
+        4 & 3 & 0.153884\\
+        \hline
+        \end{tabular}
+        \caption{Ranking CMM luego de veinte partidos 3 vs 1 a favor de 3}
+        \label{cmm_caso_9}
+    \end{center}
+\end{table}
+
+\textbf{Observación}: En veinte partidos, 3 aún no fue capaz mediante CMM de un equipo reemplazara a 1 en el primer lugar.
+
+\subsubsection{¿Qué podemos decir sobre CMM en base a las observaciones?}
+
+Estos ejemplos sencillos nos permitieron entender un poco más CMM a la hora de rankear equipos.\\
+
+Desde el caso 1 al caso 5, probamos introducir un equipo y hacerlo avanzar compitiendo con el equipo de la última posición. Vimos que puede alcanzar un mejor puesto en el ranking tratando de obtener una configuración similar a la de los equipos que están en la posición deseada, lo cual es esperado para un ranking en general. Vimos también que el resultado de un partido influye sobre otros equipos mediante una "transitividad" (caso 4).\\
+
+Desde el caso 6 al caso 9, queriamos hacer foco en como un equipo puede avanzar en la tabla. Ingresamos un participante más a nuestro sistema, dejando un total de cuatro y volviendolo un poco más complejo, corroboramos que los equipos son suceptibles a cambios en su rating si algún equipo con el que tuvo relación tiene un partido. Por otra parte, notamos que un equipo en la tabla avanza más lento conforme se enfrenta a equipos que están en las últimas posiciones y más rápido conforme se enfrenta a otros que está en las primeras:
+
+\begin{itemize}
+    \item en el caso 7: 3 vs 2, favor a 3. Después de cien partidos 2 había avanzado una posición.
+    \item en el caso 8: 3 vs 1, favor a 3. En siete partidos se logra que 2 desplace a 1.
+    \item en el caso 9: 3 vs 2, favor a 3. En veinte partidos no se logró mover a 1 del primer lugar.
+\end{itemize}
+
+Tiene sentido esto último ya que tal vez pueda considerarse que no hay suficiente mérito en vencer a equipos que están en las últimas posiciones.
+
+\subsubsection{Estrategias para llegar a las primeras posiciones}
+
+En base a lo que se comentó antes. Una \textbf{estrategía trivial} posible para llegar a las primeras posiciones con relativamente pocas partidos, siendo el último en la tabla es ganarle al que esté primero siempre. De esta manera el último aumenta su rating tanto como puede. Para corroborar esto, se hizo una prueba sobre algunos casos de test presentados por la cátedra.
+
+\begin{itemize}
+    \item atp\_matches\_2015.dat: equipo 104433, llega a las primeras posiciones en 15 partidos.
+    \item test\_completo\_1000\_2.in: equipo 396, llega a las primeras posiciones en 259 partidos.
+    \item test\_completo\_1000\_8.in: equipo 409, llega a las primeras posiciones en 889 partidos.
+\end{itemize}
+
+Otra estrategia posible sería aprovechar el \textbf{caracter transitivo de CMM}: entre el caso 6 y el caso 7 de la sección anterior se puede ver al equipo 1 que había tenido muchas más partidos de las que el equipo 4 tuvo con 2. Entre esas pruebas se agregaron partidos que ponian en ventaja a 2, pero hicieron subir a 1 por sobre 4. En resumen: Que un equipo suba o baje de posición depende en parte a la performance de los equipos con los que jugó previamente: si 1 gana muchas veces a 2, entonces cuando 2 quiera subir, 1 también lo hará. En concreto:
+
+\begin{itemize}
+    \item Un equipo A, quiere llegar a las primeras posiciones.
+    \item A se enfrenta y gana contra equipos B, C, D: no muchos partidos, de lo contrario la probabilidad de que en alguno de ellos pierda incrementa. Estos equipos son considerados por A como más débiles y por sobre los que tiene una ventaja.
+    \item De esta forma, A se asegura tener buenas posiciones por sus propios resultados.
+    \item Al tener B, C, D (con alguna probabilidad, por ser considerados equipos de bajo rendimiento) peor rankeo, si estos quieren tener mejores posiciones u obtener una clasificación, deben ganar partidos.
+    \item A obtiene los beneficios de los partidos ganados por B, C, D aumentando su rating sin haber jugado.
+\end{itemize}
+
+\subsubsection{¿Es CMM un método justo?}
+
+Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado.\\
+
+Por otra parte, sabemos que de poder elegir contra quien jugar y cuantos partidos un equipo puede plantear una estrategia para subir su rating sin haber jugado.\\
+
+En el caso 9 presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es dificil que lo haga ganando partidos con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos.\\
+
+En base a estas cosas, podría calificarse a CMM como un método \textbf{no justo}, de no tener la competencia reglas claras que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos.
