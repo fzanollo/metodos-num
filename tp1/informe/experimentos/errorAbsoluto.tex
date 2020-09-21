@@ -33,4 +33,6 @@ Difieren poco pero es un caso chico, este error se podría repetir y acarrear te
 
 Para ver esto realizamos dos tipos de experimentos, por un lado reutilizamos el batch de tests de la cátedra para ver cuales son las características del error absoluto en un caso promedio.
 
+%TODO explicar por que no funciono el test que decimos aca abajo y dsp decir que vimos los de la catedra y ahi nos dimos cuenta que uno de los peores casos era cuando jugaban todos contra todos y lo cambiamos para que haga eso(*)
+%TODO comparar todos los boxplot, explicar que muestra cada uno. Comparar los de nuestro intento de test, con el de la catedra con lo nuevo(*) si es que lo hacemos
 Por el otro construimos una serie de partidos ficticios con el propósito de que la matriz quede con valores no múltiplos en su diagonal, posiblemente este no sea el peor caso de error pero suponemos que es suficientemente malo. Para calcular el error absoluto, ya que no contamos con el valor esperado, utilizamos la factorización de Cholesky ya que es más estable. Cabe destacar que este método se puede aplicar ya que la matriz resulta simétrica y definida positiva\cite{CMMpaper}.%The Cholesky method is available, because the matrices are not only (obviously) symmetric and real, but are also positive definite.
