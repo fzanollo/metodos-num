@@ -19,7 +19,7 @@ Se inicia un sistema con dos equipos: 1, y 2, con un único partido entre ellos:
         2 & 2 & 0.375\\
         \hline
         \end{tabular}
-        \caption{Ranking CMM luego de iniciar una partida 1 vs 2, a favor de 1}
+        \caption{Ranking CMM luego de iniciar un partido 1 vs 2, a favor de 1}
         \label{cmm_caso_1}
     \end{center}
 \end{table}
@@ -66,7 +66,7 @@ Sobre el sistema anterior: se suma un equipo, 3. 3 vs 2 a favor de 3.
         3 & 2 & 0.24\\
         \hline
         \end{tabular}
-        \caption{Ranking CMM luego de introducir a 3 y hacer una partida entre 2 y 3, a favor de 3}
+        \caption{Ranking CMM luego de introducir a 3 y agregar un partido a favor de 3}
         \label{cmm_caso_3}
     \end{center}
 \end{table}
@@ -127,7 +127,7 @@ Sobre el sistema anterior: se agregan cinco partidos, 1 vs 2 a favor de 1.
 
 Sobre el sistema anterior: se suma un equipo, 4. 4 vs 3 a favor de 4.
 
-\textbf{Pregunta}: ¿Qué pasará si un nuevo equipo tiene una partida contra el equipo que está en la primera posición?
+\textbf{Pregunta}: ¿Qué pasará si un nuevo equipo tiene un partido contra el equipo que está en la primera posición?
 
 \begin{table}[h!]
     \begin{center}
@@ -146,7 +146,7 @@ Sobre el sistema anterior: se suma un equipo, 4. 4 vs 3 a favor de 4.
     \end{center}
 \end{table}
 
-\textbf{Observación}: En una sola partida, 4 llegó a la primera posición. Se puede explicar que 1 haya quedado por arriba de 3 ya que la configuración de partidos jugados es un factor que está presente en CMM: 4 vs 3 deja a 3 con un partido más, pero perdido, a diferencia de 1 que no sumó partidos.
+\textbf{Observación}: En un solo partido, 4 llegó a la primera posición. Se puede explicar que 1 haya quedado por arriba de 3 ya que la configuración de partidos jugados es un factor que está presente en CMM: 4 vs 3 deja a 3 con un partido más, pero perdido, a diferencia de 1 que no sumó partidos.
 
 \newpage
 
@@ -198,7 +198,7 @@ Sobre el sistema anterior: se agregan tantos partidos como sea necesario para de
     \end{center}
 \end{table}
 
-\textbf{Observación}: En siete partidos, 3 fue capaz mediante CMM de que 2 reemplazara a 1 en el primer lugar.
+\textbf{Observación}: En siete partidos, 3 fue capaz mediante CMM de que 2 reemplazara a 1 en el primer lugar. ¿Por qué 2 y no 4? Es probable que sea debido a la cantidad de partidos 1 vs 2 que se hayan dado.
 
 \subsubsection*{Caso 9}
 
@@ -223,8 +223,9 @@ Sobre el sistema del caso 7: se agregan tantos partidos como sea necesario para 
     \end{center}
 \end{table}
 
-\textbf{Observación}: En veinte partidos, 3 aún no fue capaz mediante CMM de un equipo reemplazara a 1 en el primer lugar.
+\textbf{Observación}: En veinte partidos, 3 aún no fue capaz mediante CMM de que un equipo reemplazara a 1 en el primer lugar.
 
+\newpage
 \subsubsection{¿Qué podemos decir sobre CMM en base a las observaciones?}
 
 Estos ejemplos sencillos nos permitieron entender un poco más CMM a la hora de rankear equipos.\\
@@ -241,32 +242,52 @@ Desde el caso 6 al caso 9, queriamos hacer foco en como un equipo puede avanzar 
 
 Tiene sentido esto último ya que tal vez pueda considerarse que no hay suficiente mérito en vencer a equipos que están en las últimas posiciones.
 
-\subsubsection{Estrategias para llegar a las primeras posiciones}
+\subsubsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}
 
-En base a lo que se comentó antes. Una \textbf{estrategía trivial} posible para llegar a las primeras posiciones con relativamente pocas partidos, siendo el último en la tabla es ganarle al que esté primero siempre. De esta manera el último aumenta su rating tanto como puede. Para corroborar esto, se hizo una prueba sobre algunos casos de test presentados por la cátedra.
+Como se desarrolla en [ref colley], la solución al sistema $Cr = b$ son los ratings de los equipos involucrados en la competencia. Saliendo de su expresión matricial, obtenemos que para un equipo $e_i \in \{e_1, \dots, e_n\}$:
+
+\begin{equation}
+    r_i = \frac{1 + \frac{w_i - l_i}{2} + \sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}}{2 + n_i}    
+\end{equation}
+
+donde para $e_k$:
 
 \begin{itemize}
-    \item atp\_matches\_2015.dat: equipo 104433, llega a las primeras posiciones en 15 partidos.
-    \item test\_completo\_1000\_2.in: equipo 396, llega a las primeras posiciones en 259 partidos.
-    \item test\_completo\_1000\_8.in: equipo 409, llega a las primeras posiciones en 889 partidos.
+    \item $r_k$ es el rating buscado
+    \item $w_k$ es la cantidad de partidos ganados
+    \item $l_k$ es la cantidad de partidos perdidos
+    \item $n_k$ es la cantidad de partidos jugados
+    \item $n_{k,l}$ es la cantidad de partidos jugados entre $e_k$ y $e_l$ 
 \end{itemize}
 
-Otra estrategia posible sería aprovechar el \textbf{caracter transitivo de CMM}: entre el caso 6 y el caso 7 de la sección anterior se puede ver al equipo 1 que había tenido muchas más partidos de las que el equipo 4 tuvo con 2. Entre esas pruebas se agregaron partidos que ponian en ventaja a 2, pero hicieron subir a 1 por sobre 4. En resumen: Que un equipo suba o baje de posición depende en parte a la performance de los equipos con los que jugó previamente: si 1 gana muchas veces a 2, entonces cuando 2 quiera subir, 1 también lo hará. En concreto:
+La primera observación que podemos hacer es que conforme aumente la cantidad de partidos, \textbf{el denominador principal aumenta}, con lo cual \textbf{$r_i$ se vuelve más pequeño}.\\
+
+En segundo lugar, hay dos términos en el numerador principal que contribuyen a aumentar o disminuir $r_i$:
 
 \begin{itemize}
-    \item Un equipo A, quiere llegar a las primeras posiciones.
-    \item A se enfrenta y gana contra equipos B, C, D: no muchos partidos, de lo contrario la probabilidad de que en alguno de ellos pierda incrementa. Estos equipos son considerados por A como más débiles y por sobre los que tiene una ventaja.
-    \item De esta forma, A se asegura tener buenas posiciones por sus propios resultados.
-    \item Al tener B, C, D (con alguna probabilidad, por ser considerados equipos de bajo rendimiento) peor rankeo, si estos quieren tener mejores posiciones u obtener una clasificación, deben ganar partidos.
-    \item A obtiene los beneficios de los partidos ganados por B, C, D aumentando su rating sin haber jugado.
+    \item $\frac{w_i - l_i}{2}$: Alcanza su valor más alto cuando se ganan todos los partidos, contrariamente, es muy desventajoso si se pierden más partidos de los que se ganan dado que se vuelve negativo. En general, del numerador principal, representa la mayor parte del valor de $r_i$. Observemos también que a medida que este valor cambia, el denominador principal aumenta, por lo que la \textbf{ventaja máxima se encuentra ganando partidos}.
+    \item $\sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}$: Es una suma en la que cada en cada término se encuentra la cantidad de partidos disputados entre $e_i$ y $e_j$ ponderado por $r_j$. Cada término de la suma \textbf{aporta tanto como $n_{i, j}$ cuando $r_j$ tiene un valor cercano $1$} y aporta menos cuando el mismo tiene un valor cercano a $0$.
+\end{itemize}
+
+\newpage
+Esto nos permite explicar el caracter "transitivo" de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
+
+\subsubsection{Una estrategia avanzar en el ranking minimizando la cantidad de partidos}
+
+En base a la interpretación anterior, podemos sacar ventaja de CMM si:
+
+\begin{itemize}
+    \item Se compensa la relación entre los términos $(2 + n_i)$ y $\frac{w_i - l_i}{2}$ para evitar que $r_i$ disminuya. Esto se logra manteniendo al máximo la cantidad de partidos ganados.
+    \item De ser posible, jugar menos partidos que los demás equipos.
+    \item Teniendo en cuenta el caracter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a que tan bien le vaya a ese único equipo.
 \end{itemize}
 
 \subsubsection{¿Es CMM un método justo?}
 
-Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado.\\
+Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado. \\
 
-Por otra parte, sabemos que de poder elegir contra quien jugar y cuantos partidos un equipo puede plantear una estrategia para subir su rating sin haber jugado.\\
+Sabemos que de poder elegir contra quien jugar y cuantos partidos un equipo puede plantear una estrategia para subir su rating sin haber jugado.\\
 
-En el caso 9 presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es dificil que lo haga ganando partidos con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos.\\
+En el caso 9 presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es dificil que lo haga ganando partidas con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos.\\
 
-En base a estas cosas, podría calificarse a CMM como un método \textbf{no justo}, de no tener la competencia reglas claras que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos.
+En base a estas cosas, podría calificarse a CMM como un método \textbf{no  justo, de no tener la competencia reglas claras} que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos.
