@@ -360,6 +360,7 @@ tp
 .vscode
 .devcontainer
 *.dat
+!**/casos/*.dat
 !casoscmm.dat
 .ipynb_checkpoints
 *.csv
