@@ -1,3 +1,4 @@
+# Catedra
 Para correr los scripts, desde una consola ejecutar:
 
 ```bash
@@ -19,7 +20,13 @@ resultado para cada corrida en el correspondiente .out. Despues, chequea que el 
 .expected, tambien del directorio test. En este caso, la comparacion es por tolerancia coordenada a coordeanda del vector
 solucion.
 
+
 # ¿Cómo replicar las pruebas que se muestran en el informe?
+
+Observación: para correr el tp el orden esperado de los parámetros es ./tp inputfile outputfile algorithm (donde algorithm puede ser 0-CMM, 1-WP, los resultados de Elo fueron generados utilizando python)
+
+## Error absoluto
+Todos los scripts para crear/correr/comparar/generar gráficos se encuentran en la notebook llamada tp1mn
 
 ## Análisis cualitativo
 

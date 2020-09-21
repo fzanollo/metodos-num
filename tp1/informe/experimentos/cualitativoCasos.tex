@@ -244,7 +244,7 @@ Tiene sentido esto último ya que tal vez pueda considerarse que no hay suficien
 
 \subsubsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}
 
-Como se desarrolla en [ref colley], la solución al sistema $Cr = b$ son los ratings de los equipos involucrados en la competencia. Saliendo de su expresión matricial, obtenemos que para un equipo $e_i \in \{e_1, \dots, e_n\}$:
+Como se desarrolla en \cite{CMMpaper}, la solución al sistema $Cr = b$ son los ratings de los equipos involucrados en la competencia. Saliendo de su expresión matricial, obtenemos que para un equipo $e_i \in \{e_1, \dots, e_n\}$:
 
 \begin{equation}
     r_i = \frac{1 + \frac{w_i - l_i}{2} + \sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}}{2 + n_i}    
@@ -266,20 +266,20 @@ En segundo lugar, hay dos términos en el numerador principal que contribuyen a 
 
 \begin{itemize}
     \item $\frac{w_i - l_i}{2}$: Alcanza su valor más alto cuando se ganan todos los partidos, contrariamente, es muy desventajoso si se pierden más partidos de los que se ganan dado que se vuelve negativo. En general, del numerador principal, representa la mayor parte del valor de $r_i$. Observemos también que a medida que este valor cambia, el denominador principal aumenta, por lo que la \textbf{ventaja máxima se encuentra ganando partidos}.
-    \item $\sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}$: Es una suma en la que cada en cada término se encuentra la cantidad de partidos disputados entre $e_i$ y $e_j$ ponderado por $r_j$. Cada término de la suma \textbf{aporta tanto como $n_{i, j}$ cuando $r_j$ tiene un valor cercano $1$} y aporta menos cuando el mismo tiene un valor cercano a $0$.
+    \item $\sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}$: Es una suma en la que cada en cada término se encuentra la cantidad de partidos disputados entre $e_i$ y $e_j$ ponderado por $r_j$. Cada término de la suma \textbf{aporta tanto como $n_{i, j}$ cuando $r_j$ tiene un valor cercano a $1$} y aporta menos cuando el mismo tiene un valor cercano a $0$.
 \end{itemize}
 
 \newpage
-Esto nos permite explicar el caracter "transitivo" de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
+Esto nos permite explicar el caracter ``transitivo'' de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
 
-\subsubsection{Una estrategia avanzar en el ranking minimizando la cantidad de partidos}
+\subsubsection{Una estrategia para avanzar en el ranking minimizando la cantidad de partidos}
 
 En base a la interpretación anterior, podemos sacar ventaja de CMM si:
 
 \begin{itemize}
     \item Se compensa la relación entre los términos $(2 + n_i)$ y $\frac{w_i - l_i}{2}$ para evitar que $r_i$ disminuya. Esto se logra manteniendo al máximo la cantidad de partidos ganados.
     \item De ser posible, jugar menos partidos que los demás equipos.
-    \item Teniendo en cuenta el caracter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a que tan bien le vaya a ese único equipo.
+    \item Teniendo en cuenta el caracter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a qué tan bien le vaya a ese único equipo.
 \end{itemize}
 
 \subsubsection{¿Es CMM un método justo?}
