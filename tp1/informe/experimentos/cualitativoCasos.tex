@@ -290,11 +290,34 @@ Sabemos que de poder elegir contra quien jugar y cuantos partidos un equipo pued
 
 En el caso 9 presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es dificil que lo haga ganando partidas con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos.\\
 
-En base a estas cosas, podría calificarse a CMM como un método \textbf{no  justo, de no tener la competencia reglas claras} que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos.
+En base a estas cosas, podría calificarse a CMM como un método \textbf{no  justo, de no tener la competencia reglas claras} que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos. Cabe destacar que este último caso CMM pierde un poco de gracia y un rankeo por medio de puntos (como en fútbol por ejemplo) sería más efectivo.
 
+%--------------------------------------------------------
+\FloatBarrier
 \subsection{CMM y otros algoritmos de rankeo}
+En la tabla \ref{tab:tops10CMM} se puede ver los nombres de los tenistas en el top 10 de CMM, a modo informal de comparación agregamos su posición en WP y Elo así como también su ranking ``real''\footnote{Según \url{https://www.atptour.com/en/rankings/singles?rankDate=2015-12-28&rankRange=0-100}}. CMM hace un gran trabajo ``descubriendo'' cuáles son los jugadores top 10, faltandole solo uno del ranking oficial (Jo-Wilfried Tsonga) aunque mezcla un poco las posiciones.
 
+\input{csvs/tops10.tex}
+
+Más allá de estos datos curiosos vamos a ver la relación lineal entre CMM y los demás rankings, usando scatterplots, coeficiente de Pearson y \textit{Kendall’s weighted $\tau$}. Este último lo descubrimos buscando métodos para comparar rankings, según entendemos es un algoritmo bastante usado y es parte del conjunto de funciones de \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.weightedtau.html}{Scipy}.
+
+Según se explica tanto en la documentación oficial de Scipy como en el paper que presenta la idea \cite{kendall} el algoritmo compara los rankings dando más importancia a los valores de mayor magnitud, pero teniendo en cuenta aún los más chicos. La explicación matemática de cómo se realiza queda fuera de nuestro alcance por el momento aunque nos gustaría verla en detalle de ser posible.
+
+%--------------------------------------------------------
+\FloatBarrier
 \subsubsection{Winning Percentage}
+
+En la figura \ref{fig:sc_cmm_wp} podemos ver que la correlación lineal ente CMM y WP es bastante buena salvo por unos grupos de outliers. El coeficiente de Pearson es 0.805, mostrando que esos grupos de outliers no afecta \textit{tanto} y la relación es cercana. Por otro lado el coeficiente de Kendall es 0.763, un poco más bajo lo que indicaría, si mal no entendemos, que la relación no es tan buena para los primeros puestos. Esto concuerda en principio con la tabla de tops presentada al comienzo.\ref{tab:tops10CMM}
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.8]{imagenes/scatterplot_CMM_WP.png}
+ \caption{Correlación lineal entre CMM y WP.}
+ \label{fig:sc_cmm_wp}
+\end{figure}
+
+%TODO analizar los grupos de outliers
+
 
 Previamente analizamos la composición de $r_i$ para CMM, ahora vamos a analizarla para WP y asi entender las similitudes [ref] que se observan en la sección anterior.
 
@@ -316,7 +339,18 @@ si $w_i = \frac{w_i - l_i}{2} + \frac{n_i}{2}$
 
 Observemos que al final, la expresión de $r_i$ para CMM es muy parecida a la expresión de $r_i$ para WP, por lo que es esperable un comportamiento similar, siempre teniendo en cuenta que el estimador que es objeto de estudio en este trabajo, tiene como objetivo aportar coherencia al asignar ratings y en eso difieren.
 
+%--------------------------------------------------------
+\FloatBarrier
 \subsubsection{ELO}
+
+Elo y CMM se parecen menos linealmente, como se puede ver en la figura \ref{fig:sc_cmm_elo}. Su coeficiente de Pearson es 0.789, un poco menos que con WP. Mientras que su coeficiente de Kendall es 0.868, esto nos indica que, si bien no son súper parecidos linealmente tienden a rankear de manera similar los jugadores con mayor cantidad de ``puntaje''. Esto también concuerda con la tabla de tops.\ref{tab:tops10CMM}
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.8]{imagenes/scatterplot_CMM_Elo.png}
+ \caption{Correlación lineal entre CMM y Elo.}
+ \label{fig:sc_cmm_elo}
+\end{figure}
 
 De la misma manera que en la sección anterior, notamos algunas similitudes entre CMM y ELO. Pasamos a analizarlo para entenderlo mejor.
 
@@ -331,7 +365,7 @@ Algunas diferencias respecto a CMM que se pueden deducir en base a lo mencionado
 
 \begin{itemize}
     \item La actualización de $elo_i$ sólo depende del equipo contrincante y de su rating ELO. Por lo que no hay influencia sobre otros equipos.
-    \item Hasta $k$ puntos puede avanzar o retroceder $elo_i$ dependiendo del resultado del partido y de que tan probable sea que un equipo gane a otro. Los equipos con resultados más inesperados (a favor o en contra) son los que reciben la mayor diferencia.
+    \item Hasta $k$ puntos puede avanzar o retroceder $elo_i$ dependiendo del resultado del partido y de qué tan probable sea que un equipo gane a otro. Los equipos con resultados más inesperados (a favor o en contra) son los que reciben la mayor diferencia.
     \item En base a lo anterior, es poco ventajoso que equipos fuertes se enfrenten a equipos débiles dado que en esos partidos la ganancia de puntos en el ranking es mínima.
     \item Se entiende a ELO como un sistema que permite medir el progreso, dado que recompensa o penaliza las sorpresas.
 \end{itemize}
