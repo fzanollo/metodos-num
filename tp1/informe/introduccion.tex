@@ -1,0 +1,61 @@
+El objeto de estudio de este trabajo es Colley Matrix Method (CMM) para generar rankings en competiciones deportivas. En virtud de entenderlo mejor, empezaremos introduciéndolo para luego plantear algunas preguntas sobre cuestiones aritméticas.
+
+Vamos a presentar una implementación en C++ que nos va a permitir en base a un dataset propuesto por la cátedra elaborar una tabla de posiciones que podría utilizarse luego para determinar que equipos ganan una competencia y cuales de ellos están en condiciones de clasificar a otras instancias.
+
+Desde el punto de vista del análisis cuantitativo presentaremos el error absoluto del método utilizando casos específicos y tomando como referencia implementaciones ya desarrolladas más estables numéricamente.
+
+Desde el punto de vista del análisis cualitativo presentaremos un estudio por planteo de casos de los cuales podremos derivar algunas carácterísticas del método que explicaremos cuando hagamos la interpretación del sistema matricial que lo determina. Consecuentemente podremos plantear una estrategia para explotarlo y determinar en que casos podria ser injusta un evento que lo utilice.
+
+Finalmente haremos una comparación de CMM contra otros sistemas de rankeo, como en este caso son WP (Winning Percentage) y ELO para encontrar similitudes y diferencias.
+
+\subsection{Problema}
+Una forma intuitiva de establecer un sistema de puntaje para un evento es utilizar el estimador que relaciona la cantidad de partidos ganados con la cantidad de partidos totales: estamos hablando del \textit{winning percentaje} (WP)
+
+\begin{equation}
+    r_i = \frac{w_i}{n_i}
+\end{equation}
+
+Donde $w_i$ denota la cantidad de partidos ganados, $n_i$ la cantidad de partidos jugados y $r_i$ es el ratio buscado.
+
+Por un lado, puede pasar que para un equipo, $r_i = 1$ habiendo jugado y ganado un partido mientras que para otro $r_j = 0.7$ habiendo jugado diez y perdido siete. Por otra parte, WP, no contempla en su desarrollo características de los oponentes o cuantas veces jugó contra ellos, dado que no es lo mismo jugar una vez contra el top 1 que hacerlo cuatro veces.
+
+Este es el problema que intenta resolver Colley Matrix Method.
+
+\subsection{Colley Matrix Method (CMM)}
+
+El desarrollo de CMM se basa en la \textit{Regla de Laplace de sucesos}, es decir, en como $\frac{1 + w_i}{2 + n_i}$ es mejor estimador para situaciones de las que se sabe poco que $\frac{w_i}{n_i}$.
+
+Observemos que
+
+\begin{equation}
+    w_i = \frac{(w_i - l_i)}{2} + \frac{n_i}{2}
+\end{equation}
+
+Por lo que si tomamos el nuevo estimador, entonces
+
+\begin{equation}
+    r_i = \frac{1 + w_i}{2 + n_i} = \frac{1 + \frac{w_i - l_i}{2} + \frac{n_i}{2}}{2 + n_i} = \frac{1 + \frac{w_i - l_i}{2} + \sum_{i=1}^{n_i}{r_j^i}}{2 + n_i}
+\end{equation}
+
+Si asumimos que inicialmente, todos los equipos tiene un $r_i = \frac{1}{2}$, entendiendo a $l_i$ como la cantidad de partidos perdidos por el equipo $i$ y a $r_j^i$ como la cantidad de partidos jugados entre el equipo $i$ y el equipo $j$.
+
+Dado que en un evento hay $n$ equipos, cada uno de los cuales con su propio \textit{rating} $r_i$, notemos que:
+
+\begin{equation}
+    (2 + n_i) * r_i - \sum_{i = 1}^{n_i} r_j^i = 1 + \frac{w_i - l_i}{2}
+\end{equation}
+
+Obtenemos un sistema lineal de ecuaciones $C r = b$ donde $r$ es el vector incógnita con los ratings y
+
+\begin{equation}
+    b = 1 + \frac{w_i - l_i}{2}
+\end{equation}
+
+\begin{equation}
+    C_{i, j} = \left\lbrace\begin{matrix} 
+        -n_{i, j} $ si $ i\neq j\\
+        2 + n_i $ si $ i = j\\
+    \end{matrix}\right. 
+\end{equation}
+
+¿Pero este sistema siempre tiene solución? claramente, en una situación en la que es necesaria rankear equipos siempre debería poder lograrse. ¿Habrán situaciones para las cuales no se podrá hacer? ¿Elaborará un ranking razonable?
