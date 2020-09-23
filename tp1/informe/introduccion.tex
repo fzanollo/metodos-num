@@ -4,7 +4,7 @@ Vamos a presentar una implementación en C++ que nos va a permitir en base a un 
 
 Desde el punto de vista del análisis cuantitativo presentaremos el error absoluto del método utilizando casos específicos y tomando como referencia implementaciones ya desarrolladas más estables numéricamente.
 
-Desde el punto de vista del análisis cualitativo presentaremos un estudio por planteo de casos de los cuales podremos derivar algunas carácterísticas del método que explicaremos cuando hagamos la interpretación del sistema matricial que lo determina. Consecuentemente podremos plantear una estrategia para explotarlo y determinar en que casos podria ser injusta un evento que lo utilice.
+Desde el punto de vista del análisis cualitativo presentaremos un estudio por planteo de casos de los cuales podremos derivar algunas carácterísticas del método que explicaremos cuando hagamos la interpretación del sistema matricial que lo determina. Consecuentemente podremos plantear una estrategia para explotarlo y determinar en qué casos podria ser injusta un evento que lo utilice.
 
 Finalmente haremos una comparación de CMM contra otros sistemas de rankeo, como en este caso son WP (Winning Percentage) y ELO para encontrar similitudes y diferencias.
 
@@ -23,7 +23,7 @@ Este es el problema que intenta resolver Colley Matrix Method.
 
 \subsection{Colley Matrix Method (CMM)}
 
-El desarrollo de CMM se basa en la \textit{Regla de Laplace de sucesos}, es decir, en como $\frac{1 + w_i}{2 + n_i}$ es mejor estimador para situaciones de las que se sabe poco que $\frac{w_i}{n_i}$.
+El desarrollo de CMM se basa en la \textit{Regla de Laplace de sucesos}, es decir, en cómo $\frac{1 + w_i}{2 + n_i}$ es mejor estimador para situaciones de las que se sabe poco que $\frac{w_i}{n_i}$.
 
 Observemos que
 
@@ -37,7 +37,7 @@ Por lo que si tomamos el nuevo estimador, entonces
     r_i = \frac{1 + w_i}{2 + n_i} = \frac{1 + \frac{w_i - l_i}{2} + \frac{n_i}{2}}{2 + n_i} = \frac{1 + \frac{w_i - l_i}{2} + \sum_{i=1}^{n_i}{r_j^i}}{2 + n_i}
 \end{equation}
 
-Si asumimos que inicialmente, todos los equipos tiene un $r_i = \frac{1}{2}$, entendiendo a $l_i$ como la cantidad de partidos perdidos por el equipo $i$ y a $r_j^i$ como la cantidad de partidos jugados entre el equipo $i$ y el equipo $j$.
+Si asumimos que inicialmente todos los equipos tiene un $r_i = \frac{1}{2}$, entendiendo a $l_i$ como la cantidad de partidos perdidos por el equipo $i$ y a $r_j^i$ como la cantidad de partidos jugados entre el equipo $i$ y el equipo $j$.
 
 Dado que en un evento hay $n$ equipos, cada uno de los cuales con su propio \textit{rating} $r_i$, notemos que:
 

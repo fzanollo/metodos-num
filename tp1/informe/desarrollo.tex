@@ -10,11 +10,11 @@ Todos los métodos se complementan con el algoritmo de \textit{backward substitu
 
 \subsection{Elección del algoritmo}
 
-Aunque, como la matríz $C$ de nuestro sistema es efectivamente simétrica definida positiva[papercmm] y cumple con las condiciones para resolverse con cualquiera de los métodos mencionados, optamos por hacer una primera implementación con Eliminación Gaussiana[refporq].
+Nos fue requerido resolver el sistema mediante Eliminación Gaussiana, sin pivoteos. Observemos que como la matríz $C$ de nuestro sistema es \textit{simétrica definida positiva} \cite{CMMpaper} cumple con las condiciones para resolverse con cualquiera de los métodos mencionados.
 
 \subsection{Algunas características de nuestro sistema}
 
-Para ello, analicemos primero como es la matriz $C$ de nuestro sistema y por qué cumple con las condiciones para resolverse mediante el método mencionado.
+Para ello, analicemos primero cómo es la matriz $C$ de nuestro sistema y por qué cumple con las condiciones para resolverse mediante el método mencionado.
 
 \begin{itemize}
     \item \textbf{De tener solución, es única}: dado que contamos con $n = \#\{equipo\}$ ecuaciones y $n = dim(r)$ incógnitas.
