@@ -303,6 +303,8 @@ Más allá de estos datos curiosos vamos a ver la relación lineal entre CMM y l
 
 Según se explica tanto en la documentación oficial de Scipy como en el paper que presenta la idea \cite{kendall} el algoritmo compara los rankings dando más importancia a los valores de mayor magnitud, pero teniendo en cuenta aún los más chicos. La explicación matemática de cómo se realiza queda fuera de nuestro alcance por el momento aunque nos gustaría verla en detalle de ser posible.
 
+Analizaremos estos algoritmos de rankeo utilizando el conjunto de datos de partidos de ATP 2015\cite{repoAtp}.
+
 %--------------------------------------------------------
 \FloatBarrier
 \subsubsection{Winning Percentage}
@@ -316,10 +318,9 @@ En la figura \ref{fig:sc_cmm_wp} podemos ver que la correlación lineal ente CMM
  \label{fig:sc_cmm_wp}
 \end{figure}
 
-%TODO analizar los grupos de outliers
+En cuanto a los tres grupos principales de outliers podemos ver que se tratan de los que tienen WP = 0, 0.5 y 1. Al no tener el ajuste de la regla de Laplace si no se ganó/perdió algún partido los valores van a parar a uno de los extremos; además si se tiene la misma cantidad de ganadas que perdidas el valor de WP será 0.5 ya que no considera ``fuerza'' del adversario.\\
 
-
-Previamente analizamos la composición de $r_i$ para CMM, ahora vamos a analizarla para WP y asi entender las similitudes [ref] que se observan en la sección anterior.
+Previamente analizamos la composición de $r_i$ para CMM, ahora vamos a analizarla para WP y asi entender las similitudes que se observan.
 
 Para el algoritmo WP:
 
