@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     } else if (opcionAlgor == 1) {
         result = WP(cantEquipos, cantPartidos, partidos, equipoIdToIndex);
     } else {
-        cout << "TODO, todavia no esta implementado" << endl;
+        cout << "Elo fue implementado en python, directamente en la notebook" << endl;
     }
 
     write(fout, result);
