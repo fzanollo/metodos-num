@@ -38,3 +38,9 @@ Se implica directamente que a \textbf{$C$ se le puede aplicar la Eliminación Ga
 La aritmética finita de las computadoras traen aparejados problemas para representar nuestro sistema numérico. En el caso de la Eliminación Gaussiana sin pivoteo podría presentarse al realizar una división por algún elemento de la diagonal de la matriz en cuestión que esté muy cercano a cero. En tal caso cualquier error se vería amplificado. No obstante el ser $C$ una matriz estrictamente diagonal dominante y simétrica nos asegura tener en la diagonal el elemento más grande en módulo tanto por fila como por columna, por lo que el pivoteo parcial en un caso como este sería redundante y se logra una cierta estabilidad numérica.
 
 No obstante, las pruebas de control sobre la implementación acotan el error por $10^{-4}$.
+
+\subsection{Sobre WP y Elo}
+
+Como comentamos en la introducción, WP es una de las razones por las que CMM existe. No obstante, Elo fue creado de forma independiente y hoy es utilizado considerablemente en el ajedrez competitivo y se ha extendido a otras ramas de actividades.
+
+Aunque a nivel implementativo no son muy interesantes en este trabajo, si vamos a ahondar en la cuestión cualitativa de ambos para compararlos con CMM \ref{cmm_comparacion}.
