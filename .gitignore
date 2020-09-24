@@ -366,3 +366,4 @@ tp
 *.csv
 *.pdf
 !informe.pdf
+!ejemplo.dat
