@@ -1,8 +1,6 @@
-\subsection{Análisis cualitativo}
+Desde la perspectiva cualitativa, vamos a plantear y responder preguntas que nos lleven a entender mejor CMM y a encontrar ventajas y desventajas del mismo. Para ello primeramente propondremos casos pequeños, que no necesariamente representan casos de competencias reales.
 
-El objetivo de esta sección es plantear y responder preguntas que nos lleven a entender mejor CMM y a encontrar ventajas y desventajas del mismo. Para ello primeramente propondremos casos pequeños, que no necesariamente representan casos de competencias reales.
-
-\subsubsection{Planteo de casos}
+\subsection{Planteo de casos}
 
 \subsubsection*{Caso 1}
 Se inicia un sistema con dos equipos: 1, y 2, con un único partido entre ellos: 1 vs 2 a favor de 1.
@@ -226,7 +224,7 @@ Sobre el sistema del caso 7 \ref{caso_7}: se agregan tantos partidos como sea ne
 \textbf{Observación}: En veinte partidos, 3 aún no fue capaz mediante CMM de que un equipo reemplazara a 1 en el primer lugar.
 
 \newpage
-\subsubsection{¿Qué podemos decir sobre CMM en base a las observaciones?}\label{conclusion_observaciones}
+\subsection{¿Qué podemos decir sobre CMM en base a las observaciones?}\label{conclusion_observaciones}
 
 Estos ejemplos sencillos nos permitieron entender un poco más CMM a la hora de rankear equipos.
 
@@ -242,7 +240,7 @@ Desde el caso 6 al caso 9, quisimos hacer foco en como un equipo puede avanzar e
 
 Tiene sentido esto último ya que tal vez pueda considerarse que no hay suficiente mérito en vencer a equipos que están en las últimas posiciones.
 
-\subsubsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}\label{interpretacion_sistema}
+\subsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}\label{interpretacion_sistema}
 
 Como se desarrolla en \cite{CMMpaper}, la solución al sistema $Cr = b$ son los ratings de los equipos involucrados en la competencia. Saliendo de su expresión matricial, obtenemos que para un equipo $e_i \in \{e_1, \dots, e_n\}$:
 
@@ -272,7 +270,7 @@ En segundo lugar, hay dos términos en el numerador principal que contribuyen a 
 \newpage
 Esto nos permite explicar el carácter ``transitivo'' de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
 
-\subsubsection{Una estrategia para avanzar en el ranking minimizando la cantidad de partidos}\label{estrategia}
+\subsection{Una estrategia para avanzar en el ranking minimizando la cantidad de partidos}\label{estrategia}
 
 En base a la interpretación anterior, podemos sacar ventaja de CMM si:
 
@@ -282,7 +280,7 @@ En base a la interpretación anterior, podemos sacar ventaja de CMM si:
     \item Teniendo en cuenta el carácter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. Eventualmente en la intención de llegar a mejores posiciones de estos equipos, alguno (o ninguno) empezará a subir en la tabla impactando proporcionalmente a la cantidad de partidos que haya jugado con el equipo que aplique la estrategia. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a qué tan bien le vaya a ese único equipo.
 \end{itemize}
 
-\subsubsection{¿Es CMM un método justo?}
+\subsection{¿Es CMM un método justo?}
 
 Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado.
 
