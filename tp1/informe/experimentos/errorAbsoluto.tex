@@ -29,14 +29,14 @@ $$\begin{pmatrix}
 \end{pmatrix}$$
 
 Se puede ver que $\frac{396}{91} \cong 4.351648352$ teniendo una diferencia de $0.00000165$ con $4.35165$.
-Difieren poco pero es un caso chico, este error se podría repetir y acarrear terminando en un valor en esa posición muy diferente al esperado, afectando así el ranking final.\\
+Difieren poco pero es un caso chico, este error se podría repetir y acarrear terminando en un valor en esa posición muy diferente al esperado, afectando así el ranking final.
 
-Para experimentar sobre esto construimos una serie de partidos ficticios con el propósito de que la matriz quede con \textit{valores diferentes en su diagonal}, posiblemente este no sea el peor caso de error pero suponemos que es suficientemente malo. Para calcular el error absoluto, debido a que no contamos con el valor de control, utilizamos la factorización de Cholesky ya que es más estable. Cabe destacar que este método se puede aplicar dado que la matriz resulta simétrica y definida positiva\cite{CMMpaper}.\\
+Para experimentar sobre esto construimos una serie de partidos ficticios con el propósito de que la matriz quede con \textit{valores diferentes en su diagonal}, posiblemente este no sea el peor caso de error pero suponemos que es suficientemente malo. Para calcular el error absoluto, debido a que no contamos con el valor de control, utilizamos la factorización de Cholesky ya que es más estable. Cabe destacar que este método se puede aplicar dado que la matriz resulta simétrica y definida positiva\cite{CMMpaper}.
 %The Cholesky method is available, because the matrices are not only (obviously) symmetric and real, but are also positive definite.
 
 Yendo en detalle hicimos que cada equipo (1 a total-1) juegue $id$ cantidad de partidos, es decir, el equipo 1 juega un partido, el 2 dos, etc. Salvo el último equipo que va a jugar la cantidad que sea necesaria para cumplir con los partidos de los demás.
 
-Como se puede observar en la figura \ref{fig:bienDiferenteEnDiagonal} aumenta el error a medida que aumenta la cantidad de equipos, lo cuál es esperable ya que se realizan más despejes, cuentas y se acarrea más el error.\\
+Como se puede observar en la figura \ref{fig:bienDiferenteEnDiagonal} aumenta el error a medida que aumenta la cantidad de equipos, lo cuál es esperable ya que se realizan más despejes, cuentas y se acarrea más el error.
 
 \begin{figure}[H]
  \centering
