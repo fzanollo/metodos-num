@@ -365,3 +365,4 @@ tp
 .ipynb_checkpoints
 *.csv
 *.pdf
+!informe.pdf
