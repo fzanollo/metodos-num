@@ -368,3 +368,30 @@ Algunas diferencias respecto a CMM que se pueden deducir en base a lo mencionado
     \item En base a lo anterior, es poco ventajoso que equipos fuertes se enfrenten a equipos débiles dado que en esos partidos la ganancia de puntos en el ranking es mínima.
     \item Se entiende a Elo como un sistema que permite medir el progreso, dado que recompensa o penaliza las sorpresas.
 \end{itemize}
+
+%--------------------------------------------------------
+\FloatBarrier
+\subsubsection{Otro set de datos}
+Hicimos las mismas comparaciones utilizando el set de datos de NBA 2016 proporcionado por la cátedra. En principio lo hicimos más por completitud suponiendo que no íbamos a encontrar nada nuevo en cuanto a los algoritmos y sus equivalencias. Además el set de datos al ser bastante más chico, con sólo 30 equipos y 1002 partidos, quizás no proporciona información suficiente para sacar conclusiones fuertes.
+
+Pero al ver la correlación de CMM y WP nos sorprendimos un poco. Con un coeficiente de Pearson de 0.999 y Kendall de 0.989 la correlación lineal es casi perfecta, como se puede ver en la figura \ref{fig:sc__nba_cmm_wp}. Esto implicaría que las ``ganancias'' de CMM vs WP se pierden. 
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.8]{imagenes/scatterplot_nba_CMM_WP.png}
+ \caption{Correlación lineal entre CMM y WP para NBA}
+ \label{fig:sc__nba_cmm_wp}
+\end{figure}
+
+Por otro lado los coeficientes de Pearson y Kendall para con Elo dan 0.987 y 0.935 respectivamente, se puede observar en la figura \ref{fig:sc__nba_cmm_elo} que estan bastante ordenados. Como último queríamos comentar la relación entre WP y Elo, 0.985 Pearson y 0.939 Kendall, es decir, los tres son casi equivalentes.
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.8]{imagenes/scatterplot_nba_CMM_Elo.png}
+ \caption{Correlación lineal entre CMM y Elo para NBA}
+ \label{fig:sc__nba_cmm_elo}
+\end{figure}
+
+Al analizar el conjunto de datos observamos que todos los equipos juegan mínimo una vez contra los demás y todos juegan una cantidad de partidos parecida (con una diferencia de a lo sumo 3 partidos). Esto transforma este caso en uno super particular, ya que las mejoras de CMM para tener en cuenta contrincante no son muy necesarias, todos tienen casi el mismo fixture; y la regla de Laplace no aplica tampoco ya que tenemos la misma cantidad de datos para todos los equipos (entre 65 y 68 partidos c/u).
+
+Por ende algo tan simple como WP nos da tan buenos resultados y las ``mejoras'' de CMM y Elo quedan obsoletas.
