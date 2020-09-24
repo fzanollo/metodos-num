@@ -1,16 +1,16 @@
-Existen múltiples formas en las que se puede resolver algoritmicamente un sistema de ecuaciones lineales como el nuestro, del tipo $C r = b$. Con distintas complejidades al implementar y distintas características, entre ellas se encuentran:
+Existen múltiples formas en las que se puede resolver algorítmicamente un sistema de ecuaciones lineales como el nuestro, del tipo $C r = b$. Con distintas complejidades al implementar y distintas características, entre ellas se encuentran:
 
 \begin{itemize}
-    \item \textbf{Eliminación Gaussiana}: Este es uno de los métodos métodos más sencillos desde el punto de vista teórico. Consiste en derivar un sistema como el nuestro en un sistema con una matriz triangular para que sea fácil de resolver. Como ventaja: es de fácil implementación; como desventaja: no todos los sistemas pueden resolverse mediante Eliminación Gaussiana sin pivoteo y es suceptible a errores numéricos. Entre otras cosas, consta con una complejidad de $O(n^3)$.
-    \item \textbf{Mediante Factorización LU}: Esencialmente se apoya en el método anterior. Consiste en obtener una factorización $C = LU$ donde $L$ es triangular inferior con unos en la diagonal y $U$ es triangular superior. Como ventaja respecto a la Eliminación Gaussiana a secas es que mediante la resolución de dos sistemas de ecuaciones simples se puede lograr una complejidad de $O(n^2)$. Como desventaja: aún no todos los sistemas pueden resolverse utilizando este método sin pivoteo.
-    \item \textbf{Mediante Factorización de Choleski}: Consiste en encontrar una factorización $C = LL^t$ donde $L$ es una matríz triangular inferior. Una vez se obtiene mencionada factorización se puede resolver el sistema en cuestión utilizando, al igual que antes, dos sistemas intermedios. La diferencia con los métodos previos es que hay un algoritmo que permite hallar las matrices de estos sistemas más simple sin Eliminación Gaussiana. Como ventaja: es más eficiente para representar sistemas de ecuaciones en memoria y cuenta con una complejidad de $O(n^2)$ aunque con mejores constantes que el Método de Factorización LU. Por otra parte, tiene una mayor estabilidad numérica. Como desventaja: no todos los sistemas pueden resolverse mediante este método, solo aquellos cuya matriz principal sea simétrica definida positiva.
+    \item \textbf{Eliminación Gaussiana sin pivoteo}: Este es uno de los métodos métodos más sencillos desde el punto de vista teórico. Consiste en derivar un sistema como el nuestro en un sistema con una matriz triangular para que sea fácil de resolver. Como ventaja: es de fácil implementación; como desventaja: no todos los sistemas pueden resolverse mediante Eliminación Gaussiana sin pivoteo y es susceptible a errores numéricos. Entre otras cosas, consta con una complejidad de $O(n^3)$.
+    \item \textbf{Factorización LU}: Esencialmente se apoya en el método anterior. Consiste en obtener una factorización $C = LU$ donde $L$ es triangular inferior con unos en la diagonal y $U$ es triangular superior. Como ventaja respecto a la Eliminación Gaussiana sin pivoteo es que mediante la resolución de dos sistemas de ecuaciones simples se puede lograr una complejidad de $O(n^2)$. Como desventaja: aún no todos los sistemas pueden resolverse utilizando este método.
+    \item \textbf{Factorización de Cholesky}: Consiste en encontrar una factorización $C = LL^t$ donde $L$ es una matriz triangular inferior. Una vez se obtiene la factorización se puede resolver el sistema en cuestión utilizando, al igual que antes, dos sistemas intermedios. La diferencia con los métodos previos es que hay un algoritmo que permite hallar las matrices de estos sistemas sin Eliminación Gaussiana. Como ventaja: es más eficiente para representar sistemas de ecuaciones en memoria y cuenta con una complejidad de $O(n^2)$ aunque con mejores constantes que el Método de Factorización LU. Por otra parte, tiene una mayor estabilidad numérica. Como desventaja: no todos los sistemas pueden resolverse mediante este método, sólo aquellos cuya matriz principal sea \textit{simétrica definida positiva}.
 \end{itemize}
 
 Todos los métodos se complementan con el algoritmo de \textit{backward substitution} ($O(n^2)$) para resolver el sistema.
 
 \subsection{Elección del algoritmo}
 
-Nos fue requerido resolver el sistema mediante Eliminación Gaussiana, sin pivoteos. Observemos que como la matríz $C$ de nuestro sistema es \textit{simétrica definida positiva} \cite{CMMpaper} cumple con las condiciones para resolverse con cualquiera de los métodos mencionados.
+Nos fue requerido resolver el sistema mediante Eliminación Gaussiana sin pivoteo (EG). Observemos que como la matriz $C$ de nuestro sistema es simétrica definida positiva \cite{CMMpaper} cumple con las condiciones para resolverse con cualquiera de los métodos mencionados.
 
 \subsection{Algunas características de nuestro sistema}
 
@@ -33,8 +33,8 @@ Por otro lado, sabemos que si las submatrices principales de una matriz son no s
 
 Se implica directamente que a \textbf{$C$ se le puede aplicar la Eliminación Gaussiana sin pivoteo}.
 
-\subsection{Sobre la estabilidad numérica de la Eliminación Gaussiana sin pivoteo}
+\subsection{Sobre la estabilidad numérica de la Eliminación Gaussiana sin pivoteo}\label{estabilidad_numerica}
 
-La aritmética finita de las computadoras traen aparejados problemas para representar nuestro sistema numérico. En el caso de la Eliminación Gaussiana sin pivoteo podria presentarse al realizar una división por algún elemento de la diagonal de la matriz en cuestión que esté muy cercano a cero. En tal caso cualquier error se vería amplificado. No obstante al ser $C$ una matríz estrictamente diagonal dominante y simétrica eso nos asegura tener en la diagonal el elemento más grande en módulo tanto por fila como por columna, por lo que el pivoteo parcial en un caso como este sería redundante y se logra una cierta estabilidad numérica.
+La aritmética finita de las computadoras traen aparejados problemas para representar nuestro sistema numérico. En el caso de la Eliminación Gaussiana sin pivoteo podría presentarse al realizar una división por algún elemento de la diagonal de la matriz en cuestión que esté muy cercano a cero. En tal caso cualquier error se vería amplificado. No obstante el ser $C$ una matriz estrictamente diagonal dominante y simétrica nos asegura tener en la diagonal el elemento más grande en módulo tanto por fila como por columna, por lo que el pivoteo parcial en un caso como este sería redundante y se logra una cierta estabilidad numérica.
 
-No obstante, las pruebas de control sobre la implementanción acotan el error por $10^{-4}$.
+No obstante, las pruebas de control sobre la implementación acotan el error por $10^{-4}$.

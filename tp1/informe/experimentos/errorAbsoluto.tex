@@ -1,4 +1,4 @@
-Como se explicó en [ref a desarrollo o intro] debido a la aritmética finita de la computadora %TODO agregar ref
+Como se explicó en \ref{estabilidad_numerica} debido a la aritmética finita de la computadora
 las operaciones pueden llegar a ser muy inestables \cite{arithmetic}.
 
 Un pequeño ejemplo:
@@ -19,7 +19,7 @@ $$\begin{pmatrix}
     0 & 0 & 0 & \frac{396}{91} \\
 \end{pmatrix}$$
 
-Pero por culpa de la falta de precisión de los double queda:
+Pero debido a la falta de precisión de los double queda:
 
 $$\begin{pmatrix}
     5 & -1 & -1 & -1 \\
@@ -31,12 +31,12 @@ $$\begin{pmatrix}
 Se puede ver que $\frac{396}{91} \cong 4.351648352$ teniendo una diferencia de $0.00000165$ con $4.35165$.
 Difieren poco pero es un caso chico, este error se podría repetir y acarrear terminando en un valor en esa posición muy diferente al esperado, afectando así el ranking final.\\
 
-Para experimentar sobre esto construimos una serie de partidos ficticios con el propósito de que la matriz quede con \textit{valores diferentes en su diagonal}, posiblemente este no sea el peor caso de error pero suponemos que es suficientemente malo. Para calcular el error absoluto, ya que no contamos con el valor esperado, utilizamos la factorización de Cholesky ya que es más estable. Cabe destacar que este método se puede aplicar ya que la matriz resulta simétrica y definida positiva\cite{CMMpaper}.\\
+Para experimentar sobre esto construimos una serie de partidos ficticios con el propósito de que la matriz quede con \textit{valores diferentes en su diagonal}, posiblemente este no sea el peor caso de error pero suponemos que es suficientemente malo. Para calcular el error absoluto, debido a que no contamos con el valor de control, utilizamos la factorización de Cholesky ya que es más estable. Cabe destacar que este método se puede aplicar dado que la matriz resulta simétrica y definida positiva\cite{CMMpaper}.\\
 %The Cholesky method is available, because the matrices are not only (obviously) symmetric and real, but are also positive definite.
 
 Yendo en detalle hicimos que cada equipo (1 a total-1) juegue $id$ cantidad de partidos, es decir, el equipo 1 juega un partido, el 2 dos, etc. Salvo el último equipo que va a jugar la cantidad que sea necesaria para cumplir con los partidos de los demás.
 
-Como se puede observar en la figura \ref{fig:bienDiferenteEnDiagonal} aumenta el error a medida que aumenta la cantidad de equipos, lo cuál es esperable ya que se realizan más despejes y cuentas y se acarrea más el error.\\
+Como se puede observar en la figura \ref{fig:bienDiferenteEnDiagonal} aumenta el error a medida que aumenta la cantidad de equipos, lo cuál es esperable ya que se realizan más despejes, cuentas y se acarrea más el error.\\
 
 \begin{figure}[H]
  \centering
@@ -45,9 +45,9 @@ Como se puede observar en la figura \ref{fig:bienDiferenteEnDiagonal} aumenta el
  \label{fig:bienDiferenteEnDiagonal}
 \end{figure}
 
-Luego, simplemente por probar otros casos decidimos utilizar el batch de tests generado por la cátedra. Al obtener los resultados notamos que los \textit{tests completos} generaban un error absoluto promedio mayor al que obtuvimos con nuestra \textit{diagonal diferente}, ver figura\ref{fig:testCatedra}.
+Luego, simplemente por probar otros casos decidimos utilizar el batch de tests generado por la cátedra. Al obtener los resultados notamos que los \textit{tests completos} generaban un error absoluto promedio mayor al que obtuvimos con nuestra \textit{diagonal diferente}, ver figura \ref{fig:testCatedra}.
 
-Lo que suponíamos que podía estar pasando es que al haber muchos -1 al comienzo y no tantos 0s el error generado termina siendo mayor. Para probar esto hicimos nuestros propios tests de \textit{todos vs todos}, para diferentes cantidades de equipos. Pero al final, como se puede apreciar en la figura \ref{fig:todosVsTodos}, no pudimos llegar a un error tan grande como vs la cátedra. Suponemos que esto se debe a que nuestro oráculo no es tan estable como pensábamos y queda abierta la pregunta de cómo fueron calculados los resultados esperados para los casos de la cátedra.
+Lo que suponíamos que podía estar pasando es que al haber muchos -1 al comienzo y no tantos 0s el error generado termina siendo mayor. Para probar esto hicimos nuestros propios tests de \textit{todos vs todos}, para diferentes cantidades de equipos. Pero al final, como se puede apreciar en la figura \ref{fig:todosVsTodos}, no pudimos llegar a un error tan grande como los de la cátedra. Suponemos que esto se debe a que nuestro oráculo no es tan estable como pensábamos y queda abierta la pregunta de cómo fueron calculados los resultados esperados para los casos de la cátedra.
 
 \begin{figure}[H]
  \centering

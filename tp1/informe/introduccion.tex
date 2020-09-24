@@ -4,12 +4,12 @@ Vamos a presentar una implementación en C++ que nos va a permitir en base a un 
 
 Desde el punto de vista del análisis cuantitativo presentaremos el error absoluto del método utilizando casos específicos y tomando como referencia implementaciones ya desarrolladas más estables numéricamente.
 
-Desde el punto de vista del análisis cualitativo presentaremos un estudio por planteo de casos de los cuales podremos derivar algunas carácterísticas del método que explicaremos cuando hagamos la interpretación del sistema matricial que lo determina. Consecuentemente podremos plantear una estrategia para explotarlo y determinar en qué casos podria ser injusta un evento que lo utilice.
+Desde el punto de vista del análisis cualitativo presentaremos un estudio por planteo de casos de los cuales podremos derivar algunas características del método que explicaremos cuando hagamos la interpretación del sistema matricial que lo determina. Consecuentemente podremos plantear una estrategia para explotarlo y determinar en qué casos podría ser injusto un evento que lo utilice.
 
-Finalmente haremos una comparación de CMM contra otros sistemas de rankeo, como en este caso son WP (Winning Percentage) y ELO para encontrar similitudes y diferencias.
+Finalmente haremos una comparación de CMM contra otros sistemas de rankeo, como en este caso son WP (porcentaje de victorias) y Elo para encontrar similitudes y diferencias.
 
 \subsection{Problema}
-Una forma intuitiva de establecer un sistema de puntaje para un evento es utilizar el estimador que relaciona la cantidad de partidos ganados con la cantidad de partidos totales: estamos hablando del \textit{winning percentaje} (WP)
+Una forma intuitiva de establecer un sistema de puntaje para un evento es utilizar el estimador que relaciona la cantidad de partidos ganados con la cantidad de partidos totales: estamos hablando del \textit{porcentaje de victorias} (WP)
 
 \begin{equation}
     r_i = \frac{w_i}{n_i}
@@ -17,7 +17,7 @@ Una forma intuitiva de establecer un sistema de puntaje para un evento es utiliz
 
 Donde $w_i$ denota la cantidad de partidos ganados, $n_i$ la cantidad de partidos jugados y $r_i$ es el ratio buscado.
 
-Por un lado, puede pasar que para un equipo, $r_i = 1$ habiendo jugado y ganado un partido mientras que para otro $r_j = 0.7$ habiendo jugado diez y perdido siete. Por otra parte, WP, no contempla en su desarrollo características de los oponentes o cuantas veces jugó contra ellos, dado que no es lo mismo jugar una vez contra el top 1 que hacerlo cuatro veces.
+Por un lado, puede pasar que para un equipo, $r_i = 1$ habiendo jugado y ganado un partido mientras que para otro $r_j = 0.7$ habiendo jugado diez y perdido siete. Por otra parte, WP, no contempla en su desarrollo características de los oponentes o cuantas veces jugó contra ellos, dado que no es lo mismo jugar una vez contra el número 1 que hacerlo cuatro veces.
 
 Este es el problema que intenta resolver Colley Matrix Method.
 
@@ -58,4 +58,4 @@ Obtenemos un sistema lineal de ecuaciones $C r = b$ donde $r$ es el vector incó
     \end{matrix}\right. 
 \end{equation}
 
-¿Pero este sistema siempre tiene solución? claramente, en una situación en la que es necesaria rankear equipos siempre debería poder lograrse. ¿Habrán situaciones para las cuales no se podrá hacer? ¿Elaborará un ranking razonable?
+¿Pero este sistema siempre tiene solución? claramente, en una situación en la que es necesario rankear equipos siempre debería poder lograrse. ¿Habrán situaciones para las cuales no se podrá hacer? ¿Elaborará un ranking razonable?

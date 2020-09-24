@@ -1,6 +1,6 @@
 \subsection{Análisis cualitativo}
 
-El objetivo de esta sección es plantear y responder preguntas que nos lleven a entender mejor CMM y a encontrar ventajas y desventajas del mismo. Para ello primeramente propondremos casos pequeños, que no necesariamente representen casos de competencias reales.
+El objetivo de esta sección es plantear y responder preguntas que nos lleven a entender mejor CMM y a encontrar ventajas y desventajas del mismo. Para ello primeramente propondremos casos pequeños, que no necesariamente representan casos de competencias reales.
 
 \subsubsection{Planteo de casos}
 
@@ -71,7 +71,7 @@ Sobre el sistema anterior: se suma un equipo, 3. 3 vs 2 a favor de 3.
     \end{center}
 \end{table}
 
-\textbf{Observación}: Después de 3 vs 2 a favor de 3, 3 supera facilmente a 2 modificando sus posiciones. El rating de 2 desciende esperadamente, pero el de 1 también aunque sigue manteniendo su posición. Al no estar 1 involucrado en este partido, vemos que CMM afecta el rating (y tal vez el ranking) de equipos que no formaron parte del partido.
+\textbf{Observación}: Después de 3 vs 2 a favor de 3, 3 supera fácilmente a 2 modificando sus posiciones. El rating de 2 desciende esperadamente, pero el de 1 también aunque sigue manteniendo su posición. Al no estar 1 involucrado en este partido, vemos que CMM afecta el rating (y tal vez el ranking) de equipos que no formaron parte del partido.
 
 \newpage
 
@@ -150,7 +150,7 @@ Sobre el sistema anterior: se suma un equipo, 4. 4 vs 3 a favor de 4.
 
 \newpage
 
-\subsubsection*{Caso 7}
+\subsubsection*{Caso 7}\label{caso_7}
 
 Sobre el sistema anterior: se agregan cien partidos, 2 vs 3 a favor de 2.
 
@@ -173,7 +173,7 @@ Sobre el sistema anterior: se agregan cien partidos, 2 vs 3 a favor de 2.
     \end{center}
 \end{table}
 
-\textbf{Observación}: Se observa que por un lado 2 y 3 intercambiaron posiciones, lo que muestra que, aunque los ajustes de rating se haga con cada partido, los máximos valores que pueden tener se ven limitados a los valores de los equipos que se enfrentaron. Por otro lado 1 y 4 intercambiaron lugares también: esto puede deberse a que hasta este momento 3 y 4 se enfrentaron en una ocasión a favor de 4, es probable que su caida en el puesto sea debido a la caida de 3 (su victoria se desprestigia).
+\textbf{Observación}: Se observa que por un lado 2 y 3 intercambiaron posiciones, lo que muestra que, aunque los ajustes de rating se hagan con cada partido, los máximos valores que pueden tener se ven limitados a los valores de los equipos que se enfrentaron. Por otro lado 1 y 4 intercambiaron lugares también: esto puede deberse a que hasta este momento 3 y 4 se enfrentaron en una ocasión a favor de 4, es probable que su caída en el puesto sea debido a la caída de 3 (su victoria se desprestigia).
 
 \subsubsection*{Caso 8}
 
@@ -200,9 +200,9 @@ Sobre el sistema anterior: se agregan tantos partidos como sea necesario para de
 
 \textbf{Observación}: En siete partidos, 3 fue capaz mediante CMM de que 2 reemplazara a 1 en el primer lugar. ¿Por qué 2 y no 4? Es probable que sea debido a la cantidad de partidos 1 vs 2 que se hayan dado.
 
-\subsubsection*{Caso 9}
+\subsubsection*{Caso 9}\label{caso_9}
 
-Sobre el sistema del caso 7: se agregan tantos partidos como sea necesario para desplazar a 1 de la primera posición, 3 vs 2 a favor de 3.
+Sobre el sistema del caso 7 \ref{caso_7}: se agregan tantos partidos como sea necesario para desplazar a 1 de la primera posición, 3 vs 2 a favor de 3.
 
 \textbf{Pregunta}: Estando 3 en la última posición, ¿se podrá desplazar a 1 de la primera posición en pocos partidos?
 
@@ -228,11 +228,11 @@ Sobre el sistema del caso 7: se agregan tantos partidos como sea necesario para 
 \newpage
 \subsubsection{¿Qué podemos decir sobre CMM en base a las observaciones?}
 
-Estos ejemplos sencillos nos permitieron entender un poco más CMM a la hora de rankear equipos.\\
+Estos ejemplos sencillos nos permitieron entender un poco más CMM a la hora de rankear equipos.
 
-Desde el caso 1 al caso 5, probamos introducir un equipo y hacerlo avanzar compitiendo con el equipo de la última posición. Vimos que puede alcanzar un mejor puesto en el ranking tratando de obtener una configuración similar a la de los equipos que están en la posición deseada, lo cual es esperado para un ranking en general. Vimos también que el resultado de un partido influye sobre otros equipos mediante una "transitividad" (caso 4).\\
+Desde el caso 1 al caso 5, probamos introducir un equipo y hacerlo avanzar compitiendo con el equipo de la última posición. Vimos que puede alcanzar un mejor puesto en el ranking tratando de obtener una configuración similar a la de los equipos que están en la posición deseada, lo cual es esperado para un ranking en general. Vimos también que el resultado de un partido influye sobre otros equipos mediante una "transitividad" (caso 4).
 
-Desde el caso 6 al caso 9, queriamos hacer foco en como un equipo puede avanzar en la tabla. Ingresamos un participante más a nuestro sistema, dejando un total de cuatro y volviendolo un poco más complejo, corroboramos que los equipos son suceptibles a cambios en su rating si algún equipo con el que tuvo relación tiene un partido. Por otra parte, notamos que un equipo en la tabla avanza más lento conforme se enfrenta a equipos que están en las últimas posiciones y más rápido conforme se enfrenta a otros que está en las primeras:
+Desde el caso 6 al caso 9, quisimos hacer foco en como un equipo puede avanzar en la tabla. Ingresamos un participante más a nuestro sistema, dejando un total de cuatro y volviéndolo un poco más complejo, corroboramos que los equipos son susceptibles a cambios en su rating si algún equipo con el que tuvo relación tiene un partido. Por otra parte, notamos que un equipo en la tabla avanza más lento conforme se enfrenta a equipos que están en las últimas posiciones y más rápido conforme se enfrenta a otros que está en las primeras:
 
 \begin{itemize}
     \item en el caso 7: 3 vs 2, favor a 3. Después de cien partidos 2 había avanzado una posición.
@@ -242,7 +242,7 @@ Desde el caso 6 al caso 9, queriamos hacer foco en como un equipo puede avanzar 
 
 Tiene sentido esto último ya que tal vez pueda considerarse que no hay suficiente mérito en vencer a equipos que están en las últimas posiciones.
 
-\subsubsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}
+\subsubsection{Interpretación del sistema $Cr = b$ y una explicación a las observaciones}\label{interpretacion_sistema}
 
 Como se desarrolla en \cite{CMMpaper}, la solución al sistema $Cr = b$ son los ratings de los equipos involucrados en la competencia. Saliendo de su expresión matricial, obtenemos que para un equipo $e_i \in \{e_1, \dots, e_n\}$:
 
@@ -270,7 +270,7 @@ En segundo lugar, hay dos términos en el numerador principal que contribuyen a 
 \end{itemize}
 
 \newpage
-Esto nos permite explicar el caracter ``transitivo'' de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
+Esto nos permite explicar el carácter ``transitivo'' de CMM: partidos de equipos con los que $e_i$ haya jugado impactarán en uno de los términos de la última sumatoria vista de forma proporcional a la cantidad de partidos disputados entre $e_i$ y el equipo en cuestión.
 
 \subsubsection{Una estrategia para avanzar en el ranking minimizando la cantidad de partidos}
 
@@ -279,23 +279,23 @@ En base a la interpretación anterior, podemos sacar ventaja de CMM si:
 \begin{itemize}
     \item Se compensa la relación entre los términos $(2 + n_i)$ y $\frac{w_i - l_i}{2}$ para evitar que $r_i$ disminuya. Esto se logra manteniendo al máximo la cantidad de partidos ganados.
     \item De ser posible, jugar menos partidos que los demás equipos.
-    \item Teniendo en cuenta el caracter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a qué tan bien le vaya a ese único equipo.
+    \item Teniendo en cuenta el carácter transitivo mencionado previamente, jugar uniformemente con equipos que tengan bajo rating (dado que la probabilidad de ganarles es mayor) una cantidad considerable de partidos, mientras más, mejor. Eventualmente en la intención de llegar a mejores posiciones de estos equipos, alguno (o ninguno) empezará a subir en la tabla impactando proporcionalmente a la cantidad de partidos que haya jugado con el equipo que aplique la estrategia. También se puede jugar siempre con un mismo equipo de rating bajo, pero la posibilidad de encontrar una ventaja se limita a qué tan bien le vaya a ese único equipo.
 \end{itemize}
 
 \subsubsection{¿Es CMM un método justo?}
 
-Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado. \\
+Puede pasar que el rating de un equipo se vea afectado por una partida en la que no estuvo involucrado.
 
-Sabemos que de poder elegir contra quien jugar y cuantos partidos un equipo puede plantear una estrategia para subir su rating sin haber jugado.\\
+Sabemos que de poder elegir contra quien y cuantos partidos jugar, un equipo puede plantear una estrategia para subir su rating sin haber jugado como los otros.
 
-En el caso 9 presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es dificil que lo haga ganando partidas con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos.\\
+En el caso 9 \ref{caso_9} presentado en la sección anterior. se observa que si un equipo que está en las últimas posiciones quiere llegar al primer lugar, es difícil que lo haga ganando partidas con equipos que están en posiciones más bajas o bien que no tienen relación alguna con los equipos que están por encima del que quiere subir. Aún después de haber jugado, como en ese caso más de veinte partidos. Por eso también aplicar la estrategia mencionada previamente puede ser arriesgada.
 
-En base a estas cosas, podría calificarse a CMM como un método \textbf{no  justo, de no tener la competencia reglas claras} que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos. Cabe destacar que este último caso CMM pierde un poco de gracia y un rankeo por medio de puntos (como en fútbol por ejemplo) sería más efectivo.
+En base a estas cosas, podría calificarse a CMM como un método \textbf{no  justo, de no tener la competencia reglas claras} que determinen la forma de juego, asegurando que no se puedan incurrir en tales estrategias o asegurando que todos jueguen contra todos. Cabe destacar que en este último caso CMM pierde un poco de gracia y un rankeo por medio de puntos (como en fútbol por ejemplo) sería más efectivo.
 
 %--------------------------------------------------------
 \FloatBarrier
 \subsection{CMM y otros algoritmos de rankeo}
-En la tabla \ref{tab:tops10CMM} se puede ver los nombres de los tenistas en el top 10 de CMM, a modo informal de comparación agregamos su posición en WP y Elo así como también su ranking ``real''\footnote{Según \url{https://www.atptour.com/en/rankings/singles?rankDate=2015-12-28&rankRange=0-100}}. CMM hace un gran trabajo ``descubriendo'' cuáles son los jugadores top 10, faltandole solo uno del ranking oficial (Jo-Wilfried Tsonga) aunque mezcla un poco las posiciones.
+En la tabla \ref{tab:tops10CMM} se puede ver los nombres de los tenistas en el top 10 de CMM, a modo informal de comparación agregamos su posición en WP y Elo así como también su ranking ``real''\footnote{Según \url{https://www.atptour.com/en/rankings/singles?rankDate=2015-12-28&rankRange=0-100}}. CMM hace un gran trabajo ``descubriendo'' cuales son los jugadores top 10, faltando solo uno del ranking oficial (Jo-Wilfried Tsonga) aunque mezcla un poco las posiciones.
 
 \input{csvs/tops10.tex}
 
@@ -307,14 +307,14 @@ Analizaremos estos algoritmos de rankeo utilizando el conjunto de datos de parti
 
 %--------------------------------------------------------
 \FloatBarrier
-\subsubsection{Winning Percentage}
+\subsubsection{Porcentaje de victorias}
 
-En la figura \ref{fig:sc_cmm_wp} podemos ver que la correlación lineal ente CMM y WP es bastante buena salvo por unos grupos de outliers. El coeficiente de Pearson es 0.805, mostrando que esos grupos de outliers no afecta \textit{tanto} y la relación es cercana. Por otro lado el coeficiente de Kendall es 0.763, un poco más bajo lo que indicaría, si mal no entendemos, que la relación no es tan buena para los primeros puestos. Esto concuerda en principio con la tabla de tops presentada al comienzo.\ref{tab:tops10CMM}
+En la figura \ref{fig:sc_cmm_wp} podemos ver que la correlación lineal entre CMM y WP es bastante buena salvo por unos grupos de outliers. El coeficiente de Pearson es 0.805, mostrando que esos grupos de outliers no afectan \textit{tanto} y la relación es cercana. Por otro lado el coeficiente de Kendall es 0.763, un poco más bajo lo que indicaría, si mal no entendemos, que la relación no es tan buena para los primeros puestos. Esto concuerda en principio con la tabla \ref{tab:tops10CMM} presentada al comienzo.
 
 \begin{figure}[h]
  \centering
  \includegraphics[scale=0.8]{imagenes/scatterplot_CMM_WP.png}
- \caption{Correlación lineal entre CMM y WP.}
+ \caption{Correlación lineal entre CMM y WP}
  \label{fig:sc_cmm_wp}
 \end{figure}
 
@@ -328,45 +328,45 @@ Para el algoritmo WP:
     r_i = \frac{w_i}{n_i}   
 \end{equation}
 
-donde $w_i$ y $n_i$ tienen el mismo significado que para la definición de CMM [ref].
+donde $w_i$ y $n_i$ tienen el mismo significado que para la definición de CMM \ref{interpretacion_sistema}.
 
-Es importante tener en cuenta que la definición de CMM tiene su origen en una variación de WP [ref], utilizando la Regla de Laplace de sucesos. Por lo que:
+Es importante recordar que la definición de CMM tiene su origen en una variación de WP, utilizando la Regla de Laplace de sucesos. Por lo que:
 
 \begin{equation}
     r_i = \frac{1 + \frac{w_i - l_i}{2} + \sum_{j=1, j \neq i}^{n}{n_{i,j} * r_j}}{2 + n_i} = \frac{1 + w_i}{2 + n_i}
 \end{equation}
 
-si $w_i = \frac{w_i - l_i}{2} + \frac{n_i}{2}$
+si se toma la igualdad $w_i = \frac{w_i - l_i}{2} + \frac{n_i}{2}$, asumiendo que todos los equipos inician el sistema con $r_i = \frac{1}{2}$.
 
 Observemos que al final, la expresión de $r_i$ para CMM es muy parecida a la expresión de $r_i$ para WP, por lo que es esperable un comportamiento similar, siempre teniendo en cuenta que el estimador que es objeto de estudio en este trabajo, tiene como objetivo aportar coherencia al asignar ratings y en eso difieren.
 
 %--------------------------------------------------------
 \FloatBarrier
-\subsubsection{ELO}
+\subsubsection{Elo}
 
-Elo y CMM se parecen menos linealmente, como se puede ver en la figura \ref{fig:sc_cmm_elo}. Su coeficiente de Pearson es 0.789, un poco menos que con WP. Mientras que su coeficiente de Kendall es 0.868, esto nos indica que, si bien no son súper parecidos linealmente tienden a rankear de manera similar los jugadores con mayor cantidad de ``puntaje''. Esto también concuerda con la tabla de tops.\ref{tab:tops10CMM}
+Elo y CMM se parecen menos linealmente, como se puede ver en la figura \ref{fig:sc_cmm_elo}. Su coeficiente de Pearson es 0.789, un poco menos que con WP. Mientras que su coeficiente de Kendall es 0.868, esto nos indica que, si bien no son muy parecidos linealmente tienden a rankear de manera similar los jugadores con mayor cantidad de ``puntaje''. Esto también concuerda con la tabla \ref{tab:tops10CMM} de tops.
 
 \begin{figure}[h]
  \centering
  \includegraphics[scale=0.8]{imagenes/scatterplot_CMM_Elo.png}
- \caption{Correlación lineal entre CMM y Elo.}
+ \caption{Correlación lineal entre CMM y Elo}
  \label{fig:sc_cmm_elo}
 \end{figure}
 
-De la misma manera que en la sección anterior, notamos algunas similitudes entre CMM y ELO. Pasamos a analizarlo para entenderlo mejor.
+De la misma forma que en la sección anterior, pasamos a analizar el cálculo de Elo para entenderlo mejor.
 
-ELO se compone de dos partes:
+Elo se compone de dos partes:
 
 \begin{itemize}
     \item La probabilidad de que un equipo $e_i$ gane sobre un equipo $e_j$: $p(elo_i, elo_j) = \frac{1}{1 + 10^{\frac{elo_j - elo_i}{400}}}$
-    \item Actualización del rating ELO de un equipo $e_i$ que se enfrentó a un equipo $e_j$: $u(elo_i, elo_j, p_i) = elo_i + k(p_i - p(elo_i, elo_j))$ donde $p_i$ es el puntaje que hizo el equipo $e_i$ en el partido y $k$ es un coeficiente de actualización, fija en tiempo de implementación.
+    \item Actualización del rating Elo de un equipo $e_i$ que se enfrentó a un equipo $e_j$: $u(elo_i, elo_j, p_i) = elo_i + k(p_i - p(elo_i, elo_j))$ donde $p_i$ es el puntaje que hizo el equipo $e_i$ en el partido y $k$ es un coeficiente de actualización, fija en tiempo de implementación, que entre otras cosas determina cuantos puntos se ganan o se pierden como máximo.
 \end{itemize}
 
 Algunas diferencias respecto a CMM que se pueden deducir en base a lo mencionado:
 
 \begin{itemize}
-    \item La actualización de $elo_i$ sólo depende del equipo contrincante y de su rating ELO. Por lo que no hay influencia sobre otros equipos.
+    \item La actualización de $elo_i$ sólo depende del equipo contrincante y de su rating elo ($elo_j$). Por lo que no hay influencia sobre otros equipos.
     \item Hasta $k$ puntos puede avanzar o retroceder $elo_i$ dependiendo del resultado del partido y de qué tan probable sea que un equipo gane a otro. Los equipos con resultados más inesperados (a favor o en contra) son los que reciben la mayor diferencia.
     \item En base a lo anterior, es poco ventajoso que equipos fuertes se enfrenten a equipos débiles dado que en esos partidos la ganancia de puntos en el ranking es mínima.
-    \item Se entiende a ELO como un sistema que permite medir el progreso, dado que recompensa o penaliza las sorpresas.
+    \item Se entiende a Elo como un sistema que permite medir el progreso, dado que recompensa o penaliza las sorpresas.
 \end{itemize}
