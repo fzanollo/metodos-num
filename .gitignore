@@ -367,3 +367,8 @@ tp
 *.pdf
 !informe.pdf
 !ejemplo.dat
+!atp_matches_2015.csv
+!atp_players.csv
+!nba_2016_scores.csv
+!nba_2016_teams.csv
+!tops10.csv
