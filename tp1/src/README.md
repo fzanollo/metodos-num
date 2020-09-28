@@ -25,13 +25,27 @@ solucion.
 
 Observación: para correr el tp el orden esperado de los parámetros es ./tp inputfile outputfile algorithm (donde algorithm puede ser 0-CMM, 1-WP, los resultados de Elo fueron generados utilizando python)
 
-## Error absoluto
-Todos los scripts para crear/correr/comparar/generar gráficos se encuentran en la notebook llamada tp1mn
-
-## Análisis cualitativo
-
-Para correr cada caso planteado se deben utilizar los `.dat` que están en `data/casos/`. Por ejemplo:
+#### Crear los .dat para las notebooks y correr los test
 
 ```bash
-$ ./tp ../data/casos/caso1.dat ranking.out 0
+.../tools$ python atp2mn.py
+.../tools$ python massey2mn.py
+.../src$ python metnum.py test
+```
+
+#### ¿Qué hay en las notebooks?
+
+Parte del desarrollo teórico de las respuestas del informe puede ser encontrado en las mismas, puede que haya algún error. Dado que las mismas están pasadas en el informe en forma, pedimos desestimarlas de ser necesario. Por otro lado, los scripts para las pruebas que presentamos en el pdf final se encuentran ahí también, como para correr.
+
+## Pruebas
+__Error absoluto__: Todos los scripts para crear/correr/comparar/generar gráficos se encuentran en la notebook llamada tp1mn.
+
+Las pruebas relacionadas a __ATP 2015__ se encuentran en la notebook expAtp.
+
+Las pruebas relacionadas a __NBA 2016__ se encuentran en la notebook nba.
+
+Para correr cada caso planteado en la __prueba por casos__ se deben utilizar los `.dat` que están en `data/casos/`. Por ejemplo:
+
+```bash
+.../src$ ./tp ../data/casos/caso1.dat ranking.out 0
 ```
