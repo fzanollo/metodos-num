@@ -5,21 +5,34 @@
 
 using namespace std;
 
-
+bool converge (const Vector & a,const Vector& b,double tolerancia){
+    for (int i = 0; i < a.rows() ; ++i) {
+        if ( !(-tolerancia < a(i)- b(i) && a(i)- b(i)  < tolerancia ) ){
+            return false;
+        }
+    }
+    return true;
+}
 pair<double, Vector> power_iteration(const Matrix& X, unsigned num_iter, double eps)
 {
     Vector b = Vector::Random(X.cols());
+    Vector b_viejo = b;
     double eigenvalue;
     for (unsigned int i = 0; i < num_iter; ++i) {
+        b_viejo = b;
         b =  X*b ;
         b = b / b.norm();
+        if(converge(b,b_viejo,eps)){
+            cout<< "Convergio en " << i << endl;
+            break;
+        }
     }
-
     eigenvalue = (b.transpose()*X)*b;
     eigenvalue = eigenvalue / (b.transpose()*b);
 
     return make_pair(eigenvalue, b );
 }
+
 
 pair<Vector, Matrix> get_first_eigenvalues(const Matrix& X, unsigned num, unsigned num_iter, double epsilon)
 {
