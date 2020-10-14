@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/iostream.h>
 #include <pybind11/eigen.h>
 #include "knn.h"
 #include "pca.h"
@@ -11,7 +12,7 @@ PYBIND11_MODULE(metnum, m) {
     py::class_<KNNClassifier>(m, "KNNClassifier")
         .def(py::init<unsigned int>())
         .def("fit", &KNNClassifier::fit)
-        .def("predict", &KNNClassifier::predict);
+        .def("predict", &KNNClassifier::predict, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());
 
     py::class_<PCA>(m, "PCA")
         .def(py::init<unsigned int>())
