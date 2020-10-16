@@ -19,11 +19,11 @@ void PCA::fit(Matrix X)
 
 	Matrix Xmu = (X.colwise() - mu) / sqrt(dim-1);
 
-	Matrix Mcov = Xmu * Xmu.transpose(); // X.T * X 'o' X * X.T ???
-	cout << "Mcov " << Mcov << endl;
+	Matrix Mcov = Xmu.transpose() * Xmu; // X.T * X 'o' X * X.T ???
+	// cout << "Mcov " << Mcov << endl;
 
 	tc = get<0>(get_first_eigenvalues(Mcov, n_components));
-	cout << "tc " << tc;
+	// cout << "tc " << tc;
 }
 
 
