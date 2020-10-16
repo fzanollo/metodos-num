@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(tp2)
 
 set (CMAKE_CXX_STANDARD 11)
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ")
 
 
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -33,7 +33,9 @@ pybind11_add_module(metnum
                     src/metnum.cpp
                     src/knn.cpp
                     src/pca.cpp
-                    src/eigen.cpp)
+                    src/eigen.cpp
+                    src/data_handler.cpp)
+
 
 # Por cada módulo que use OpenMP ponerlo como dependencia de esta forma
 #target_link_libraries(metnum LINK_PUBLIC OpenMP::OpenMP_CXX)
@@ -52,7 +54,8 @@ add_executable(tp2
         src/main.cpp
         src/knn.cpp
         src/pca.cpp
-        src/eigen.cpp)
+        src/eigen.cpp
+        src/data_handler.cpp)
 
 
 # si se quiere hacer un ejecutable "tp2" que incluya pybind11, utilizar las
