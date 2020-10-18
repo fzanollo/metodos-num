@@ -12,13 +12,13 @@ Vector KNNClassifier::predict(Matrix X) {
     auto ret = Vector(X.rows());
 
     for (uint k = 0; k < X.rows(); ++k) {
-        ret(k) = predictOne((Vector) X.row(k), KNNClassifier::electionMode);
+        ret(k) = predict((Vector) X.row(k), KNNClassifier::electionMode);
         if(k % 100 == 0) cout << "Listo " << k << "/" << X.rows() << " del set de validación" << endl; // <-- comentar si molesta
     }
     return ret;
 }
 
-uint KNNClassifier::predictOne(Vector x, KNNClassifier::election_strategy_fn election) {
+uint KNNClassifier::predict(Vector x, KNNClassifier::election_strategy_fn election) {
     // n elementos ordenados por distancia
     point_queue queue(point_cmp);
 
