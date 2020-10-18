@@ -26,5 +26,5 @@ void PCA::fit(Matrix X)
 
 MatrixXd PCA::transform(Matrix X)
 {
-	return tc * X;
+	return X * tc;
 }
