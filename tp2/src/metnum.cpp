@@ -6,17 +6,18 @@
 #include "eigen.h"
 
 namespace py=pybind11;
+typedef py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect> callguard;
 
 // el primer argumento es el nombre...
 PYBIND11_MODULE(metnum, m) {
     py::class_<KNNClassifier>(m, "KNNClassifier")
         .def(py::init<unsigned int>())
         .def("fit", &KNNClassifier::fit)
-        .def("predict", &KNNClassifier::predict, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>());
+        .def("predict", &KNNClassifier::predict, callguard());
 
     py::class_<PCA>(m, "PCA")
         .def(py::init<unsigned int>())
-        .def("fit", &PCA::fit, py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>())
+        .def("fit", &PCA::fit, callguard())
         .def("transform", &PCA::transform);
     m.def(
         "power_iteration", &power_iteration,
