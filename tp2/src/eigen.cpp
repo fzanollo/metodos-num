@@ -13,6 +13,7 @@ bool converge (const Vector & a,const Vector& b,double tolerancia){
     }
     return true;
 }
+
 pair<double, Vector> power_iteration(const Matrix& X, unsigned num_iter, double eps)
 {
     Vector b = Vector::Random(X.cols());
@@ -23,7 +24,7 @@ pair<double, Vector> power_iteration(const Matrix& X, unsigned num_iter, double 
         b =  X*b ;
         b = b / b.norm();
         if(converge(b,b_viejo,eps)){
-            cout<< "Convergio en " << i << endl;
+            //cout<< "Convergio en " << i << endl;
             break;
         }
     }
