@@ -13,7 +13,7 @@ Vector KNNClassifier::predict(Matrix X) {
 
     for (uint k = 0; k < X.rows(); ++k) {
         ret(k) = predict((Vector) X.row(k), KNNClassifier::electionMode);
-        if(k % 100 == 0) cout << "Listo " << k << "/" << X.rows() << " del set de validación" << endl; // <-- comentar si molesta
+        // if(k % 100 == 0) cout << "Listo " << k << "/" << X.rows() << " del set de validación" << endl; // <-- comentar si molesta
     }
     return ret;
 }

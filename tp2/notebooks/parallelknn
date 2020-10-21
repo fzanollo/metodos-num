@@ -1,0 +1,26 @@
+#!/bin/bash
+
+AMOUNT_CORES=7
+MAX_TASKS=${1:-$AMOUNT_CORES}
+CORE=0
+SECONDS=0
+
+echo "train_size,kfold,knn,accuracy" >> result.csv
+
+for v in {1..401..20}; do
+    for k in {5..20..5}; do
+        PID=$!
+        taskset -cp $CORE $PID &> /dev/null
+
+        ./knn 42000 33600 $v $k >> out.log &
+
+        CORE=$(( CORE + 1 ))
+        if [ $CORE -eq $MAX_TASKS ]; then
+                wait
+                CORE=0
+        fi
+    done
+done
+
+echo $SECONDS
+echo 'Listo'
