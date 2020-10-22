@@ -1,0 +1,54 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=1.5cm]{geometry}
+%
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{placeins}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{csvsimple}
+\usepackage{scrextend}
+
+
+\usepackage{caratula/caratula}
+
+\begin{document}
+
+\def\runtitulo{Reconocimiento de dígitos}
+
+\input{caratula.tex}
+%Carátula
+\maketitle
+\newpage
+
+%Abstract
+\input{abstract.tex}
+\newpage
+
+%Indice
+\tableofcontents
+\newpage
+
+% Demás secciones
+\section{Introducción}
+\input{introduccion.tex}
+
+\section{Desarrollo}
+\input{desarrollo.tex}
+
+\section{Experimentación}
+\input{experimentacion.tex}
+
+\section{Conclusiones}
+\input{conclusion.tex}
+\newpage
+%
+
+%%%% BIBLIOGRAFIA
+\bibliographystyle{unsrt}
+\bibliography{biblio}
+
+\end{document}
