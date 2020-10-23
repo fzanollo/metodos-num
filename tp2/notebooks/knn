@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from sklearn.model_selection import KFold
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, recall_score, f1_score, cohen_kappa_score, precision_score
+from textwrap import dedent
 import numpy as np
 import pandas as pd
 import math
@@ -9,14 +10,14 @@ import metnum
 import time
 import os
 
-def work(X, y, clf, k):
+def work(X, y, clf, n_knn, n_kfold):
 
-    accuracy = []
+    data = []
 
-    kf = KFold(n_splits=k)
+    kf = KFold(n_splits=n_kfold)
     i = 1
     for train_index, test_index in kf.split(X):
-        print(f"{os.getpid()} == kfold iteración {i}/{k}")
+        print(f"{os.getpid()} kfold {i}/{n_kfold}")
 
         X_train, X_test = X.iloc[train_index], X.iloc[test_index]
         y_train, y_test = y[train_index], y[test_index]
@@ -24,47 +25,67 @@ def work(X, y, clf, k):
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_test)
 
-        accuracy.append(accuracy_score(y_test, y_pred))
+        data.append({
+            "train_size": X.shape[0],
+            "knn": n_knn,
+            "kfold": n_kfold,
+            "accuracy": accuracy_score(y_test, y_pred),
+            "recall": recall_score(y_test, y_pred, average = 'weighted'),
+            "f1": f1_score(y_test, y_pred, average = 'weighted'),
+            "cohen_kappa": cohen_kappa_score(y_test, y_pred),
+            "precision": precision_score(y_test, y_pred, average = 'weighted')
+        })
+
         i += 1
 
-    return np.mean(accuracy)
+    return data
 
-def makePartitionAndWork(X, y, k_knn, kfold, partition_size=200):
+def makePartitionAndWork(X, y, n_knn, n_kfold, partition_size=200):
 
-    results = []
+    result = pd.DataFrame()
 
     accumulator = 0
+    i = 1
 
-    clf = metnum.KNNClassifier(k_knn)
+    parts = math.ceil(X.shape[0] / partition_size)
+
+    clf = metnum.KNNClassifier(n_knn)
 
     while True:
         part_X = X.head(accumulator + partition_size)
         part_y = y.head(accumulator + partition_size)
 
-        print(f"{os.getpid()} == train size: {part_X.shape[0]} ==")
+        print(dedent(
+        f"""
+            {os.getpid()} train size: {part_X.shape[0]}
+            {os.getpid()} partición: {i}/{parts}
+        """
+        ))
 
-        accuracy = work(part_X, part_y, clf, kfold)
+        data = work(part_X, part_y, clf, n_knn, n_kfold)
 
-        results.append((part_X.shape[0], accuracy))
+        result = pd.concat([result, pd.DataFrame(data)])
 
         accumulator += partition_size
 
+        i += 1
         if accumulator >= X.shape[0]:
             break
 
-    return results
+    return result
 
 def main(
     universe_size:("tamaño a tomar del dataset original para hacer las pruebas [5000]")=5000,
     partition_size:("tamaño de partición para hacer una prueba incremental [4000]")=math.ceil(5000*0.8),
     knn:("parámetro de knn [10]")=10,
     kfold:("parámetro de kfold [10]")=10,
-    train_set_proportion:("relación de tamaño de trainset vs testset [0.8]")=0.8,
-    filename:("nombre de archivo donde dumpear el csv [result.csv]")="result.csv"
+    train_set_proportion:("relación de tamaño de trainset vs testset [0.8]")=0.8
     ):
     "Pruebas para Knn"
 
     assert universe_size * train_set_proportion >= partition_size
+
+    filename = f"knn_results/result_{universe_size}_{partition_size}_{knn}_{kfold}_{train_set_proportion}.csv"
 
     df_train = pd.read_csv("../data/train.csv")
     df_train = df_train[:universe_size]
@@ -77,7 +98,7 @@ def main(
 
     assert len(X_train) == len(y_train)
 
-    print(
+    print(dedent(
     f"""
         {os.getpid()} Pruebas para Knn
 
@@ -90,21 +111,13 @@ def main(
 
         {os.getpid()} train set final de {X_train.shape[0]} elementos
     """
-    )
-
-    result = np.array([]).reshape(0, 4)
+    ))
 
     begin = time.time()
-    configs = makePartitionAndWork(X_train, y_train, knn, kfold, partition_size)
+    result = makePartitionAndWork(X_train, y_train, knn, kfold, partition_size)
     end = time.time()
 
-    for train_size, accuracy in configs:
-        result = np.append(result, [[train_size, kfold, knn, accuracy]], axis=0)
-
-    f=open(filename,'ab')
-    np.savetxt(f, result, delimiter=",")
-    print(f"{os.getpid()} escribió en archivo {result.shape[0]} lineas")
-    f.close()
+    result.to_csv(filename, index=False)
 
     print(f"{os.getpid()} duration: {end - begin}")
 
