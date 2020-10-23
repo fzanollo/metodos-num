@@ -8,15 +8,13 @@
 
 namespace py=pybind11;
 typedef py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect> callguard;
-template <typename... Args>
-using overload_cast_ = pybind11::detail::overload_cast_impl<Args...>;
 
 // el primer argumento es el nombre...
 PYBIND11_MODULE(metnum, m) {
     py::class_<KNNClassifier>(m, "KNNClassifier")
         .def(py::init<unsigned int>())
         .def("fit", &KNNClassifier::fit)
-        .def("predict", overload_cast_<Matrix>()(&KNNClassifier::predict), callguard());
+        .def("predict", &KNNClassifier::predict, callguard());
 
     py::class_<PCA>(m, "PCA")
         .def(py::init<unsigned int>())
