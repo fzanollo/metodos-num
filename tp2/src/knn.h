@@ -32,7 +32,7 @@ private:
     Matrix y;
 
     // Predicción sólo para un elemento. "predict" lo hace para todas las rows de la matriz entrante.
-    uint predict(Vector, election_strategy_fn);
+    uint predictOne(Vector, election_strategy_fn);
 
     // Algoritmo de selección de label en base a la moda.
     static uint electionMode(point_queue, uint);

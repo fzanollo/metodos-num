@@ -374,3 +374,4 @@ tp
 !tops10.csv
 
 tp2/build
+!**/knn_results/*.csv
