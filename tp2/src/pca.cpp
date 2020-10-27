@@ -23,6 +23,14 @@ void PCA::fit(Matrix X)
 	// cout << "tc " << tc;
 }
 
+void PCA::setTC(Matrix tc) {
+	// tc tiene que venir ajustada para la cantidad de componentes que se desea
+	this->tc = tc;
+}
+
+Matrix PCA::getTC() {
+	return this->tc;
+}
 
 MatrixXd PCA::transform(Matrix X)
 {

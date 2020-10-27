@@ -1,0 +1,30 @@
+#!/bin/bash
+
+AMOUNT_CORES=6
+MAX_TASKS=${1:-$AMOUNT_CORES}
+CORE=0
+SECONDS=0
+
+for v in {1..51..5}; do
+    for a in {10..100..10}; do
+        for k in {5..20..5}; do
+            PID=$!
+            taskset -cp $CORE $PID &> /dev/null
+
+            universe=10000
+            partitionsize=2000
+
+            echo $PID
+            ./exp $universe $partitionsize $v $a $k &
+
+            CORE=$(( CORE + 1 ))
+            if [ $CORE -eq $MAX_TASKS ]; then
+                    wait
+                    CORE=0
+            fi
+        done
+    done
+done
+
+echo $SECONDS
+echo 'Listo'
