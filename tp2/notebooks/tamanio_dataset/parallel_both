@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+./parallelknn
+
+./parallelknn_pca

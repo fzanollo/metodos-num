@@ -1,0 +1,29 @@
+#!/bin/bash
+
+AMOUNT_CORES=4
+MAX_TASKS=${1:-$AMOUNT_CORES}
+CORE=0
+SECONDS=0
+
+for knn_k in {1..15..2}; do
+    k_fold=10
+    
+    PID=$!
+    taskset -cp $CORE $PID &> /dev/null
+
+    universe=42000
+    partitionsize=6000
+
+    echo $PID
+    ./knn $universe $partitionsize $knn_k $k_fold &
+
+    CORE=$(( CORE + 1 ))
+    if [ $CORE -eq $MAX_TASKS ]; then
+            wait
+            CORE=0
+    fi
+    done
+done
+
+echo $SECONDS
+echo 'Listo'
