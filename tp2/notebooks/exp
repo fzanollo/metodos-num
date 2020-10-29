@@ -11,11 +11,12 @@ import time
 import os
 
 # autovectores precalculados para pca
-T = np.loadtxt('pca_cached')
+# T = np.loadtxt('pca_cached')
 
 def pca(alpha, X_train, X_test):
     pca = metnum.PCA(alpha)
-    pca.setTC(T[:, :alpha])
+    # pca.setTC(T[:, :alpha])
+    pca.fit(X_train)
     return pca.transform(X_train), pca.transform(X_test)
 
 def work(X, y, clf, n_knn, n_pca, n_kfold):
