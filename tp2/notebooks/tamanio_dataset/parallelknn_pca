@@ -5,7 +5,7 @@ MAX_TASKS=${1:-$AMOUNT_CORES}
 CORE=0
 SECONDS=0
 
-for knn_k in {3..11..2}; do
+for knn_k in {1..11..2}; do
     for alpha in {25..105..10}; do
         k_fold=10
 
