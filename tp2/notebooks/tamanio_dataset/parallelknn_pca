@@ -5,27 +5,24 @@ MAX_TASKS=${1:-$AMOUNT_CORES}
 CORE=0
 SECONDS=0
 
-for knn_k in {1..11..2}; do
-    for alpha in {25..105..10}; do
-        k_fold=10
 
-        PID=$!
-        taskset -cp $CORE $PID &> /dev/null
+k_fold=10
 
-        universe=42000
-        partitionsize=6000
+PID=$!
+taskset -cp $CORE $PID &> /dev/null
 
-        echo $PID
-        ./knn_pca $universe $partitionsize $knn_k $alpha $k_fold &
+universe=42000
+partitionsize=6000
 
-        CORE=$(( CORE + 1 ))
-        if [ $CORE -eq $MAX_TASKS ]; then
-                wait
-                CORE=0
-        fi
-        done
-    done
+echo $PID
+./knn_pca $universe $partitionsize $k_fold &
+
+CORE=$(( CORE + 1 ))
+if [ $CORE -eq $MAX_TASKS ]; then
+        wait
+        CORE=0
+fi
 done
-
+        
 echo $SECONDS
 echo 'Listo'
