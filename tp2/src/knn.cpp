@@ -1,25 +1,35 @@
 #include "knn.h"
 
-KNNClassifier::KNNClassifier(uint n_neighbors) {
-    this->n_neighbors = n_neighbors;
+KNNClassifier::KNNClassifier(uint n_neighbors_max) {
+    this->n_neighbors_max = n_neighbors_max;
 }
 
 void KNNClassifier::fit(Matrix X, Matrix y) {
     this->X = X; this->y = y;
 }
 
-Vector KNNClassifier::predict(Matrix X) {
-    auto ret = Vector(X.rows());
+void KNNClassifier::load(Matrix X) {
+    D = Matrix(X.rows(), n_neighbors_max);
 
+    // matriz de distancias
     for (uint k = 0; k < X.rows(); ++k) {
-        ret(k) = predictOne((Vector) X.row(k), KNNClassifier::electionMode);
-        // if(k % 100 == 0) cout << "Listo " << k << "/" << X.rows() << " del set de validación" << endl; // <-- comentar si molesta
+        // cout << "Vecinos más cercanos para elemento " << k << endl;
+        D.row(k) = getNearestElements(X.row(k));
+    }
+}
+
+Vector KNNClassifier::predict(uint n_neighbors) {
+    assert(n_neighbors <= n_neighbors_max);
+    auto ret = Vector(D.rows());
+
+    for (uint k = 0; k < D.rows(); ++k) {
+        ret(k) = resolve(D.row(k), n_neighbors);
+        // if(k % 100 == 0) cout << "Listo " << k << "/" << D.rows() << " del set de validación" << endl; // <-- comentar si molesta
     }
     return ret;
 }
 
-uint KNNClassifier::predictOne(Vector x, KNNClassifier::election_strategy_fn election) {
-    // n elementos ordenados por distancia
+Vector KNNClassifier::getNearestElements(Vector x) {
     point_queue queue(point_cmp);
 
     // comparaciones
@@ -28,16 +38,23 @@ uint KNNClassifier::predictOne(Vector x, KNNClassifier::election_strategy_fn ele
         uint label = y(k, 0);
         queue.push(point(distance, label));
     }
-    return election(queue, n_neighbors);
+
+    auto ret = Vector(n_neighbors_max);
+
+    for(uint k = 0; k < n_neighbors_max; k++) {
+        ret(k) = queue.top().second;
+        queue.pop();
+    }
+
+    return ret;
 }
 
-uint KNNClassifier::electionMode(point_queue queue, uint n_neighbors) {
+uint KNNClassifier::resolve(Vector nearest, uint n_neighbors) {
     const uint n_symbols = 10;
     uint votes[n_symbols] = {0};
 
     for(uint i = 0; i < n_neighbors; i++) {
-        votes[queue.top().second]++;
-        queue.pop();
+        votes[(uint) nearest(i)]++;
     }
 
     uint label = 0;

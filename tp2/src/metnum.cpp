@@ -14,6 +14,7 @@ PYBIND11_MODULE(metnum, m) {
     py::class_<KNNClassifier>(m, "KNNClassifier")
         .def(py::init<unsigned int>())
         .def("fit", &KNNClassifier::fit)
+        .def("load", &KNNClassifier::load, callguard())
         .def("predict", &KNNClassifier::predict, callguard());
 
     py::class_<PCA>(m, "PCA")

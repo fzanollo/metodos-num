@@ -12,9 +12,11 @@ using namespace std;
 
 class KNNClassifier {
 public:
-    KNNClassifier(uint n_neighbors);
+    KNNClassifier(uint n_neighbors_max);
     void fit(Matrix X, Matrix y);
-    Vector predict(Matrix X);
+    void load(Matrix X);
+    Vector predict(uint n_neighbors);
+    Matrix getD();
 private:
     // point = par (distancia, label)
     typedef pair<double, uint> point;
@@ -25,15 +27,12 @@ private:
     // min queue para point (rápido para sacar el más cercano)
     typedef priority_queue<point, vector<point>, decltype(point_cmp)> point_queue;
 
-    typedef function<uint(point_queue, uint)> election_strategy_fn;
+    uint n_neighbors_max;
+    Matrix X; // trainset
+    Matrix y; // labels
+    Matrix D; // distancias
 
-    uint n_neighbors;
-    Matrix X;
-    Matrix y;
+    uint resolve(Vector, uint);
 
-    // Predicción sólo para un elemento. "predict" lo hace para todas las rows de la matriz entrante.
-    uint predictOne(Vector, election_strategy_fn);
-
-    // Algoritmo de selección de label en base a la moda.
-    static uint electionMode(point_queue, uint);
+    Vector getNearestElements(Vector x);
 };

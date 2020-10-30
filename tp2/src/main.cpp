@@ -24,15 +24,15 @@ int main(int argc, char** argv){
 
 	DataHandler dh(train_path, test_path);
 
-	KNNClassifier kNN(k_nearest);
-	
+	KNNClassifier kNN(100); // documentar esto
+
 	switch (method) {
 
 		case '0' :
 			/* kNN */
 			kNN.fit(dh.train_data(), dh.train_label());
-
-			dh.classif() = kNN.predict(dh.test_data());
+			kNN.load(dh.test_data());
+			dh.classif() = kNN.predict(k_nearest);
 			break;
 
 		case '1' :
@@ -44,8 +44,8 @@ int main(int argc, char** argv){
 			dh.test_data() = pca.transform(dh.test_data());
 
 			kNN.fit(dh.train_data(), dh.train_label());
-
-			dh.classif() = kNN.predict(dh.test_data());
+			kNN.load(dh.test_data());
+			dh.classif() = kNN.predict(k_nearest);
 			break;
 
 	}
