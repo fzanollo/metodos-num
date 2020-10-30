@@ -375,3 +375,4 @@ tp
 
 tp2/build
 !**/knn_results/*.csv
+!**/tamanio_dataset/knn_pca_results/*.csv
