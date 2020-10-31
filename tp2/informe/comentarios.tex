@@ -1,0 +1,24 @@
+\subsection{Relación de PCA con la descomposición SVD}
+
+Sea $\bar{X}$ una muestra centrada en el origen, reducir su dimensionalidad implica encontrar una transformación $P$ tal que $\hat{X}^t=P\bar{X}^t$, siendo $\hat{X}$ tal que la varianza se ve maximizada y su covarianza minimazada.
+
+Sabemos que la matriz de covarianza para $\hat{X}$ se define como
+
+\begin{equation*}
+    M_{\hat{X}} = \frac{\hat{X}^t\hat{X}}{n-1} = \frac{P\bar{X}^t\bar{X} P^t}{n-1}
+\end{equation*}
+
+Por lo que si consideramos la descomposición SVD de $\bar{X}$, $\bar{X}= U \Sigma V^t $, entonces
+
+\begin{equation*}
+    M_{\hat{X}} = (PV) \frac{\Sigma^t \Sigma}{n-1} (PV)^t
+\end{equation*}
+
+Tomando $D = \frac{\Sigma^t \Sigma}{n-1}$ con $P = V^T$, tenemos lo que queriamos de $M_{\hat{X}}$.
+
+Además sucede también que $\bar{X} V = U \Sigma$, por lo que $\hat{X}^t = \Sigma^t U^t$.
+
+En conclusión: $P$ es justo lo que queríamos y tiene una forma particular que se deriva de la factorización SVD de $\bar{X}$. $D$ también tiene una forma particular que se deriva de la factorización SVD de $\bar{X}$. A diferencia del método que vimos en clase, en el cual nos basamos en encontrar esta información a partir de $M_{\bar{X}}$ y del hecho que las matrices de covarianza son simétricas.
+
+
+
