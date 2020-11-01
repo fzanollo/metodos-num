@@ -43,7 +43,7 @@ Al igual que sucede en kNN podemos notar un mejor desempeño para las parejas co
 
 \subsection{Validación Simple sobre el dataset completo}
 
-La segunda parte de esta sección realiza el mismo experimento que la primera pero ahora sobre el dataset original y eligiendo un rango condicionado por lo antes visto, con la motivación de encontrar el conjunto de los mejores diez predictores para cada método. Notese que cuando decimos que el rango del experimento actual estará condicionado por una experimentación realizada sobre un dataset reducido ,estamos asumiendo que los parámetros óptimos se ven inmutables por la cantidad de datos para entrenar y validar lo cual no es trivial por esa razón lo analizamos en la SECCIÓN FER .
+La segunda parte de esta sección realiza el mismo experimento que la primera pero ahora sobre el dataset original y eligiendo un rango condicionado por lo antes visto, con la motivación de encontrar el conjunto de los mejores diez predictores para cada método. Nótese que cuando decimos que el rango del experimento actual estará condicionado por una experimentación realizada sobre un dataset reducido ,estamos asumiendo que los parámetros óptimos se ven inmutables por la cantidad de datos para entrenar y validar lo cual no es trivial por esa razón lo analizamos en la SECCIÓN FER .
 
 
 \paragraph{kNN}
@@ -230,15 +230,15 @@ Aclaración : La matriz de Confusión tiene ceros en la diagonal para favorecer 
 \caption{Precision del mejor parámetro}
 \label{knn_métricas2}%
 \end{subfigure}
-\caption{Métricas del mejor parametros para kNN.}
+\caption{Métricas del mejor parámetros para kNN.}
 \label{knn_métricas}%
 \end{figure}
 
 
 Se puede observar en \ref{knn_métricas1} que la cantidad de datos relevantes que se recuperan del set de validación no es el mismo para cada dígito, la diferencia se aprecia claramente cuando comparamos el $0$ o el $1$ con el $8$ , en los primeros solo alrededor de un $1\%$ no es relevante , en cambio con este último aproximadamente un  $7\%$ .
 
-En contraste si observamos \ref{knn_métricas1} para estos mismos dígitos se invierten los roles, podemos ver que la cantidad de digitos recuperados como $8$ son relevantes.
-Lo que sucede es que muchos datos de esta clase estan siendo confundidos con otras, en \ref{knn_MatrizConf} se puede notar esto.
+En contraste si observamos \ref{knn_métricas1} para estos mismos dígitos se invierten los roles, podemos ver que la cantidad de dígitos recuperados como $8$ son relevantes.
+Lo que sucede es que muchos datos de esta clase están siendo confundidos con otras, en \ref{knn_MatrizConf} se puede notar esto.
 \paragraph{kNN+PCA}.
 
 
@@ -273,7 +273,7 @@ Aclaración : La matriz de Confusión tiene ceros en la diagonal para favorecer 
 
 En \ref{fig:knnpca_metricas} comparando ambas métricas podemos notar que con el $3$ sucede algo similar a lo que pasaba con el $8$ en el dataset no transformado.
 
-En particular si observamos el $9$ sucede toalmente lo contrario casi todos los datos del set de validación relevantes son recuperados (recall alta) , pero a su vez muchos de esos recuperados no son relevantes (precision baja).
+En particular si observamos el $9$ sucede totalmente lo contrario casi todos los datos del set de validación relevantes son recuperados (recall alta) , pero a su vez muchos de esos recuperados no son relevantes (precision baja).
 
 
 

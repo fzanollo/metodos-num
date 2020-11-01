@@ -1,7 +1,7 @@
 \subsection{Balanceo y morfología}
 La intención de esta sección es ver tanto cómo se comporta el OCR al contar con una base de datos de entrenamiento totalmente balanceada y desbalanceada como la morfología de los dígitos y qué consecuencias pueden traer. Como tal no realizaremos iteraciones sobre el alpha o el k, asumiendo valores fijos iguales a los ``mejores'' encontrados en las secciones anteriores.
 
-En la tabla \ref{tab:totalDigitos} se puede ver la cantidad por digitos del dataset completo. Como el 5 (del que menos hay) tiene 3795 instancias, no podemos elegir más de esa cantidad. En todos los experimentos que siguen vamos a utilizar 3795 instancias, 2277 de entrenamiento y 1518 de validación.
+En la tabla \ref{tab:totalDigitos} se puede ver la cantidad por dígitos del dataset completo. Como el 5 (del que menos hay) tiene 3795 instancias, no podemos elegir más de esa cantidad. En todos los experimentos que siguen vamos a utilizar 3795 instancias, 2277 de entrenamiento y 1518 de validación.
 
 \begin{table}[h]
 \centering
@@ -69,7 +69,7 @@ Pero si esto es así entonces \textit{¿Qué pasa si agregamos más 4s en vez de
 \end{figure}
 
 \FloatBarrier
-Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero clasifica erroneamente como 9, como se puede ver en \ref{fig:bal_conf}. Por ende al tener más instancias de 4s le estamos dando al sistema más vecinos para comparar del valor con el que más flaquea, esto aumenta el recall del 4 al dar menos falsos negativos, luego como el valor predecido era 9 la precisión de este último aumenta ya que hay menos falsos positivos.
+Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero clasifica erróneamente como 9, como se puede ver en \ref{fig:bal_conf}. Por ende al tener más instancias de 4s le estamos dando al sistema más vecinos para comparar del valor con el que más flaquea, esto aumenta el recall del 4 al dar menos falsos negativos, luego como el valor predecido era 9 la precisión de este último aumenta ya que hay menos falsos positivos.
 \begin{figure}[h]
  \centering
  \includegraphics[width=0.8\linewidth]{images/balanceo/Balanceado con alpha:35 y k:3_3795.png}
@@ -77,7 +77,7 @@ Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero c
  \label{fig:bal_conf}
 \end{figure}
 
-A modo de resúmen y para facilitar su comparación, en la figura \ref{fig:comparaciones} se puede ver la precisión, recall y f1 para cada una de las clases y cada uno de los desbalances propuestos hasta ahora.
+A modo de resumen y para facilitar su comparación, en la figura \ref{fig:comparaciones} se puede ver la precisión, recall y f1 para cada una de las clases y cada uno de los desbalances propuestos hasta ahora.
 \begin{figure}
     \centering
     \subfloat{{\includegraphics[width=.4\linewidth]{images/balanceo/primeros3exp_precision_3795.png} }}%
@@ -116,7 +116,7 @@ Creemos que los errores se deben a la morfología de estos números, ya que bast
 \FloatBarrier
 Hasta ahora sabemos que el desbalance no es inherentemente malo sino que podría beneficiarnos, entonces surge la pregunta \textit{¿Cuál es la configuración (proporciones de dígitos) que más accuracy genera?}
 
-Para empeza desbalanceamos a mano utilizando como guía el recall de cada clase, en favor de los que menos poseen. Probamos con las proporciones: 
+Para empezar desbalanceamos a mano utilizando como guía el recall de cada clase, en favor de los que menos poseen. Probamos con las proporciones: 
 
 \begin{description}
  \item [Muchos 4s, más 3s] proporción de 0.11, 0.18 para el 3 y 4 (resp.) y 0.093 para el resto. 

@@ -2,7 +2,7 @@
 
 Como fue propuesto por la cátedra, para validar que la elección de nuestros parámetros para el sistema lleven luego a una buena generalización al momento de clasificar dígitos, utilizamos la técnica de cross validation con K-Fold.
 
-Brevemente, para el caso de KNN+PCA, por ejemplo, tenemos que elegir entre $(k_i, \alpha_i)$ óptimos, por lo que para cada par se partirá el trainset disponible en $K$ conjuntos para luego hacer $K$ pruebas, donde en cada una de ellas la unión de $K-1$ conjuntos pasan a ser un nuevo trainset y el restante pasa a ser un nuevo testset. Al menos cada conjunto fue un testset después de haber aplicado K-Fold. Luego, promediando algúna métrica de performance entre las $K$ disponibles se puede obtener el valor final para la misma, la cual puede ser comparada después con las generadas por otros pares de parámetros. Los elegidos van a poder ser validados con el testset original.
+Brevemente, para el caso de KNN+PCA, por ejemplo, tenemos que elegir entre $(k_i, \alpha_i)$ óptimos, por lo que para cada par se partirá el trainset disponible en $K$ conjuntos para luego hacer $K$ pruebas, donde en cada una de ellas la unión de $K-1$ conjuntos pasan a ser un nuevo trainset y el restante pasa a ser un nuevo testset. Al menos cada conjunto fue un testset después de haber aplicado K-Fold. Luego, promediando alguna métrica de performance entre las $K$ disponibles se puede obtener el valor final para la misma, la cual puede ser comparada después con las generadas por otros pares de parámetros. Los elegidos van a poder ser validados con el testset original.
 
 Las preguntas que se listan a continuación surgieron de pensar las cosas mencionadas en el párrafo anterior y se realizaron pruebas teniendo en cuenta los siguientes atributos:
 
@@ -15,7 +15,7 @@ Las preguntas que se listan a continuación surgieron de pensar las cosas mencio
     \item \textbf{Dataset}: Primeros 10000 elementos del dataset original, tomando el $80\%$ como trainset y el restante como testset.
 \end{itemize}
 
-\subsubsection{¿Qué valor debería tener K?}\label{KFoldValueK}
+\subsubsection{¿Qué valor debería tener $K$?}\label{KFoldValueK}
 
 Elegir los parámetros con validación simple consiste en hacer $n$ corridas de nuestro sistema, donde $n$ es el número de parámetros candidatos que tenemos. Hacerlo con cross validation utilizando K-Fold nos lleva a realizar $n * K$ corridas del sistema, por lo que el tiempo de duración del experimento puede llegar a ser grande. Dependiendo de, entre otras cosas, el tamaño del dataset y la eficiencia general de los algoritmos.
 
@@ -43,7 +43,7 @@ A juzgar por esta prueba, mientras mayor sea $K$, puede presumirse que mayor es 
 
 ¿Pero que sucede si tomamos $K$ arbitrariamente grande? Podríamos decir con cierta seguridad que el sistema se encontraría overfitteado, lo que nos llevaría a tener predicciones pobres al validar.
 
-Elegir $K$ arbitraríamente alto tampoco seria productivo.
+Elegir $K$ arbitrariamente alto tampoco seria productivo.
 
 \subsubsection{¿Qué relación hay entre $K$ y el tamaño del trainset?}\label{KFoldTrainSizeAcc}
 
@@ -75,9 +75,9 @@ Por otra parte, realizar validación simple implica prescindir de una parte de l
 
 \subsubsection{Finalmente: ¿qué valor debería tener K?}
 
-Vimos en la subsección \ref{KFoldValueK} que podriamos tomar $K=15$, dado que a mayor $K$, mayor accuracy. Pero también comentamos que tomar $K$ arbitrariamente grande puede llegar a ser perjudicial.
+Vimos en la subsección \ref{KFoldValueK} que podríamos tomar $K=15$, dado que a mayor $K$, mayor accuracy. Pero también comentamos que tomar $K$ arbitrariamente grande puede llegar a ser perjudicial.
 
-En \ref{KFoldTrainSizeAcc} vimos que la mayor confianza se obtiene cuando el trainset tiene un tamaño grande. Esto tiene sentido dado que se entrena el sistema con más variaciones de las que se disponen con $K$ más chicos.
+En \ref{KFoldTrainSizeAcc} vimos que la mayor confianza se obtiene cuando el trainset tiene un tamaño grande.
 
 De los resultados obtenidos, para la configuración de la prueba mencionada previamente, las que mostraron mayor accuracy fueron:
 
@@ -98,4 +98,4 @@ De los resultados obtenidos, para la configuración de la prueba mencionada prev
     \end{center}
 \end{table}
 
-Obteniendo la configuración $(3, 40)$ un accuracy mayor a la que obtuvo el par $(5, 50)$ en el testset final ($0.9645$ vs $0.9625$ respectivamente). Una elección razonable luego, sería tomar $K=15$ para hacer las pruebas. No obstante hay que tener presente que: esto es un ejemplo sobre una porción del dataset original, y el tiempo para calcular las pruebas con ese valor de $K$ puede ser significativo, por lo que finalmente $K=10$ es la elcción que tomamos para llevarlas acabo.
+Obteniendo la configuración $(3, 40)$ un accuracy mayor a la que obtuvo el par $(5, 50)$ en el testset final ($0.9645$ vs $0.9625$ respectivamente). Una elección razonable luego, sería tomar $K=15$ para hacer las pruebas. No obstante hay que tener presente que: esto es un ejemplo sobre una porción del dataset original, y el tiempo para calcular las pruebas con ese valor de $K$ puede ser significativo, por lo que finalmente $K=10$ es la elección que tomamos para llevarlas acabo.
