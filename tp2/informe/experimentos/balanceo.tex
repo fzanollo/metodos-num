@@ -1,0 +1,52 @@
+\subsection{Balanceo y morfología}
+La intención de esta sección es ver tanto cómo se comporta el OCR al contar con una base de datos de entrenamiento totalmente balanceada y desbalanceada como la morfología de los dígitos y qué consecuencias pueden traer. Como tal no realizaremos iteraciones sobre el alpha o el k, asumiendo valores fijos iguales a los ``mejores'' encontrados en las secciones anteriores.
+
+En la tabla \ref{tab:totalDigitos} se puede ver la cantidad por digitos del dataset completo. Como el 5 (del que menos hay) tiene 3795 instancias, no podemos elegir más de esa cantidad. En todos los experimentos que siguen vamos a utilizar 3795 instancias, 2277 de entrenamiento y 1518 de validación.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+0 & 4132 \\ \hline
+1 & 4684 \\ \hline
+2 & 4177 \\ \hline
+3 & 4351 \\ \hline
+4 & 4072 \\ \hline
+5 & 3795 \\ \hline
+6 & 4137 \\ \hline
+7 & 4401 \\ \hline
+8 & 4063 \\ \hline
+9 & 4188 \\ \hline
+\end{tabular}
+\caption{Cantidad de instancias por dígito}
+\label{tab:totalDigitos}
+\end{table}
+
+Primero vimos qué pasaba al tener un conjunto de entrenamiento totalmente balanceado. Como podemos ver en [REF] el sistema tiene bastante buena precisión en promedio (0.9496). %TODO imagenes de recall, prec primer exp %TODO acc es precisión promedio no?
+
+Como la precisión del 9 es la más baja intentamos mejorar esto agregando más instancias del mismo, cabe aclarar que cuando decimos agregar es en realidad un desbalance pero tenemos la misma cantidad de instancias de entrenamiento. La proporción normalizada de 9s es 0.16 y 0.093 para el resto. En la figura [REF] se ve que, contrario a lo que suponíamos, la precisión baja aún más y además empeora el recall de los 4s.
+%TODO imagenes segundo exp
+
+Pero si esto es así entonces ¿qué pasa si agregamos más 4s en vez de 9s? Al hacer el intento, con proporción normalizada de 0.16 para los 4s y 0.093 para el resto, vimos que mejora el recall para el 4 sin bajar tanto el del 9 y obtiene mejor accuracy general, esto se puede ver en la figura [REF].
+
+Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero clasifica erroneamente como 9, como se puede ver en [REF]. %TODO matriz de conf balanceado 
+Por ende al tener más instancias de 4s le estamos dando al sistema más vecinos para comparar del valor con el que más flaquea, esto aumenta el recall del 4 al dar menos falsos negativos, %TODO OK no?
+luego como el valor predecido era 9 la precisión de este último aumenta ya que hay menos falsos positivos.
+Creemos que los errores se deben a la morfología de estos números, ya que basta redondear un poco la línea del cuatro para que se confundan. De hecho, mirando a mano las imágenes con las cuáles comete errores podemos ver casos como [REF] y [REF] donde los 4s parecen 9.%TODO agregar imgs ejemplo
+
+Hasta ahora sabemos que el desbalance no es inherentemente malo sino que podría beneficiarnos, entonces surge la pregunta ¿Cuál es la configuración (proporciones de dígitos) que más accuracy genera?
+
+Para empeza desbalanceamos a mano utilizando como guía el recall de cada clase, desbalanceando en favor de lo que menos poseen. Probamos con las proporciones: 
+
+\begin{description}
+ \item [Muchos 4s, más 3s] proporción de 0.11, 0.15 para el 3 y 4 (resp.) y 0.093 para el resto. 
+ \item [Muchos 4s, más 3s, 7s y 8s] proporción de 0.15 para el 4, 0.11 para el 3,7 y 8 y 0.087 para el resto. 
+\end{description}
+
+Con más 4s y 3s obtiene 0.925 de accuracy, igual que con más 4s; al desbalancear también los 7s y 8s ya se pierde un poco pero sigue siendo mejor que balanceado. La figura [REF] %TODO img acc
+muestra la exactitud de cada uno de los desbalances.
+
+
+%TODO en realidad hacer el exp no?
+
+
