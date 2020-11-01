@@ -1,4 +1,4 @@
-El objeto de estudio de este trabajo es el algoritmo de clasificación \textit{k-nearest-neighbors} (KNN) en combinación con la técnica de reducción de la dimensionalidad \textit{principal component analysis} (PCA) en el contexto de un \textit{optical character recognizer} (OCR), para la clasificación de dígitos manuscritos.
+El objeto de estudio de este trabajo es el algoritmo de clasificación \textit{k-nearest-neighbors} (kNN) en combinación con la técnica de reducción de la dimensionalidad \textit{principal component analysis} (PCA) en el contexto de un \textit{optical character recognizer} (OCR), para la clasificación de dígitos manuscritos.
 
 Vamos a presentar las implementaciones en C++ de ambos algoritmos así como los resultados obtenidos del análisis de una variación del conocido dataset MNIST.
 
@@ -10,13 +10,13 @@ Finalmente presentaremos algunos detalles sobre la técnica de validación que u
 
 \subsection{El problema general}
 
-\textbf{KNN} es un algoritmo de clasificación (en nuestro contexto de uso) que dada una cantidad de clases con elementos representantes en un espacio $n$ dimensional, puede determinar de forma no absoluta para nuevos elementos cuya clase es desconocida, a cual de todas las presentes pertenece. Este proceso se lleva a cabo de forma trivial determinando ``la cercanía'' entre este nuevo elemento y sus $k$ vecinos más cercanos. De forma intuitiva, podríamos decir que se apoya en que los elementos parecidos van a parar a regiones parecidas de este espacio $n$ dimensional.
+\textbf{kNN} es un algoritmo de clasificación (en nuestro contexto de uso) que dada una cantidad de clases con elementos representantes en un espacio $n$ dimensional, puede determinar de forma no absoluta para nuevos elementos cuya clase es desconocida, a cual de todas las presentes pertenece. Este proceso se lleva a cabo de forma trivial determinando ``la cercanía'' entre este nuevo elemento y sus $k$ vecinos más cercanos. De forma intuitiva, podríamos decir que se apoya en que los elementos parecidos van a parar a regiones parecidas de este espacio $n$ dimensional.
 
 Determinar $k$ representa un problema dado que al ser este muy grande, puede llegarse a tener en cuenta a elementos de clases vecinas en otra región del espacio por un lado. Por otro lado, determinar la relación de ``cercanía'' implica definir una forma de medir la ``distancia''.
 
 La distancia euclídea es la que utilizamos en este trabajo. Su elección está fundamentada en entender las complejidades que implica tenerla. Obtener la distancia de un elemento cuya clase se quiere predecir a todos los elementos cuyas clases están determinadas por comparación puede demandarnos una considerable cantidad de tiempo, debido que este proceso depende principalmente por un lado de calcular la distancia entre dos puntos en un espacio de dimensión potencialmente grande y por otro lado la cantidad de elementos en este espacio.
 
-Es por esta razón que son útiles las técnicas de reducción de la dimensionalidad, como \textbf{PCA}. Esta nos va a permitir la \textit{extracción} de las componentes principales de una matriz (definida por nuestro dataset), mediante la transformación de la misma a un espacio de dimensión menor en el que la varianza se vea maximizada y la covarianza se anule. Luego podremos utilizar KNN con una demanda temporal menor.
+Es por esta razón que son útiles las técnicas de reducción de la dimensionalidad, como \textbf{PCA}. Esta nos va a permitir la \textit{extracción} de las componentes principales de una matriz (definida por nuestro dataset), mediante la transformación de la misma a un espacio de dimensión menor en el que la varianza se vea maximizada y la covarianza se anule. Luego podremos utilizar kNN con una demanda temporal menor.
 
 Pero definir una matriz de transformación representa también un problema, dado que requiere tiempo el pasaje de una dimensión mayor a una menor (aunque este proceso solo tenga que llevarse a cabo una vez para el entrenamiento y validación del estimador), y por otro lado la elección de cuantas componentes principales $(\alpha)$ se quiere extraer representa otro problema dado que uno desconoce cuantas son aquellas que en nuestro caso nos permiten maximizar nuestra métrica de performance.
 
@@ -28,8 +28,8 @@ Durante la construcción del estimador, la validación es una etapa fundamental,
 
 De esta forma tenemos dos matrices: una de 33600x768 y otra de 8400x768, en la que cada fila representa una imagen.
 
-Como fue mencionado antes, \textbf{la búsqueda de $k$ para KNN} representa un problema, por eso por un lado se tratará de hallar aquel que maximice nuestra métrica de performance sin PCA.
+Como fue mencionado antes, \textbf{la búsqueda de $k$ para kNN} representa un problema, por eso por un lado se tratará de hallar aquel que maximice nuestra métrica de performance sin PCA.
 
-Pero por el otro lado, la búsqueda de $k$ per se, demanda tiempo, y es un tiempo que se paga en el momento de predecir un elemento, no en la construcción del estimador dada nuestra implementación. Es por eso que por otro lado utilizaremos PCA para luego aplicar KNN. Esto demanda \textbf{la búsqueda de un $(\alpha, k)$ para PCA+KNN} óptimos.
+Pero por el otro lado, la búsqueda de $k$ per se, demanda tiempo, y es un tiempo que se paga en el momento de predecir un elemento, no en la construcción del estimador dada nuestra implementación. Es por eso que por otro lado utilizaremos PCA para luego aplicar kNN. Esto demanda \textbf{la búsqueda de un $(\alpha, k)$ para PCA+kNN} óptimos.
 
 Una vez tengamos construido un estimador que pueda predecir con alto accuracy, podemos pasar a entender cómo este varía conforme manipulamos los elementos que conforman este espacio $\alpha$ dimensional.
