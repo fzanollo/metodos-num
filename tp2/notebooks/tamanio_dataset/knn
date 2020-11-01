@@ -25,8 +25,10 @@ def work(X, y, clf, n_knn, n_kfold):
         y_train, y_test = y[train_index], y[test_index]
 
         clf.fit(X_train, y_train)
+        
         begin = time.time()
-        y_pred = clf.predict(X_test)
+        clf.load(X_test)
+        y_pred = clf.predict(n_knn)
         end = time.time()
 
         data.append({
