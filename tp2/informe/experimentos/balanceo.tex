@@ -27,11 +27,11 @@ Primero vimos qué pasaba al tener un conjunto de entrenamiento totalmente balan
     \centering
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Balanceado precision_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Balanceado precision_3795.png}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Balanceado recall_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Balanceado recall_3795.png}
     \end{subfigure}%
     \caption{Recall y precision de balanceado}
     \label{fig:bal_recall_prec}
@@ -42,31 +42,33 @@ Como la precisión del 9 es la más baja intentamos mejorar esto agregando más 
     \centering
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Con más 9s precision_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Con más 9s precision_3795.png}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Con más 9s recall_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Con más 9s recall_3795.png}
     \end{subfigure}%
     \caption{Recall y precision de desbalance con más 9s}
     \label{fig:9s_recall_prec}
 \end{figure}
 
+\FloatBarrier
 Pero si esto es así entonces \textit{¿Qué pasa si agregamos más 4s en vez de 9s?}. Al hacer el intento, con proporción normalizada de 0.16 para los 4s y 0.093 para el resto, vimos que mejora el recall para el 4 sin bajar tanto el del 9 y obtiene mejor accuracy general, esto se puede ver en la figura \ref{fig:4s_recall_prec}.
 \begin{figure}[h]
     \centering
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Con más 4s precision_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Con más 4s precision_3795.png}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{images/balanceo/Con más 4s recall_3795.png}
+        \includegraphics[width=.8\linewidth]{images/balanceo/Con más 4s recall_3795.png}
     \end{subfigure}%
     \caption{Recall y precision de desbalance con más 9s}
     \label{fig:4s_recall_prec}
 \end{figure}
 
+\FloatBarrier
 Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero clasifica erroneamente como 9, como se puede ver en \ref{fig:bal_conf}. Por ende al tener más instancias de 4s le estamos dando al sistema más vecinos para comparar del valor con el que más flaquea, esto aumenta el recall del 4 al dar menos falsos negativos, luego como el valor predecido era 9 la precisión de este último aumenta ya que hay menos falsos positivos.
 \begin{figure}[h]
  \centering
@@ -78,32 +80,34 @@ Esto tiene sentido, ya que el mayor error está cuando los valores son 4s pero c
 A modo de resúmen y para facilitar su comparación, en la figura \ref{fig:comparaciones} se puede ver la precisión, recall y f1 para cada una de las clases y cada uno de los desbalances propuestos hasta ahora.
 \begin{figure}
     \centering
-    \subfloat{{\includegraphics[width=.5\linewidth]{images/balanceo/primeros3exp_precision_3795.png} }}%
+    \subfloat{{\includegraphics[width=.4\linewidth]{images/balanceo/primeros3exp_precision_3795.png} }}%
     
-    \subfloat{{\includegraphics[width=.5\linewidth]{images/balanceo/primeros3exp_recall_3795.png} }}%
-    \subfloat{{\includegraphics[width=.5\linewidth]{images/balanceo/primeros3exp_f1_3795.png} }}%
+    \subfloat{{\includegraphics[width=.4\linewidth]{images/balanceo/primeros3exp_recall_3795.png} }}%
+    \subfloat{{\includegraphics[width=.4\linewidth]{images/balanceo/primeros3exp_f1_3795.png} }}%
     
     \caption{Precisión, recall y f1 por clase para los primeros tres desbalances}
     \label{fig:comparaciones}
 \end{figure}
 
+\FloatBarrier
+
 Creemos que los errores se deben a la morfología de estos números, ya que basta redondear un poco la línea del cuatro para que se confundan. De hecho, mirando a mano algunas de las imágenes (fig.\ref{fig:ejemplos_feos}) con las cuáles comete errores podemos ver casos polémicos; algunos no tienen la mejor de las calidades o están girados, otros directamente fueron mal catalogados. Cabe destacar que la última fija son dígitos manuscritos ingresados por nosotros, utilizando nuestra herramienta \textit{Coso Recognizer}\footnote{El nombre fue una joda y quedó, disculpas} la cuál se puede usar corriendo el script de mismo nombre\footnote{Está en la carpeta notebooks, requiere tkinter (apt-get install python3-tk)}.
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es0_pred6_4.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es2_pred3_1.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es3_pred5_9.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es3_pred9_3.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es0_pred6_4.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es2_pred3_1.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es3_pred5_9.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es3_pred9_3.png} }}%
     
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es4_pred1_1.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es4_pred9_9.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es7_pred1_0.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/es9_pred4_0.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es4_pred1_1.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es4_pred9_9.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es7_pred1_0.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es9_pred4_0.png} }}%
     
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/aMano_es1_pred7.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/aMano_es2_pred8.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/aMano_es4_pred9.png} }}%
-    \subfloat{{\includegraphics[width=.18\linewidth]{images/balanceo/digitosFeos/aMano_es5_pred6.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/aMano_es1_pred7.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/aMano_es2_pred8.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/aMano_es4_pred9.png} }}%
+    \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/aMano_es5_pred6.png} }}%
     
     \caption{Casos horriblemente particulares}
     \label{fig:ejemplos_feos}
@@ -126,7 +130,8 @@ En la figura \ref{fig:acc} se ve que con más 4s y 3s se obtiene aún más accur
  \caption{Accuracy para cada uno de los casos.}
  \label{fig:acc}
 \end{figure}
-
+ 
+\FloatBarrier
 Luego generamos automáticamente algunas variaciones de proporciones en función de encontrar alguno con mayor accuracy. Dividimos los dígitos en dos grupos, los del primero tienen una proporción fija y los restantes se dividen lo que queda equitativamente. Variamos la proporción fija en [0.11, 0.18, 0.19] y como grupos se tomaron todas las combinaciones de 1 y 2 elementos. Estos casos no llegaron a ser tan buenos como \textit{Muchos 4s, más 3s}, en la figura \ref{fig:accAutom} se puede ver la variación de los accuracy conseguidos.
 
 \begin{figure}[h]
