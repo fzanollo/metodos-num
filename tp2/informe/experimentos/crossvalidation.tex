@@ -15,7 +15,7 @@ Las preguntas que se listan a continuación surgieron de pensar las cosas mencio
     \item \textbf{Dataset}: Primeros 10000 elementos del dataset original, tomando el $80\%$ como trainset y el restante como testset.
 \end{itemize}
 
-\subsubsection{¿Qué valor debería tener K?}\label{KFoldValueK}
+\subsubsection{¿Qué valor debería tener $K$?}\label{KFoldValueK}
 
 Elegir los parámetros con validación simple consiste en hacer $n$ corridas de nuestro sistema, donde $n$ es el número de parámetros candidatos que tenemos. Hacerlo con cross validation utilizando K-Fold nos lleva a realizar $n * K$ corridas del sistema, por lo que el tiempo de duración del experimento puede llegar a ser grande. Dependiendo de, entre otras cosas, el tamaño del dataset y la eficiencia general de los algoritmos.
 
@@ -77,7 +77,7 @@ Por otra parte, realizar validación simple implica prescindir de una parte de l
 
 Vimos en la subsección \ref{KFoldValueK} que podriamos tomar $K=15$, dado que a mayor $K$, mayor accuracy. Pero también comentamos que tomar $K$ arbitrariamente grande puede llegar a ser perjudicial.
 
-En \ref{KFoldTrainSizeAcc} vimos que la mayor confianza se obtiene cuando el trainset tiene un tamaño grande. Esto tiene sentido dado que se entrena el sistema con más variaciones de las que se disponen con $K$ más chicos.
+En \ref{KFoldTrainSizeAcc} vimos que la mayor confianza se obtiene cuando el trainset tiene un tamaño grande.
 
 De los resultados obtenidos, para la configuración de la prueba mencionada previamente, las que mostraron mayor accuracy fueron:
 
