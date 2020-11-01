@@ -53,7 +53,7 @@ Para calcular estos utilizamos el método de la potencia en conjunto con el mét
 \end{algorithm}
 
 \begin{algorithm}[H]
-\caption{Metodo de Deflacion(matriz:$A$,int : $\alpha$)}
+\caption{Método de Deflación(matriz:$A$,int : $\alpha$)}
 \begin{algorithmic}[H]
     \State $Autovectores \leftarrow InicializarMatriz()$
     \State $i \leftarrow 0$
@@ -98,7 +98,30 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 
 \subsection{Detalles de implementación }
 
-En la sección Experimentación analizamos los métodos sobre mismos set de validación y entrenamiento variando sus parámetros, notamos que se hacía muy costoso para 
+En la sección Experimentación analizamos los métodos sobre mismos set de validación y entrenamiento variando sus parámetros, notamos que se hacía muy costoso entrenar en cada iteración para los distintos $k$ en el caso de kNN,y las distintas parejas de  $\{ k, \alpha\}$ para kNN+PCA. Por esa razón decidimos agregar una funcionalidad para guardar el entrenamiento y poder volverlo a usar con otro predictor.
+\par
+Con kNN cuando probamos con un rango amplio de ks, realizamos una corrida previa con el $k$ máximo y luego guardamos para cada dato sus $k$ máximo vecinos más cercanos , haciendo esto nos ahorramos en las iteraciones siguientes volver a buscar los $k'$ vecinos, lo único que hacemos es iterar sobre esta nueva matriz.
+\par
+Para kNN+PCA mantenemos la modalidad previa con respecto a los vecinos , pero además corremos primero con el $\alpha $ máximo y nos guardamos la matriz transformada para luego cuando tengamos que iterar sobre $\alpha s $ menores solo hagamos slicing sobre sus columnas.
+\par
+Esto funciona porque tomando $\alpha_{max}$  :
+\par
+$X_{pca} = XV  $ siendo $X_{pca}$ la matriz transformada y V formada por los $\alpha_{max}$ autovectores en sus columnas.
+Sabemos que nuestra nueva imagen transformada :
+\par 
+$(X_{pca})_i = fila(X)_iV =$ 
+\begin{pmatrix}
+x_1v_1 & x_2v_2 & ..& x_2v_{\alpha_{max}}
+\end{pmatrix}
+\par
+En particular si quisieramos la imagen transformada para un $\alpha'$ :
+\par
+$(X_{pca})_i[0:\alpha'] = 
+\begin{pmatrix}
+x_1v_1 & x_2v_2 & ..& x_2v_{\alpha'}
+\end{pmatrix}
+
+
 
 
 
