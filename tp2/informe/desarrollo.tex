@@ -66,6 +66,14 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 
  \end{enumerate}
 
+\subsection{Factibildad de aplicar deflación}
 
+Nuestro PCA utiliza el Método de Deflación para conseguir sus $\alpha$ autovectores y autovalores, para que este Método funcione hay algunas precondiciones que deben cumplirse.
+\begin{enumerate}
+ \item La matriz tenga base ortonormal de autovectores.
+ \item Todos sus autovalores sean distintos.
+ \item Eleccion de $z_0$ en Método de la Potencia.
+\end{enumerate}
 
+La primera sabemos que se cumple porque nosotros trabajamos sobre una matriz de Covarianza
 
