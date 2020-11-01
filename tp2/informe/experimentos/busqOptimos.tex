@@ -4,7 +4,7 @@
 El principal objetivo de esta sección es encontrar los parámetros óptimos de knn y knn+pca con respecto a la accuracy. 
 
 \subsection{Experimentación preliminar}
-Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de $\alpha$, $k$ para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demasiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja $\alpha$, $k$ en caso de kNN+PCA. 
+% Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de $\alpha$, $k$ para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demasiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja $\alpha$, $k$ en caso de kNN+PCA. 
 
 
 \paragraph{kNN}
@@ -208,7 +208,7 @@ Testeamos el mejor predictor sobre el el 20$\%$ del dataset previamente separado
 $Accuracy = 0.9661 $
 \par
 \vspace{0.5cm}
-Aclaración : la matriz de confusión se le reemplazaron los elementos de su diagonal por ceros para que sea más sencillo visualizar las demás casillas.
+Aclaración : La matriz de Confusión tiene ceros en la diagonal para favorecer la visualización de las demás casillas.
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/ConfMatrix_knn.png}%
@@ -243,7 +243,8 @@ Aclaración : la matriz de confusión se le reemplazaron los elementos de su dia
 $Accuracy = 0.9725 $
 \par
 \vspace{0.5cm}
-Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diagonal por ceros para que sea más sencillo visualizar las demás casillas.
+Aclaración : La matriz de Confusión tiene ceros en la diagonal para favorecer la visualización de las demás casillas.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/ConfMatrix_knnpca.png}%
@@ -271,7 +272,8 @@ Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diag
 \subsubsection{Conclusión de los parámetros óptimos}
 
 
-Como se puede observar tanto en las métricas y matriz de confusión de kNN como kNN+PCA para algunos dígitos estos métodos funcionan casi perfectamente (es el caso del uno y el cero), pero para otros como el tres por ejemplo su rendimiento decrece. Estas disparidades en la predicción hacen que nos planteemos algunas dudas , si estos datos mal clasificados pueden  considerarse como outliers dado a que su morfología no se asemeja al dígito que dice su etiqueta o si esto no sucede en la mayoría de los casos tal vez debamos modificar nuestro entrenamiento si queremos mejorar la predicción de alguna de estas clases complicadas, en este caso tal vez el accuracy general pasaría a ser algo secundario.
+Como se puede observar tanto en las métricas y matriz de confusión de kNN como kNN+PCA para algunos dígitos estos métodos funcionan casi perfectamente (es el caso del uno y el cero), pero para otros como el tres por ejemplo su rendimiento decrece. Estas disparidades en la predicción hacen que nos planteemos algunas dudas , si estos datos mal clasificados pueden  considerarse como outliers dado a que su morfología no se asemeja al dígito que dice su etiqueta o si esto no sucede en la mayoría de los casos tal vez debamos modificar nuestro entrenamiento si queremos mejorar la predicción de alguna de estas clases complicadas.
+
 %al vez el 
 %como por ejemplo tal vez con alguna elección de  parámetros en las que baje un poco el accuracy general podríamos lograr un desempeño mejor en algunos de estos dígitos complicados, otra posibilidad sería que necesitamos más datos de esos dígitos para entrenar el método y así balancear el rendimiento de todas las clases.
-
+%Tal vez
