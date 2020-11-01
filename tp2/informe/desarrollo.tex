@@ -35,9 +35,9 @@ Luego calculamos la Matriz de Covarianza que por su definición es simplemente :
 
 Para calcular estos utilizamos el método de la potencia en conjunto con el método de deflación para salvar el problema de que el primero únicamente calcula el autovector con autovalor máximo en módulo.
 
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{Método de la potencia($matriz$:$A$)}
-\begin{algorithmic}[1]
+\begin{algorithmic}[H]
     \State $z \leftarrow InicializarZ()$
     \State $iteraciones \leftarrow 0$
     \While{ !(Convergio?) $and$ iteraciones $<$ maxIteraciones    }  
@@ -52,9 +52,9 @@ Para calcular estos utilizamos el método de la potencia en conjunto con el mét
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{Metodo de Deflacion(matriz:$A$,int : $\alpha$)}
-\begin{algorithmic}[1]
+\begin{algorithmic}[H]
     \State $Autovectores \leftarrow InicializarMatriz()$
     \State $i \leftarrow 0$
     \While{ $i$ $<$ $\alpha$    }  
@@ -71,9 +71,9 @@ Para calcular estos utilizamos el método de la potencia en conjunto con el mét
 \item Reducción de dimensionalidad :
 
 Por último para reducir las dimensiones de nuestro conjunto de datos multiplicamos la matriz proveniente de llamar al Método de Deflación por la orginal.
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{PCA(matriz:$A$,int : $\alpha$)}
-\begin{algorithmic}[1]
+\begin{algorithmic}[H]
     \State $V  \leftarrow Metodo de Deflacion(A,\alpha)$
     \State
     \Return  $A V$
@@ -82,14 +82,29 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 
 \end{enumerate}
 
-\subsection{Factibildad de aplicar deflación}
+%\subsection{Factibildad de aplicar deflación}
 
-Nuestro PCA utiliza el Método de Deflación para conseguir sus $\alpha$ autovectores y autovalores, para que este Método funcione hay algunas precondiciones que deben cumplirse.
-\begin{enumerate}
- \item La matriz tenga base ortonormal de autovectores.
- \item Todos sus autovalores sean distintos.
- \item Eleccion de $z_0$ en Método de la Potencia.
-\end{enumerate}
+%Nuestro PCA utiliza el Método de Deflación para conseguir sus $\alpha$ autovectores y autovalores, para que este Método funcione hay algunas precondiciones que deben cumplirse.
+%\begin{enumerate}
+% \item La matriz tenga base ortonormal de autovectores.
+% \item Todos sus autovalores sean distintos.
+% \item Elección de $z_0$ en Método de la Potencia.
+%\end{enumerate}
 
-La primera sabemos que se cumple porque nosotros trabajamos sobre una matriz de Covarianza
+%5La primera sabemos que se cumple porque nosotros trabajamos sobre una matriz de Covarianza %que sabemos que es simétrica:
+
+%$Cov^t = Cov   X^tX$
+%y por haber visto en la teorica sabemos que existe una base ortonormal de autovectores.
+
+\subsection{Detalles de implementación }
+
+En la sección Experimentación analizamos los métodos sobre mismos set de validación y entrenamiento variando sus parámetros, notamos que se hacía muy costoso para 
+
+
+
+
+
+
+
+
 
