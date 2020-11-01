@@ -1,3 +1,19 @@
+\subsection{Sobre la elección de $k$ para kNN}
+
+kNN desde un punto de vista implementativo es simple y redunda un análisis matemático mayor. No obstante la relación que hay entre $k$ y la cantidad de elementos que están representados en el espacio $n$ dimensional es de interés, no solo para ver si se puede obtener una caracterización del mismo si no para entender si puede ser acotado, lo que nos permitiría reducir regiones donde buscarlo.
+
+En nuestro caso en particular la acción de escribir un número tiene pocas ambigüedades: el dígito a escribir suele ser escrito de contadas formas y es muy fácilmente reconocible en contraste por ejemplo al problema de clasificar sentimientos en el cual mediante el análisis de un texto que puede ser vago hay que determinar si tiene una connotación positiva o negativa (por ejemplo).
+
+Derivada de la ambigüedad o falta de ella, la vectorización tiene un rol preponderante a la hora de decidir donde se van a ubicar estos elementos en el espacio: si la vectorización es buena y tiene en cuenta las ambigüedades que pueden existir como en nuestro caso, entonces todos los elementos pertenecientes a una clase estarán más cercanos.
+
+Dos cúmulos de elementos cercanos en nuestro espacio, podrían considerarse parecidos, como pueden ser las asociadas al $1$ y al $7$. Pero al ser nuestra vectorización ``buena'' (porque tiene en cuenta las ambigüedades y el dominio del problema es simple), podría considerarse poco probable que elementos de uno sean contados como elementos de otra clase si el $k$ es pequeño. Esto siempre que la cantidad de elementos de ambas clases sean parecidas.
+
+Esto nos lleva a la cuestión planteada al principio de la sección.
+
+En resumen: si $C$ es el conjunto de clases sobre las que clasificar y $E$ el conjunto de elementos para entrenar, las mismas están balanceadas al entrenar, el dominio de nuestro problema podría considerarse fácil y en consecuencia tener una buena vectorización, entonces podría tomarse $k\leq\frac{\#E}{\#C}$ para encontrar la clase de las instancias a validar. Tomar $k=1$ implicaría asumir que el elemento más cercano a nuestra instancia de validación es de la misma clase y para ello lo razonable sería contar con todo lo mencionado. En contraste $k=\#E$  implicaría devolver siempre la clase con mayor presencia (por lo que el estimador estimaría pobremente).
+
+Este mismo análisis se corrobora posteriormente durante la experimentación.
+
 \subsection{Metodología PCA}
 
  \begin{enumerate}
@@ -37,7 +53,7 @@ Para calcular estos utilizamos el método de la potencia en conjunto con el mét
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Método de Deflación(matriz:$A$,int : $\alpha$)}
+\caption{Metodo de Deflacion(matriz:$A$,int : $\alpha$)}
 \begin{algorithmic}[1]
     \State $Autovectores \leftarrow InicializarMatriz()$
     \State $i \leftarrow 0$
@@ -58,13 +74,13 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 \begin{algorithm}
 \caption{PCA(matriz:$A$,int : $\alpha$)}
 \begin{algorithmic}[1]
-    \State $V  \leftarrow Método de Deflación(A,\alpha)$
+    \State $V  \leftarrow Metodo de Deflacion(A,\alpha)$
     \State
     \Return  $A V$
 \end{algorithmic}
 \end{algorithm}
 
- \end{enumerate}
+\end{enumerate}
 
 \subsection{Factibildad de aplicar deflación}
 
