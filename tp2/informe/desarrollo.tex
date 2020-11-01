@@ -1,0 +1,71 @@
+\subsection{Metodología PCA}
+
+ \begin{enumerate}
+     \item Calculo de la Matriz de Covarianza :
+     
+Definimos $X \in R^{nxm}$ como la matriz compuesta por las imágenes del dataset ($x_i \in R^{m}$) en sus filas promediadas. 
+\par
+
+\begin{itemize}
+	\item $Fila(X) =  \frac{x_i - \mu}{\sqrt{n-1}}$  con $\mu =\frac{\sum^{n} x_i}{n} $
+\end{itemize}
+
+Luego calculamos la Matriz de Covarianza que por su definición es simplemente :
+\begin{itemize}
+	\item $Cov=  X^{t}X $
+\end{itemize}
+
+\item Cálculo de los $\alpha$ primeros autovectores : 
+
+Para calcular estos utilizamos el método de la potencia en conjunto con el método de deflación para salvar el problema de que el primero únicamente calcula el autovector con autovalor máximo en módulo.
+
+\begin{algorithm}
+\caption{Método de la potencia($matriz$:$A$)}
+\begin{algorithmic}[1]
+    \State $z \leftarrow InicializarZ()$
+    \State $iteraciones \leftarrow 0$
+    \While{ !(Convergio?) $and$ iteraciones $<$ maxIteraciones    }  
+        \State $old_z \leftarrow z$
+        \State $z \leftarrow \frac{Az}{||z ||_2}$
+        \State $Convergio? \leftarrow CriterioDeCorte(old_z,z,eps)$
+        \State $iteraciones \leftarrow iteraciones +1$
+    \EndWhile  
+    \State $\lambda \leftarrow vAv^t/v^tv$
+    \State
+    \Return  $\lambda,z$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Método de Deflación(matriz:$A$,int : $\alpha$)}
+\begin{algorithmic}[1]
+    \State $Autovectores \leftarrow InicializarMatriz()$
+    \State $i \leftarrow 0$
+    \While{ $i$ $<$ $\alpha$    }  
+        \State $\lambda,v \leftarrow $Método de la potencia$(matriz:$A$)$
+        \State $Autovectores[i] \leftarrow v$
+        \State $A \leftarrow A - \lambda vv^t$
+        \State $i \leftarrow i +1$
+    \EndWhile  
+    \State
+    \Return  $Autovectores$
+\end{algorithmic}
+\end{algorithm}
+
+\item Reducción de dimensionalidad :
+
+Por último para reducir las dimensiones de nuestro conjunto de datos multiplicamos la matriz proveniente de llamar al Método de Deflación por la orginal.
+\begin{algorithm}
+\caption{PCA(matriz:$A$,int : $\alpha$)}
+\begin{algorithmic}[1]
+    \State $V  \leftarrow Método de Deflación(A,\alpha)$
+    \State
+    \Return  $A V$
+\end{algorithmic}
+\end{algorithm}
+
+ \end{enumerate}
+
+
+
+
