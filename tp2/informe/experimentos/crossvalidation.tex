@@ -22,7 +22,7 @@ Elegir los parámetros con validación simple consiste en hacer $n$ corridas de 
 Esto nos llevó a probar inicialmente con una serie de valores fijos para $K$ y una parte del dataset original para ver si, la métrica de performance variaba mucho, e inferir en ese caso si vale el costo temporal o no hacer la validación con valores de $K$ cada vez más altos.
 
 \begin{itemize}
-    \item \textbf{Pregunta}: ¿Será apreciable la variación de nuestra métrica de performance si K crece?
+    \item \textbf{Pregunta}: ¿Será apreciable la variación de nuestra métrica de performance si $K$ crece?
     \item \textbf{Hipótesis}: Si: incrementar $K$ permitiría ver como se comporta el sistema con $K$ trainsets distintos, por lo que es factible que mientras más trainsets existan, se van a poder elegir parámetros que generalicen mejor y maximicen la métrica de performance.
 \end{itemize}
 
@@ -37,15 +37,15 @@ Para uno de los pares estudiados $(k = 3, \alpha = 40)$
     \label{fig:KFoldIncreasingK}
 \end{figure}
 
-Como se puede apreciar en la figura \ref{fig:KFoldIncreasingK}, efectivamente, hubo un incremento en el accuracy.
+Como se puede apreciar en la figura \ref{fig:KFoldIncreasingK}, efectivamente, hubo un incremento en el accuracy para $K=5, 10, 15$, pero decreció para $K=20$.
 
-A juzgar por esta prueba, mientras mayor sea $K$, mayor es el accuracy por lo que parece conveniente, al menos tomar $K = 20$.
+A juzgar por esta prueba, mientras mayor sea $K$, puede presumirse que mayor es el accuracy por lo que parece conveniente, al menos tomar $K=15$.
 
 ¿Pero que sucede si tomamos $K$ arbitrariamente grande? Podríamos decir con cierta seguridad que el sistema se encontraría overfitteado, lo que nos llevaría a tener predicciones pobres al validar.
 
 Elegir $K$ arbitraríamente alto tampoco seria productivo.
 
-\subsubsection{¿Qué relación hay entre K y el tamaño del trainset?}\label{KFoldTrainSizeAcc}
+\subsubsection{¿Qué relación hay entre $K$ y el tamaño del trainset?}\label{KFoldTrainSizeAcc}
 
 Para la siguiente prueba, el trainset definido de 8000 elementos, lo particionamos en cuatro trainsets: el primero de 2000, el segundo de 4000, el tercero de 6000 y el último (el completo) de 8000 elementos.
 
@@ -61,7 +61,7 @@ La evaluación fue consistente con la hipótesis planteada, observando el par me
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.7]{images/KFoldAccTrainSize.png}
-    \caption{Accuracy vs K: La mayor diferencia parece lograrse no variando K, si no variando el tamaño del trainset.}
+    \caption{Accuracy vs $K$: La mayor diferencia parece lograrse no variando $K$, si no variando el tamaño del trainset.}
     \label{fig:KFoldAccTrainSize}
 \end{figure}
 
@@ -71,13 +71,15 @@ En la figura \ref{fig:KFoldAccTrainSize} se puede observar, análogamente al cas
 
 Utilizar K-Fold nos resulta útil para elegir los parámetros con cierta confianza de que no van a haber mayores problemas generalizando a datos desconocidos. A cambio permitimos que la información se reorganice en cada prueba de diferentes maneras. Eso mismo puede ser prohibitivo para modelos en los que haya una componente temporal presente, dado que se pierde el sentido en la información.
 
+Por otra parte, realizar validación simple implica prescindir de una parte de los datos para entrenar, por lo que esta técnica de validación cruzada es particularmente útil en estos casos.
+
 \subsubsection{Finalmente: ¿qué valor debería tener K?}
 
-Vimos en la subsección \ref{KFoldValueK} que podriamos tomar $K=20$, dado que a mayor $K$, mayor accuracy. Pero también comentamos que el aumento no parecia ser significativo para el tiempo demorado.
+Vimos en la subsección \ref{KFoldValueK} que podriamos tomar $K=15$, dado que a mayor $K$, mayor accuracy. Pero también comentamos que tomar $K$ arbitrariamente grande puede llegar a ser perjudicial.
 
 En \ref{KFoldTrainSizeAcc} vimos que la mayor confianza se obtiene cuando el trainset tiene un tamaño grande. Esto tiene sentido dado que se entrena el sistema con más variaciones de las que se disponen con $K$ más chicos.
 
-De los resultados obtenidos, para la configuración de la prueba mencionada previamente, las mostraron mayor accuracy fueron:
+De los resultados obtenidos, para la configuración de la prueba mencionada previamente, las que mostraron mayor accuracy fueron:
 
 \begin{table}[h!]
     \begin{center}
@@ -91,7 +93,7 @@ De los resultados obtenidos, para la configuración de la prueba mencionada prev
         20 & 5 & 50 & 0.9522\\
         \hline
         \end{tabular}
-        \caption{Accuracy medio más alto para distintas configuraciones de K-Fold.}
+        \caption{Accuracy medio más alto para distintas configuraciones de K-Fold con un tamaño del trainset de 8000 elementos.}
         \label{kfold_table_1}
     \end{center}
 \end{table}
