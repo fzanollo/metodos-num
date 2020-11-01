@@ -1,12 +1,17 @@
 
-\section{Búsqueda de parámetros óptimos }
+\subsection{Búsqueda de parámetros óptimos }
 
 El principal objetivo de esta sección es encontrar los parámetros óptimos de knn y knn+pca con respecto a la accuracy. 
 
+<<<<<<< HEAD
 \subsection{Experimentación preliminar}
 Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de k, alpha para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demasiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja alpha, k en caso de kNN+PCA. 
+=======
+\subsubsection{Experimentación preliminar}
+Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de k, alpha para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demásiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja alpha, k en caso de kNN+PCA. 
+>>>>>>> 84ffacb41c0b2da60df73a9105938ada9d3bae9f
 
-\subsubsection{kNN}
+\paragraph{kNN}
 
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
@@ -27,7 +32,7 @@ Este primer segmento de la sección se enfoca en generar una intuición sobre c�
 
 Como podemos primer en la imagen (a) de Figura 1 muestra una presunta relación inversamente proporcional entre el k elegido y su accuracy, para vislumbrar si esto es así realizamos el mismo experimento sobre valores pequeños de k pero con más granularidad para notar cualquier variación en la accuracy, qué es lo que se puede observar en la imagen (b). Ahora con más detalle se puede observar a partir de cuales magnitudes el método disminuye se eficiencia, en particular los mejores k parecen encontrarse dentro del rango 1-10.
 
-\subsubsection{kNN+PCA}
+\paragraph{kNN+PCA}
 
 \begin{figure}[H]
     \centering
@@ -44,7 +49,7 @@ Al igual que sucede en kNN podemos notar un mejor desempeño para las parejas co
 La segunda parte de esta sección realiza el mismo experimento que la primera pero ahora sobre el dataset original y eligiendo un rango condicionado por lo antes visto, con la motivación de encontrar el conjunto de los mejores diez parámetros para cada método. Notese que cuando decimos que el rango del experimento estará condicionado por una experimentación realizada sobre un dataset reducido ,estamos asumiendo que los parámetros se ven inmutables por la cantidad de datos para entrenar y validar lo cual no es trivial por esa razón lo analizamos en la SECCIÓN FER, donde mostramos empíricamente que esto es verdadero para nuestro caso particular.
 
 
-\subsubsection{kNN}
+\paragraph{kNN}
 
 
 \begin{figure}[H]
@@ -79,7 +84,7 @@ La segunda parte de esta sección realiza el mismo experimento que la primera pe
     \end{center}
 \end{table}
 
-\subsubsection{kNN+PCA}
+\paragraph{kNN+PCA}
 
 \par
 
@@ -118,12 +123,12 @@ $ k \in \{1,..,80\}$ (granularidad = 2)\\$alpha \in \{  35, 160 \}$ (granularida
     \end{center}
 \end{table}
 
-\subsection{Validación Cruzada}
+\subsubsection{Validación Cruzada}
 
 Por último para conseguir el mejor parámetro o la mejor pareja en el caso de knn+pca se somete a los resultados previos a una corrida de validación cruzada ,con diez particiones, para evitar cualquier tipo de sesgo que pudiera tener nuestro anterior split de entrenamiento y validación. 
 El funcionamiento de la validación cruzada junto a la elección de su parámetros como diez se detalla en la sección @LUIS.
 
-\subsubsection{kNN}
+\paragraph{kNN}
 
 
 $ k \in \{1,3,4,5,6,7,8,9,10,11\}$
@@ -152,7 +157,7 @@ $ k \in \{1,3,4,5,6,7,8,9,10,11\}$
     \end{center}
 \end{table}
 
-\subsubsection{kNN+PCA}
+\paragraph{kNN+PCA}
 
 En el caso de kNN+PCA  no solo tomamos las diez mejores parejas resultantes de la validación simple si no que extraemos los alpha, k de ellas y sometemos a validación cruzada a la combinación de todos ellos parámetros.
 
@@ -184,12 +189,12 @@ $alpha \in \{  35, 40, 45, 50, 55, 75 \}$
     \end{center}
 \end{table}
 
-\subsection{ Testing sobre la mejor pareja : }
+\subsubsection{ Testing sobre la mejor pareja : }
 
 
 Utilizamos el 20$\%$ del dataset previamente separado para testear conseguir el $Accuracy$ de la mejor pareja.
 
-\subsubsection{kNN}
+\paragraph{kNN}
 
 $Accuracy_{mejor pareja} = 0.9661 $
 \par
@@ -222,7 +227,7 @@ Aclaración : la matriz de confusión se le reemplazaron los elementos de su dia
 
 
 
-\subsubsection{kNN+PCA}
+\paragraph{kNN+PCA}
 
 
 \vspace{0.5cm}
@@ -254,7 +259,7 @@ Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diag
 \end{figure}
 
 
-\subsection{Conclusión de los parámetros óptimos}
+\subsubsection{Conclusión de los parámetros óptimos}
 
 
 Como se puede observar tanto en las métricas y matriz de confusión de kNN como kNN+PCA para algunos dígitos estos métodos funcionan casi perfectamente (es el caso del uno y el cero), pero para otros como el tres por ejemplo su rendimiento decrece. Estas disparidades en la predicción hacen que nos planteamos algunas dudas , si estos datos mal clasificados pueden considerarse como outliers dado a su morfología no se asemeja al dígito que dice su etiqueta o tal vez debemos modificar nuestro entrenamiento para llegar a mejorar la predicción de una clase complicado , si esto es así tal vez se deba dejar de lado el accuracy general.
