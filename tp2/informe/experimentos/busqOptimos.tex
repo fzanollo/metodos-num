@@ -4,7 +4,7 @@
 El principal objetivo de esta sección es encontrar los parámetros óptimos de knn y knn+pca con respecto a la accuracy. 
 
 \subsection{Experimentación preliminar}
-Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de k, alpha para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demásiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja alpha, k en caso de kNN+PCA. 
+Este primer segmento de la sección se enfoca en generar una intuición sobre cómo reaccionan los métodos frente a distintos valores de k, alpha para ello utilizamos una partición del dataset original para poder experimentar sobre un rango bastante extenso de parámetros sin preocuparnos demasiado por la complejidad. Este primer experimento consiste en utilizar un split simple de train y validación sobre la partición previamente elegida para cada k en el caso de kNN y para cada pareja alpha, k en caso de kNN+PCA. 
 
 \subsubsection{kNN}
 
@@ -19,13 +19,13 @@ Este primer segmento de la sección se enfoca en generar una intuición sobre c�
 \caption{Rango de 1-30 con granularidad 1}
 \label{fig:subimbar_medio2}
 \end{subfigure}
-\caption{Validacion Simple de kNN sobre el data-set reducido.}
+\caption{Validación Simple de kNN sobre el dataset reducido.}
 \label{knn_preliminar}%
 \end{figure}
 
 \par
 
-Como podemos primer en la imagen (a) de Figura 1 muestra una presunta relación inversamente proporcional entre el k elegido y su accuracy, para vislumbrar si esto es así realizamos el mismo experimento sobre valores pequeños de k pero con más granularidad para notar cualquier variación en la accuracy, que es lo que se puede observar en la imagen (b). Ahora con más detalle se puede observar a partir de cuales magnitudes el método disminuye se eficiencia, en particular los mejores k parecen encontrarse dentro del rango 1-10.
+Como podemos primer en la imagen (a) de Figura 1 muestra una presunta relación inversamente proporcional entre el k elegido y su accuracy, para vislumbrar si esto es así realizamos el mismo experimento sobre valores pequeños de k pero con más granularidad para notar cualquier variación en la accuracy, qué es lo que se puede observar en la imagen (b). Ahora con más detalle se puede observar a partir de cuales magnitudes el método disminuye se eficiencia, en particular los mejores k parecen encontrarse dentro del rango 1-10.
 
 \subsubsection{kNN+PCA}
 
@@ -33,15 +33,15 @@ Como podemos primer en la imagen (a) de Figura 1 muestra una presunta relación 
     \centering
     \includegraphics[width=12cm]{images/validacionSimple_heatmap_datasetRedux}%
     \qquad
-    \caption{Validacion Simple de kNN+PCA sobre el data-set reducido}
+    \caption{Validación Simple de kNN+PCA sobre el dataset reducido}
     \label{knnpca_preliminar}%
 \end{figure}
 
-Al igual que sucede en kNN podemos notar un mejor desempeño para las parejas con valores chicos de $k$, en cambio para alpha ya no estan clara la relación aunque se puede ver una leve mejora para los $alpha$ menores a 100, por esto mismo en la validacion simple que sigue sobre el dataset en su totalidad mantendremos el rango del $alpha$ y solo achicaremos el de $k$.
+Al igual que sucede en kNN podemos notar un mejor desempeño para las parejas con valores chicos de $k$, en cambio para alpha ya no está clara la relación aunque se puede ver una leve mejora para los $alpha$ menores a 100, por esto mismo en la validación simple que sigue sobre el dataset en su totalidad mantendremos el rango del $alpha$ y solo achicamos el de $k$.
 
 \subsection{Validación Simple sobre el data-set completo}
 
-La segunda parte de esta sección realiza el mismo experimento que la primera pero ahora sobre el dataset original y eligiendo un rango condicionado por lo antes visto, con la motivación de encontrar el conjunto de los mejores diez parámetros para cada método. Notese que cuando decimos que el rango del experimento estara condicionado por una experimentacion realizada sobre un dataset reducido ,estamos asumiendo que los parámetros se ven inmutables por la cantidad de datos para entrenar y validar lo cual no es trivial por esa razon lo analizamos en la SECCION FER, donde mostramos empiricamente que esto es verdadero para nuestro caso particular.
+La segunda parte de esta sección realiza el mismo experimento que la primera pero ahora sobre el dataset original y eligiendo un rango condicionado por lo antes visto, con la motivación de encontrar el conjunto de los mejores diez parámetros para cada método. Notese que cuando decimos que el rango del experimento estará condicionado por una experimentación realizada sobre un dataset reducido ,estamos asumiendo que los parámetros se ven inmutables por la cantidad de datos para entrenar y validar lo cual no es trivial por esa razón lo analizamos en la SECCIÓN FER, donde mostramos empíricamente que esto es verdadero para nuestro caso particular.
 
 
 \subsubsection{kNN}
@@ -51,7 +51,7 @@ La segunda parte de esta sección realiza el mismo experimento que la primera pe
     \centering
     \includegraphics[width=8cm]{images/validacionSimple_datasetCompleto.png}%
     \qquad
-    \caption{Validacion Simple de kNN sobre el data-set completo}
+    \caption{Validación Simple de kNN sobre el dataset completo}
     \label{knn_valSimple}%
 \end{figure}
 
@@ -74,7 +74,7 @@ La segunda parte de esta sección realiza el mismo experimento que la primera pe
         
         \hline
         \end{tabular}
-        \caption{Accuracy de las mejores 10 parejas extraido de la Validacion Simple sobre el dataset completo para kNN.}
+        \caption{Accuracy de las mejores 10 parejas extraido de la Validación Simple sobre el dataset completo para kNN.}
         \label{knn_valSimple_table}
     \end{center}
 \end{table}
@@ -89,7 +89,7 @@ $ k \in \{1,..,80\}$ (granularidad = 2)\\$alpha \in \{  35, 160 \}$ (granularida
     \centering
     \includegraphics[width=12cm]{images/validacionSimple_datasetCompleto_knnpca_k80}%
     \qquad
-    \caption{Validacion Simple de kNN+PCA sobre el data-set completo}
+    \caption{Validación Simple de kNN+PCA sobre el dataset completo}
     \label{knnpca_valSimpleCompleto}%
 \end{figure}
 
@@ -113,15 +113,15 @@ $ k \in \{1,..,80\}$ (granularidad = 2)\\$alpha \in \{  35, 160 \}$ (granularida
         
         \hline
         \end{tabular}
-        \caption{Accuracy de las mejores 10 parejas extraido de la Validacion Simple sobre el dataset completo para kNN+PCA.}
+        \caption{Accuracy de las mejores 10 parejas extraído de la Validación Simple sobre el dataset completo para kNN+PCA.}
         \label{knnpca_valSimple_table}
     \end{center}
 \end{table}
 
 \subsection{Validación Cruzada}
 
-Por último para conseguir el mejor parámetro o la mejor pareja en el caso de knn+pca se somete a los resultados previos a una corrida de validación cruzada ,con diez particiones, para evitar cualquier tipo de sesgo que pudiera tener nuestra anterior split de entrenamiento y validacion. 
-El funcionamiento de la validación cruzada junto a la eleccion de su parámetros como diez se detalla en la seccion @LUIS.
+Por último para conseguir el mejor parámetro o la mejor pareja en el caso de knn+pca se somete a los resultados previos a una corrida de validación cruzada ,con diez particiones, para evitar cualquier tipo de sesgo que pudiera tener nuestro anterior split de entrenamiento y validación. 
+El funcionamiento de la validación cruzada junto a la elección de su parámetros como diez se detalla en la sección @LUIS.
 
 \subsubsection{kNN}
 
@@ -147,14 +147,14 @@ $ k \in \{1,3,4,5,6,7,8,9,10,11\}$
         
         \hline
         \end{tabular}
-        \caption{Accuracy promedio resultante de la Validacion Cruzada para kNN.}
+        \caption{Accuracy promedio resultante de la Validación Cruzada para kNN.}
         \label{knn_crossVal_table}
     \end{center}
 \end{table}
 
 \subsubsection{kNN+PCA}
 
-En el caso de kNN+PCA  no solo tomamos las diez mejores parejas resultantes de la validación simple si no que extraemos los alpha, k de ellas y sometemos a validación cruzada a la combinacion de todos ellos parámetros.
+En el caso de kNN+PCA  no solo tomamos las diez mejores parejas resultantes de la validación simple si no que extraemos los alpha, k de ellas y sometemos a validación cruzada a la combinación de todos ellos parámetros.
 
 $ k \in \{4,6,8\}$
 \par
@@ -178,7 +178,7 @@ $alpha \in \{  35, 40, 45, 50, 55, 75 \}$
         
         \hline
         \end{tabular}
-        \caption{Accuracy de las mejores 10 parejas del total de 18 parejas extraido de la Validacion Cruzada .}
+        \caption{Accuracy de las mejores 10 parejas del total de 18 parejas extraído de la Validación Cruzada .}
         \label{knnpca_crossVal_table}
 
     \end{center}
@@ -187,14 +187,14 @@ $alpha \in \{  35, 40, 45, 50, 55, 75 \}$
 \subsection{ Testing sobre la mejor pareja : }
 
 
-Utilizamos el 20$\%$ del data-set previamente separado para testear conseguir el $Accuracy$ de la mejor pareja.
+Utilizamos el 20$\%$ del dataset previamente separado para testear conseguir el $Accuracy$ de la mejor pareja.
 
 \subsubsection{kNN}
 
 $Accuracy_{mejor pareja} = 0.9661 $
 \par
 \vspace{0.5cm}
-Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diagonal por ceros para que sea más sencillo visualizar las demás casillas.
+Aclaración : la matriz de confusión se le reemplazaron los elementos de su diagonal por ceros para que sea más sencillo visualizar las demás casillas.
 \begin{figure}[H]
     \centering
     \includegraphics[width=14cm]{images/ConfMatrix_knn.png}%
@@ -214,7 +214,7 @@ Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diag
 \includegraphics[width=0.9\linewidth, height=5cm]{images/precision_knn.png} 
 \caption{Precision del mejor parámetro}
 \end{subfigure}
-\caption{Metricas del mejor parametos para kNN.}
+\caption{Metricas del mejor parametros para kNN.}
 \label{knn_metricas}%
 \end{figure}
 
@@ -249,7 +249,7 @@ Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diag
 \caption{Precision de la mejor pareja}
 \label{fig:metpca2}
 \end{subfigure}
-\caption{Metricas de la mejor pareja para kNN+PCA.}
+\caption{Métricas de la mejor pareja para kNN+PCA.}
 \label{knnpca_metricas}%
 \end{figure}
 
@@ -257,7 +257,7 @@ Aclaracion : la matriz de confusión se le reemplazaron los elementos de su diag
 \subsection{Conclusión de los parámetros óptimos}
 
 
-Como se puede observar tanto en las métricas y matriz de confusión de kNN como kNN+PCA para algunos dígitos estos métodos funcionan casi perfectamente (es el caso del uno y el cero), pero para otros como el tres por ejemplo su rendimiento decrece. Estas disparidades en la predicción hacen que nos planteamos algunas dudas , si estos datos mal clasificados pueden considerarse como outliers dado a q su morfología no se asemeja al dígito que dice su etiqueta o tal vez debemos modificar nuestro entrenamiento para llegar a mejorar la predicción de una clase complicado , si esto es asi tal vez se deba dejar de lado el accuracy general.
+Como se puede observar tanto en las métricas y matriz de confusión de kNN como kNN+PCA para algunos dígitos estos métodos funcionan casi perfectamente (es el caso del uno y el cero), pero para otros como el tres por ejemplo su rendimiento decrece. Estas disparidades en la predicción hacen que nos planteamos algunas dudas , si estos datos mal clasificados pueden considerarse como outliers dado a su morfología no se asemeja al dígito que dice su etiqueta o tal vez debemos modificar nuestro entrenamiento para llegar a mejorar la predicción de una clase complicado , si esto es así tal vez se deba dejar de lado el accuracy general.
 %al vez el 
-%como por ejemplo tal vez con alguna elección de  parámetros en las que baje un poco el accuracy general podriamos lograr un desempeño mejor en algunos de estos dígitos complicados, otra posibilidad sería que necesitamos más datos de esos dígitos para entrenar el método y asi balancear el rendimiento de todas las clases.
+%como por ejemplo tal vez con alguna elección de  parámetros en las que baje un poco el accuracy general podríamos lograr un desempeño mejor en algunos de estos dígitos complicados, otra posibilidad sería que necesitamos más datos de esos dígitos para entrenar el método y así balancear el rendimiento de todas las clases.
 
