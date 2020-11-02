@@ -24,7 +24,12 @@ int main(int argc, char** argv){
 
 	DataHandler dh(train_path, test_path);
 
-	KNNClassifier kNN(100); // documentar esto
+	/**
+	 * Este valor queda hardcodeado, puede utlizarse
+	 * normalmente mientras que k <= 1000. En caso contrario
+	 * este valor que representa al k máximo de knn debe aumentarse.
+	 */
+	KNNClassifier kNN(100);
 
 	switch (method) {
 
