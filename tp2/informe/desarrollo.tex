@@ -75,7 +75,7 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 \begin{algorithm}[H]
 \caption{PCA(matriz:$A$,int : $\alpha$)}
 \begin{algorithmic}[H]
-    \State $V  \leftarrow Metodo de Deflacion(A,\alpha)$
+    \State $V  \leftarrow $Metodo de Deflación$(A,\alpha)$
     \State
     \Return  $A V$
 \end{algorithmic}
@@ -110,18 +110,24 @@ Esto funciona porque tomando $\alpha_{max}$  :
 $X_{pca} = XV  $ siendo $X_{pca}$ la matriz transformada y V formada por los $\alpha_{max}$ autovectores en sus columnas.
 Sabemos que nuestra nueva imagen transformada :
 \par 
+
 $(X_{pca})_i = fila(X)_iV =$ 
+$
 \begin{pmatrix}
 x_1v_1 & x_2v_2 & ..& x_2v_{\alpha_{max}}
 \end{pmatrix}
+$
 \par
+
 En particular si quisieramos la imagen transformada para un $\alpha'$ :
 \par
-$(X_{pca})_i[0:\alpha'] = 
+
+$(X_{pca})_i[0:\alpha'] = $
+$
 \begin{pmatrix}
 x_1v_1 & x_2v_2 & ..& x_2v_{\alpha'}
 \end{pmatrix}
-
+$
 
 
 
