@@ -1,4 +1,4 @@
-\subsection{Sobre la elección de $k$ para kNN}
+\subsection{Sobre la elección de $k$ para kNN}\label{desarrollosobreknn}
 
 kNN desde un punto de vista implementativo es simple y redunda un análisis matemático mayor. No obstante la relación que hay entre $k$ y la cantidad de elementos que están representados en el espacio $n$ dimensional es de interés, no solo para ver si se puede obtener una caracterización del mismo si no para entender si puede ser acotado, lo que nos permitiría reducir regiones donde buscarlo.
 
@@ -97,7 +97,7 @@ Por último para reducir las dimensiones de nuestro conjunto de datos multiplica
 %$Cov^t = Cov   X^tX$
 %y por haber visto en la teorica sabemos que existe una base ortonormal de autovectores.
 
-\subsection{Detalles de implementación }
+\subsection{Detalles de implementación}
 
 En la sección Experimentación analizamos los métodos sobre mismos set de validación y entrenamiento variando sus parámetros, notamos que se hacía muy costoso entrenar en cada iteración para los distintos $k$ en el caso de kNN,y las distintas parejas de  $\{ k, \alpha\}$ para kNN+PCA. Por esa razón decidimos agregar una funcionalidad para guardar el entrenamiento y poder volverlo a usar con otro predictor.
 \par
@@ -110,6 +110,7 @@ Esto funciona porque tomando $\alpha_{max}$  :
 $X_{pca} = XV  $ siendo $X_{pca}$ la matriz transformada y V formada por los $\alpha_{max}$ autovectores en sus columnas.
 Sabemos que nuestra nueva imagen transformada :
 \par 
+<<<<<<< HEAD
 
 $(X_{pca})_i = fila(X)_iV =$ 
 $
@@ -120,14 +121,27 @@ $
 \par
 
 En particular si quisieramos la imagen transformada para un $\alpha'$ :
+=======
+$(X_{pca})_i = fila(X)_iV =
+\begin{pmatrix}
+x_1v_1 & x_2v_2 & ..& x_2v_{\alpha_{max}}
+\end{pmatrix}$
+\par
+En particular si quisiéramos la imagen transformada para un $\alpha'$ :
+>>>>>>> 0c2463035a5c82df0b889f5ae291b965c8caffaa
 \par
 
 $(X_{pca})_i[0:\alpha'] = $
 $
 \begin{pmatrix}
 x_1v_1 & x_2v_2 & ..& x_2v_{\alpha'}
+<<<<<<< HEAD
 \end{pmatrix}
 $
+=======
+\end{pmatrix}$
+
+>>>>>>> 0c2463035a5c82df0b889f5ae291b965c8caffaa
 
 
 

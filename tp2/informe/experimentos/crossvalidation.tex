@@ -1,14 +1,14 @@
-\subsection{Sobre Cross Validation con K-Fold}
+\subsection{Sobre Cross Validation con K-Fold}\label{crossvalidationkfold}
 
 Como fue propuesto por la cátedra, para validar que la elección de nuestros parámetros para el sistema lleven luego a una buena generalización al momento de clasificar dígitos, utilizamos la técnica de cross validation con K-Fold.
 
-Brevemente, para el caso de KNN+PCA, por ejemplo, tenemos que elegir entre $(k_i, \alpha_i)$ óptimos, por lo que para cada par se partirá el trainset disponible en $K$ conjuntos para luego hacer $K$ pruebas, donde en cada una de ellas la unión de $K-1$ conjuntos pasan a ser un nuevo trainset y el restante pasa a ser un nuevo testset. Al menos cada conjunto fue un testset después de haber aplicado K-Fold. Luego, promediando alguna métrica de performance entre las $K$ disponibles se puede obtener el valor final para la misma, la cual puede ser comparada después con las generadas por otros pares de parámetros. Los elegidos van a poder ser validados con el testset original.
+Brevemente, para el caso de PCA+kNN, por ejemplo, tenemos que elegir entre $(k_i, \alpha_i)$ óptimos, por lo que para cada par se partirá el trainset disponible en $K$ conjuntos para luego hacer $K$ pruebas, donde en cada una de ellas la unión de $K-1$ conjuntos pasan a ser un nuevo trainset y el restante pasa a ser un nuevo testset. Al menos cada conjunto fue un testset después de haber aplicado K-Fold. Luego, promediando alguna métrica de performance entre las $K$ disponibles se puede obtener el valor final para la misma, la cual puede ser comparada después con las generadas por otros pares de parámetros. Los elegidos van a poder ser validados con el testset original.
 
 Las preguntas que se listan a continuación surgieron de pensar las cosas mencionadas en el párrafo anterior y se realizaron pruebas teniendo en cuenta los siguientes atributos:
 
 \begin{itemize}
     \item \textbf{Métrica de performance}: Accuracy, tomando la media.
-    \item \textbf{Algoritmo}: KNN+PCA
+    \item \textbf{Algoritmo}: PCA+kNN
     \item \textbf{Rango de $K$}: $\{5, 10, 15, 20\}$
     \item \textbf{Rango de $k$}: $\{1\dots53, 2\}$
     \item \textbf{Rango de $\alpha$}: $\{10\dots120, 10\}$

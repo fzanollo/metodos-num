@@ -1,0 +1,7 @@
+Vimos en \ref{desarrollosobreknn} que el problema de clasificación de dígitos es uno simple. Puede resolverse de múltiples formas, en particular con kNN. Probar sobre distintas particiones del trainset original pudo llevarnos un tiempo considerable pero finalmente encontramos el valor que necesitábamos. Nos queda pendiente probar variaciones de este algoritmo, por ejemplo utilizando una función de distancia diferente, como podría ser una ponderando las distancias.
+
+Utilizando PCA tanto la calidad de los resultados como el tiempo de ejecución mejoran notablemente. En la sección \ref{balance} mostramos que los casos con categorización errónea son muy particulares y a veces hasta mal etiquetados. Por otro lado en \ref{fer} vemos cómo mejora en cuanto a tiempo de ejecución.
+
+En cuanto a la distribución de las clases en el dataset, vimos que un desbalance puede ser beneficioso pero depende mucho de la morfología, cantidad y calidad de las clases. Queda como trabajo futuro analizar más al respecto para conseguir el desbalance que maximice el accuracy; incluso, suponemos, se podría computar a partir de cierta información de las clases.
+
+Es muy difícil determinar cómo se puede desempeñar este método en otros casos de uso. En particular el hecho de que PCA mantenga la estructura del dataset depende intrínsecamente de la forma original de éste, el MNIST con el que trabajamos no parece presentar mayores dificultades en este aspecto pero no podemos afirmar que para cualquier otro funcione. 

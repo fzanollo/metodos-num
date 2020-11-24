@@ -1,4 +1,4 @@
-\subsection{Balanceo y morfología}
+\subsection{Balanceo y morfología}\label{balance}
 La intención de esta sección es ver tanto cómo se comporta el OCR al contar con una base de datos de entrenamiento totalmente balanceada y desbalanceada como la morfología de los dígitos y qué consecuencias pueden traer. Como tal no realizaremos iteraciones sobre el alpha o el k, asumiendo valores fijos iguales a los ``mejores'' encontrados en las secciones anteriores.
 
 En la tabla \ref{tab:totalDigitos} se puede ver la cantidad por dígitos del dataset completo. Como el 5 (del que menos hay) tiene 3795 instancias, no podemos elegir más de esa cantidad. En todos los experimentos que siguen vamos a utilizar 3795 instancias, 2277 de entrenamiento y 1518 de validación.
@@ -22,7 +22,7 @@ En la tabla \ref{tab:totalDigitos} se puede ver la cantidad por dígitos del dat
 \label{tab:totalDigitos}
 \end{table}
 
-Primero vimos qué pasaba al tener un conjunto de entrenamiento totalmente balanceado. Como podemos ver en la fig.\ref{fig:bal_recall_prec} el sistema tiene bastante buena precisión y recall para cada una de las clases, con un accuracy de 0.925.
+Primero vimos qué pasaba al tener un conjunto de entrenamiento totalmente balanceado. Como podemos ver en la figura \ref{fig:bal_recall_prec} el sistema tiene bastante buena precisión y recall para cada una de las clases, con un accuracy de 0.925.
 \begin{figure}[h]
     \centering
     \begin{subfigure}{.5\textwidth}
@@ -91,7 +91,7 @@ A modo de resumen y para facilitar su comparación, en la figura \ref{fig:compar
 
 \FloatBarrier
 
-Creemos que los errores se deben a la morfología de estos números, ya que basta redondear un poco la línea del cuatro para que se confundan. De hecho, mirando a mano algunas de las imágenes (fig.\ref{fig:ejemplos_feos}) con las cuáles comete errores podemos ver casos polémicos; algunos no tienen la mejor de las calidades o están girados, otros directamente fueron mal catalogados. Cabe destacar que la última fija son dígitos manuscritos ingresados por nosotros, utilizando nuestra herramienta \textit{Coso Recognizer}\footnote{El nombre fue una joda y quedó, disculpas} la cuál se puede usar corriendo el script de mismo nombre\footnote{Está en la carpeta notebooks, requiere tkinter (apt-get install python3-tk)}.
+Creemos que los errores se deben a la morfología de estos números, ya que basta redondear un poco la línea del cuatro para que se confundan. De hecho, mirando a mano algunas de las imágenes (fig.\ref{fig:ejemplos_feos}) con las cuáles comete errores podemos ver casos polémicos; algunos no tienen la mejor de las calidades o están girados, otros directamente fueron mal catalogados. Cabe destacar que la última fila son dígitos manuscritos ingresados por nosotros, utilizando nuestra herramienta \textit{Coso Recognizer}\footnote{El nombre fue una joda y quedó, disculpas} la cuál se puede usar corriendo el script de mismo nombre\footnote{Está en la carpeta notebooks, requiere tkinter (apt-get install python3-tk)}.
 \begin{figure}[h]
     \centering
     \subfloat{{\includegraphics[width=.16\linewidth]{images/balanceo/digitosFeos/es0_pred6_4.png} }}%
