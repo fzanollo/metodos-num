@@ -30,3 +30,8 @@ Matrix LinearRegression::predict(Matrix X)
     //return ret;
     return X * this->coef;
 }
+
+Vector LinearRegression::getCoef()
+{
+    return this->coef;
+}

@@ -9,6 +9,8 @@ public:
     void fit(Matrix X, Matrix y);
 
     Matrix predict(Matrix X);
+
+    Vector getCoef();
 private:
     Vector coef;
 };
